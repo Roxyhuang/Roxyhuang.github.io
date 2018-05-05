@@ -13,7 +13,7 @@
 <meta property="og:description" content="一、js复习之前置概念1.js历史及以前名词 ECMA(European Computer Manufactures Associatio)   1欧洲计算机制造联合会  TC39（Technical Committee #39）   1ECMA指派负责“标准化一种通用、跨平台、供应商中立的脚本语言的语法和语意”的39号技术委员会  ECMA-262   1基于以javascript1.1为蓝本">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/js-reivew-script.png">
-<meta property="og:updated_time" content="2018-05-04T09:04:18.000Z">
+<meta property="og:updated_time" content="2018-05-05T07:22:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js复习之基础概念以及script">
 <meta name="twitter:description" content="一、js复习之前置概念1.js历史及以前名词 ECMA(European Computer Manufactures Associatio)   1欧洲计算机制造联合会  TC39（Technical Committee #39）   1ECMA指派负责“标准化一种通用、跨平台、供应商中立的脚本语言的语法和语意”的39号技术委员会  ECMA-262   1基于以javascript1.1为蓝本">
@@ -75,7 +75,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -94,9 +94,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            CATEGORIES: 'Catégories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -122,7 +122,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -142,16 +142,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
                 4
-                <span>posts</span>
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Tag</span>
             </div>
         </div>
         
@@ -379,7 +379,7 @@
 <h2 id="2-script"><a href="#2-script" class="headerlink" title="2.script"></a>2.script</h2><h3 id="1-script六个属性"><a href="#1-script六个属性" class="headerlink" title="(1) script六个属性"></a>(1) script六个属性</h3><h4 id="async（可选）"><a href="#async（可选）" class="headerlink" title="async（可选）"></a>async（可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">立即下载，但不妨碍页面中的其他操作,比如下载其他资源或等待加载其他脚本 只对外部脚本文件有效。</span><br></pre></td></tr></table></figure>
 <h4 id="charset（可选）"><a href="#charset（可选）" class="headerlink" title="charset（可选）"></a>charset（可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指定src属性的代码字符集，通常会被大多数浏览器忽略，可以用来解决乱码问题。</span><br></pre></td></tr></table></figure>
 <h4 id="defer-（可选）"><a href="#defer-（可选）" class="headerlink" title="defer （可选）"></a>defer （可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示脚本可以延迟到文档完全被解析显示之后再执行。只对外部脚本有效</span><br></pre></td></tr></table></figure>
-<h4 id="language-（已放弃）"><a href="#language-（已放弃）" class="headerlink" title="language （已放弃）"></a>language （已放弃）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示编写代码使用的脚本语言（如：Javascript、Javascript1.2或VBScript），已废弃。</span><br></pre></td></tr></table></figure>
+<h4 id="language-（已弃用）"><a href="#language-（已弃用）" class="headerlink" title="language （已弃用）"></a>language （已弃用）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示编写代码使用的脚本语言（如：Javascript、Javascript1.2或VBScript），已废弃。</span><br></pre></td></tr></table></figure>
 <h4 id="src-（可选）"><a href="#src-（可选）" class="headerlink" title="src （可选）"></a>src （可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示包含要执行代码的外部文件。</span><br></pre></td></tr></table></figure>
 <h4 id="type-（可选）（不是必须默认值text-javascirpt）"><a href="#type-（可选）（不是必须默认值text-javascirpt）" class="headerlink" title="type （可选）（不是必须默认值text/javascirpt）"></a>type （可选）（不是必须默认值text/javascirpt）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 可以看作language的替代属性；表示编写代码使用的脚本语言的内容类型（也称为MIME类型）。</span><br><span class="line">&gt; text/javascirpt text/ecmascirpt都已经不被推荐使用。</span><br><span class="line"></span><br><span class="line">&gt; 实际上服务端传递javascirpt文件时使用的MIME类型通常是application/x-javascirpt，但是type设置该值可能会导致被忽略。</span><br><span class="line"></span><br><span class="line">&gt; 另外，在非ie下可以设置： application/javascript和application/ecmascript（不推荐）</span><br></pre></td></tr></table></figure>
 <h3 id="2-使用标签的一些注意事项"><a href="#2-使用标签的一些注意事项" class="headerlink" title="(2) 使用标签的一些注意事项"></a>(2) 使用标签的一些注意事项</h3><h4 id="1-script闭标签"><a href="#1-script闭标签" class="headerlink" title="[1] script闭标签"></a>[1] script闭标签</h4><ul>
@@ -434,9 +434,7 @@
 <li>准表示模式，则可以通过使用过渡型（Transitional）或框架集型（Frameset）文档类型来触发</li>
 </ul>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML 4.01  过渡型   --&gt;</span><span class="meta">&lt;!DOCTYPE HTML PUBLIC"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>8   <span class="comment">&lt;!-- HTML 4.01 框架集型     --&gt;</span><span class="meta">&lt;!DOCTYPE HTML PUBLIC 9 "-//W3C//DTD HTML 4.01 Frameset//EN""http://www.w3.org/TR/html4/frameset.dtd"&gt;</span>  <span class="comment">&lt;!-- XHTML 1.0  过渡型    --&gt;</span><span class="meta">&lt;!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span><span class="comment">&lt;!-- XHTML 1.0  框架集型    --&gt;</span><span class="meta">&lt;!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
 <p>准标准模式与标准模式非常接近，它们差异几乎可以忽略不计。</p>
-</blockquote>
 <h3 id="7-noscript元素"><a href="#7-noscript元素" class="headerlink" title="(7) noscript元素"></a>(7) noscript元素</h3><p>noscirpt标签只有在下列情况会被显示出来：</p>
 <ul>
 <li>浏览器不支持脚本</li>
@@ -456,7 +454,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjgrqcatq0002l8m78nxkiekq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjgt2b8ft0000r8jg5emeiirx" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -524,7 +522,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -535,7 +533,7 @@
     
     
         <a href="/2018/05/03/study-plan/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Older</strong>
+            <strong class="article-nav-caption">Plus ancien</strong>
             <div class="article-nav-title">2018年学习大纲</div>
         </a>
     
@@ -561,7 +559,7 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
                 
@@ -650,7 +648,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
             <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
@@ -663,7 +661,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 
