@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Mobx | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mobx">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/mobx.jpeg">
+<meta property="og:updated_time" content="2018-05-22T12:24:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mobx">
+<meta name="twitter:description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+<meta name="twitter:image" content="http://www.neohuang.com/img/mobx.jpeg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                5
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Mobx
+        </h1>
+    
+
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="一、浅析如何从Redux迁移Mobx"><a href="#一、浅析如何从Redux迁移Mobx" class="headerlink" title="一、浅析如何从Redux迁移Mobx"></a>一、浅析如何从Redux迁移Mobx</h2><ul>
+<li>作者：Neo_Huang</li>
+<li>参考：<a href="https://tech.youzan.com/mobx_vs_redux/" target="_blank" rel="noopener">https://tech.youzan.com/mobx_vs_redux/</a></li>
+<li>参考：<a href="http://es6.ruanyifeng.com/#docs/decorator" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/decorator</a></li>
+</ul>
+<p>Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发现使用Redux反而会降低开发效率，并且会让代码存在许多隐患，并且Redux写法相对比较繁琐，若开发人员不重视代码规范比较容易导致代码可读性较低。但之前苦于没有更好的选择，然后再看过Redux之父这一番推荐后”unhappy with redux? try mobx”，于是便诞生了这篇文章。</p>
+<h3 id="2-Redux与Mobx原理的浅析"><a href="#2-Redux与Mobx原理的浅析" class="headerlink" title="2. Redux与Mobx原理的浅析"></a>2. Redux与Mobx原理的浅析</h3><p>要分析到底选择Redux还是Mobx 还是应该知道两者实现的大致思路与原理，然后知其特性再进行选择。</p>
+<h4 id="1-react"><a href="#1-react" class="headerlink" title="(1)react"></a>(1)react</h4><p>这部分尝试写了一下，发现内容真的较多所以特此并且认为这部分内容无法省略,所以将只简述最小化流程，若要看详细分析。请移步…</p>
+<p><a href="">Redux和React-redux完整工作原理解析</a></p>
+<p>最小化的主要流程:</p>
+<p>redux最核心的函数是createStore</p>
+<p>会返回四个主要函数：</p>
+<ul>
+<li><p>dispatch</p>
+</li>
+<li><p>reducer</p>
+</li>
+<li><p>getState</p>
+</li>
+<li><p>replaceReducer</p>
+</li>
+</ul>
+<h5 id="1-使用函数createStore创建store数据点"><a href="#1-使用函数createStore创建store数据点" class="headerlink" title="[1] 使用函数createStore创建store数据点"></a>[1] 使用函数createStore创建store数据点</h5><h5 id="2-创建Reducer。它要改变的组件，它获取state和action，生成新的state"><a href="#2-创建Reducer。它要改变的组件，它获取state和action，生成新的state" class="headerlink" title="[2] 创建Reducer。它要改变的组件，它获取state和action，生成新的state"></a>[2] 创建Reducer。它要改变的组件，它获取state和action，生成新的state</h5><h5 id="3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener"><a href="#3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener" class="headerlink" title="[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener"></a>[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这一步非常容易让人混淆实际 用来订阅状态的变化。</span><br></pre></td></tr></table></figure>
+<h5 id="4-dispatch执行，reducer-currentState-action-处理当前dispatch后的传入的action-type并返回给currentState处理后的state，通过currentListeners-forEach-v-gt-v-执行监听函数，并最后返回当前-action状态"><a href="#4-dispatch执行，reducer-currentState-action-处理当前dispatch后的传入的action-type并返回给currentState处理后的state，通过currentListeners-forEach-v-gt-v-执行监听函数，并最后返回当前-action状态" class="headerlink" title="[4] dispatch执行，reducer(currentState,action)处理当前dispatch后的传入的action.type并返回给currentState处理后的state，通过currentListeners.forEach(v=&gt;v())执行监听函数，并最后返回当前 action状态"></a>[4] dispatch执行，reducer(currentState,action)处理当前dispatch后的传入的action.type并返回给currentState处理后的state，通过currentListeners.forEach(v=&gt;v())执行监听函数，并最后返回当前 action状态</h5><h5 id="5-Binding-To-React"><a href="#5-Binding-To-React" class="headerlink" title="[5]Binding To React"></a>[5]Binding To React</h5><p>首先发起dispatch(action)，调用 dispatch后所有的监听函数</p>
+<p>通过调用dispatch（action）一旦调用 dispatch所有的监听函数就会执行,然后调用相应的调用reducer    </p>
+<p>当<br>调用 subscribe，传入一个函数作为参数，那么就会给 nextListeners 列表 push 这个函数；</p>
+<p>这其中state的不可变或者是可变全部由使用者来控制，Redux并不知道state有没有发生变化，更不知道state具体哪里发生了变化。所以，如果view层需要知道哪一部分需要更新，只能通过脏检查。</p>
+<h4 id="2-Mobx"><a href="#2-Mobx" class="headerlink" title="(2)Mobx"></a>(2)Mobx</h4><p>Mobx是一个透明函数响应式编程（Transparently Functional Reactive Programming，TFRP）的状态管理库，它使得状态管理简单可伸缩。</p>
+<p><img src="/img/mobx-process.png" alt="Mobx简单流程图"></p>
+<p>图片来源：<a href="http://cn.mobx.js.org/" target="_blank" rel="noopener">http://cn.mobx.js.org/</a></p>
+<p>它由几个部分组成：Actions、State、Computed Values、Reactions</p>
+<p>在整个数据流中，通过事件驱动（UI 事件、网络请求…）触发 Actions，在 Actions 中修改了 State 中的值，这里的 State 既应用中的 store 树（存储数据），然后根据新的 State 中的数据计算出所需要的计算属性（computed values）值，最后响应（react）到 UI 视图层。</p>
+<h5 id="Mobx-思想的实现原理"><a href="#Mobx-思想的实现原理" class="headerlink" title="Mobx 思想的实现原理"></a>Mobx 思想的实现原理</h5><p>而Mobx的处理如下：</p>
+<h3 id="Redux存在的问题"><a href="#Redux存在的问题" class="headerlink" title="Redux存在的问题"></a>Redux存在的问题</h3><p>首先总结一下自己与团队Redux实践中所遇到的一些问题：</p>
+<p>Redux和Mobx更新状态，以及状态更新后更新View的过程以及原理其中牵扯到不少代码细节，以下只把大致思路进行一个分析:</p>
+<h4 id="1-若没有配套方案，View层更新颗粒划分不够小"><a href="#1-若没有配套方案，View层更新颗粒划分不够小" class="headerlink" title="(1) 若没有配套方案，View层更新颗粒划分不够小"></a>(1) 若没有配套方案，View层更新颗粒划分不够小</h4><p>根据之前的Redux的源码分析，createStore只有一个函数，返回4个闭包。dispatch只做了一件事，调用reducer然后调用subscribe的listener，这其中state的不可变或者是可变全部由使用者来控制，Redux并不知道state有没有发生变化，更不知道state具体哪里发生了变化。所以，如果view层需要知道哪一部分需要更新，只能通过脏检查。</p>
+<p>再看react-redux做了什么，在store.subscribe上挂回调，每次发生subscribe就调用connect传进去mapStateToProps和mapDispatchToProps，然后脏检测props的每一项。当然，我们可以利用不可变数据的特点，去减少prop的数量从而减少脏检测的次数，但是哪有props都来自同一个子树这么好的事呢？</p>
+<p>所以，如果有n个组件connect，每当dispatch一个action的时候，无论做了什么粒度的更新，都会发生O(n)时间复杂度的脏检测。</p>
+<p>更糟糕的是，每次reducer执行完Redux就直接调用listener了，如果在短时间内发生了多次修改（例如用户输入），不可变的开销，加上redux用字符串匹配action的开销，脏检测的开销，再加上view层的开销，整个性能表现会非常糟糕，即使在用户输入的时候往往只需要更新一个”input”。应用规模越大，性能表现越糟糕。（这里的应用指单个页面。这里的单页不是SPA的单页的意思，因为有Router的情况下，被切走的页面其所有组件都被unmount了）</p>
+<p>在应用规模增大的同时，异步请求数量一多，Redux所宣传的Predictable也根本就是泡影，更多的时候是配合各种工具沦为数据可视化工具。</p>
+<h4 id="2-处理异步需引入额外方案，不够优雅"><a href="#2-处理异步需引入额外方案，不够优雅" class="headerlink" title="(2) 处理异步需引入额外方案，不够优雅"></a>(2) 处理异步需引入额外方案，不够优雅</h4><p>在我们使用Redux时，会需要额外引入处理异步的方案，如Redux-thunk,Redux-promise,Redux saga，并且引入这些中间件都是全局</p>
+<h4 id="3-若对性能有要求，需自行优化"><a href="#3-若对性能有要求，需自行优化" class="headerlink" title="(3) 若对性能有要求，需自行优化"></a>(3) 若对性能有要求，需自行优化</h4><h4 id="4-Predictable成本与意义权衡-（仅针对我们团队的项目）"><a href="#4-Predictable成本与意义权衡-（仅针对我们团队的项目）" class="headerlink" title="(4) Predictable成本与意义权衡 （仅针对我们团队的项目）"></a>(4) Predictable成本与意义权衡 （仅针对我们团队的项目）</h4><p>React有一项非常重要的特性即是 Predictable state container for JavaScript apps.因此这一度被认为使用Redux架构的最重要的目的之一</p>
+<p>当然Mobx的进行时间旅行，不过需要额外引入mobxjs/mobx-state-tree，在此不深入讨论</p>
+<h4 id="（5）实际编码中遇到的问题总结"><a href="#（5）实际编码中遇到的问题总结" class="headerlink" title="（5）实际编码中遇到的问题总结"></a>（5）实际编码中遇到的问题总结</h4><p>（1） action的流向到底是什么？</p>
+<p>（2） payload的结构到底是什么？</p>
+<p>（3） redux的setup都是写到最上层app上，很难做一个redux component复用。</p>
+<h3 id="2-mobx相对于Redux的优势以及其自身的劣势"><a href="#2-mobx相对于Redux的优势以及其自身的劣势" class="headerlink" title="2. mobx相对于Redux的优势以及其自身的劣势"></a>2. mobx相对于Redux的优势以及其自身的劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><p>(1) 使用成本低，配置简单</p>
+<h5 id="数据更新颗粒度更"><a href="#数据更新颗粒度更" class="headerlink" title="数据更新颗粒度更"></a>数据更新颗粒度更</h5><p>为每个组件创建一个Watcher，在数据的getter和setter上加钩子，当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。</p>
+<p>这样，每个组件所需要的数据时精确可知的，因此当数据发生变化时，可以精确地知道哪些组件需要被重绘，数据变化时重绘的过程是O(1)的时间复杂度。</p>
+<h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><p>(1) 代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理</p>
+<p>(2) 不引入Mobx State Tree，并不强制约定使用统一的state tree</p>
+<h3 id="3-相关知识和库"><a href="#3-相关知识和库" class="headerlink" title="3. 相关知识和库"></a>3. 相关知识和库</h3><h4 id="1-decorator"><a href="#1-decorator" class="headerlink" title="(1) decorator"></a>(1) decorator</h4><h4 id="2-Mobx-react"><a href="#2-Mobx-react" class="headerlink" title="(2) Mobx-react"></a>(2) Mobx-react</h4><h4 id="3-Mobx-State-Tree"><a href="#3-Mobx-State-Tree" class="headerlink" title="(3)     Mobx State Tree"></a>(3)     Mobx State Tree</h4><h3 id="5-开始使用Mobx"><a href="#5-开始使用Mobx" class="headerlink" title="5. 开始使用Mobx"></a>5. 开始使用Mobx</h3><p>这边希望用尽量简短的篇幅简明扼要的介绍一下，如何在React项目中使用</p>
+<p>最简化来说我们要做的三个步骤其实很简单</p>
+<h4 id="1-定义状态并使其可观察"><a href="#1-定义状态并使其可观察" class="headerlink" title="(1)定义状态并使其可观察"></a>(1)定义状态并使其可观察</h4><h4 id="2-创建视图以响应状态的变化"><a href="#2-创建视图以响应状态的变化" class="headerlink" title="(2)创建视图以响应状态的变化"></a>(2)创建视图以响应状态的变化</h4><h4 id="3-更改状态"><a href="#3-更改状态" class="headerlink" title="(3)更改状态"></a>(3)更改状态</h4><h3 id="6-在React项目中使用"><a href="#6-在React项目中使用" class="headerlink" title="6. 在React项目中使用"></a>6. 在React项目中使用</h3><p>当然要完成View层的更新，我们不能仅更改状态，这时候需要用到另外一个库Mobx-React,先说一下最基础的使用方式：</p>
+<h4 id="0-配置"><a href="#0-配置" class="headerlink" title="(0) 配置"></a>(0) 配置</h4><p>使用需要引入的库一共只有2个:mobx以及mobx-react</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; configure &#125; <span class="keyword">from</span> <span class="string">'mobx'</span>; <span class="comment">// mobx</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span>; <span class="comment">// mobx-react</span></span><br><span class="line"><span class="keyword">import</span> DevTools <span class="keyword">from</span> <span class="string">"mobx-react-devtools"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'assets/css/global.less'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'assets/css/mod_css/normal.less'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> routers <span class="keyword">from</span> <span class="string">'../../routes/route'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> AuthModel <span class="keyword">from</span> <span class="string">"../../models/AuthModel"</span>;</span><br><span class="line"><span class="keyword">import</span> CheckModel <span class="keyword">from</span> <span class="string">"../../models/CheckModel"</span>;</span><br><span class="line"><span class="keyword">import</span> LoginModel <span class="keyword">from</span> <span class="string">"../../models/LoginModel"</span>;</span><br><span class="line"><span class="keyword">import</span> TerminalModel <span class="keyword">from</span> <span class="string">"../../models/TerminalModel"</span>;</span><br><span class="line"><span class="keyword">import</span> PaymentModel <span class="keyword">from</span> <span class="string">"../../models/PaymentModel"</span>;</span><br><span class="line"><span class="keyword">import</span> GlobalModel <span class="keyword">from</span> <span class="string">"../../models/GlobalModel"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> stores = &#123;</span><br><span class="line">  AuthModel,</span><br><span class="line">  CheckModel,</span><br><span class="line">  LoginModel,</span><br><span class="line">  TerminalModel,</span><br><span class="line">  PaymentModel,</span><br><span class="line">  GlobalModel,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MOUNT_NODE = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>._____APP_STATE_____ = stores; <span class="comment">// 方便调试</span></span><br><span class="line"></span><br><span class="line">configure(&#123; <span class="attr">enforceActions</span>: <span class="literal">true</span> &#125;); <span class="comment">// 配置需action方可改变state</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider &#123;...stores&#125;&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &#123;process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp; process.env.DEBUG ? <span class="xml"><span class="tag">&lt;<span class="name">DevTools</span>/&gt;</span></span> : <span class="literal">null</span>&#125;</span><br><span class="line">    &#123; routers &#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>Provider&gt;, MOUNT_NODE,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="1-注入Model"><a href="#1-注入Model" class="headerlink" title="(1)注入Model"></a>(1)注入Model</h4><h4 id="2-将组建转化为响应式"><a href="#2-将组建转化为响应式" class="headerlink" title="(2)将组建转化为响应式"></a>(2)将组建转化为响应式</h4><h4 id="3-通过props获取状态"><a href="#3-通过props获取状态" class="headerlink" title="(3)通过props获取状态"></a>(3)通过props获取状态</h4><h4 id="4-通过action改变状态"><a href="#4-通过action改变状态" class="headerlink" title="(4)通过action改变状态"></a>(4)通过action改变状态</h4><h4 id="5-方便的"><a href="#5-方便的" class="headerlink" title="(5)方便的"></a>(5)方便的</h4><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>MobX 的理念是通过观察者模式对数据做出追踪处理，在对可观察属性的作出变更或者引用的时候，触发其依赖的监听函数，在 React 中既是在 @observer 中对组件进行数据更新并渲染到视图层面，其核心与开发模式和 Vue 非常相似。</p>
+<p>相比于 Redux 纯函数的形式，它在代码层面却是给开发者减少了不少工作量，但在多人维护的大项目中，个人认为还是 Redux 更加有利，一旦项目中的数据交互增多，其在 MobX 中对于数据流的变化就变得难以理清，而只能依靠约定来限制触发场景。</p>
+<p>在 Redux 于 MobX 的选择中，其两者还是各具优势同时也各有缺点，而如何进行抉择还应该结合项目需求与业务场景。</p>
+<p>写的时候的一些资料点</p>
+<ol>
+<li>mobx不严格区分容器组件和展示组件，或者说官方更推荐把展示组件也变成容器组件，这样性能更高。</li>
+<li><p>Provider 和 inject是mobx的附加功能，实际上不用这两个方法，功能依然可以正常运作，这是mobx比redux更简便的一点。</p>
+</li>
+<li><p>redux 中间件的问题就是它只能是全局的，在局部看起来就是 black magic……藏起来的业务复杂度最终还是要还回去的……</p>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html" data-id="cjhpubtfu000deam7ehfgcz26" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/subscribe/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/subscribe.jpeg)" alt="发布订阅模式" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/28/subscribe/" class="title">发布订阅模式</a></p>
+                            <p class="item-date"><time datetime="2018-05-27T16:00:00.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/04/js-review-script/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-reivew-script.png)" alt="js复习之基础概念以及script" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/04/js-review-script/" class="title">js复习之基础概念以及script</a></p>
+                            <p class="item-date"><time datetime="2018-05-03T16:00:00.000Z" itemprop="datePublished">2018-05-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/03/study-function/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/first.jpg)" alt="改变学习方法" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/03/study-function/" class="title">改变学习方法</a></p>
+                            <p class="item-date"><time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/03/study-plan/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/study.jpeg)" alt="2018年学习大纲" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/03/study-plan/" class="title">2018年学习大纲</a></p>
+                            <p class="item-date"><time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/13/hexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/hexo.jpeg)" alt="Hexo博客一些常用的命令" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/13/hexo/" class="title">Hexo博客一些常用的命令</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>改变学习方法 | Neo</title>
+    <title>Redux和React-redux完整工作原理解析 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="作者：Neo_Huang 1.前言最近想改变一下自己学习编程以及计算机相关知识的学习方法。 信息大爆炸时代最显著的特征就是：信息越多，有效越少，于是觉得一个科学的学习方法对自己十分重要，故进行如下总结。 2.自控力以及时间管理(1) 关于学习时间分配[1] 7:45 至 8:45 （路途学习一小时） 以音频课程与行业新知识为主 [2] 9:00 至 9:25 （review一天工作任务） 这个阶段">
-<meta property="og:type" content="article">
-<meta property="og:title" content="改变学习方法">
-<meta property="og:url" content="http://www.neohuang.com/child/2018/05/03/study-function/index.html">
+    <meta name="description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Redux和React-redux完整工作原理解析">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="作者：Neo_Huang 1.前言最近想改变一下自己学习编程以及计算机相关知识的学习方法。 信息大爆炸时代最显著的特征就是：信息越多，有效越少，于是觉得一个科学的学习方法对自己十分重要，故进行如下总结。 2.自控力以及时间管理(1) 关于学习时间分配[1] 7:45 至 8:45 （路途学习一小时） 以音频课程与行业新知识为主 [2] 9:00 至 9:25 （review一天工作任务） 这个阶段">
+<meta property="og:description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.neohuang.com/img/first.jpg">
-<meta property="og:updated_time" content="2018-05-04T08:31:50.000Z">
+<meta property="og:image" content="http://www.neohuang.com/img/mobx.jpeg">
+<meta property="og:updated_time" content="2018-05-16T04:12:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="改变学习方法">
-<meta name="twitter:description" content="作者：Neo_Huang 1.前言最近想改变一下自己学习编程以及计算机相关知识的学习方法。 信息大爆炸时代最显著的特征就是：信息越多，有效越少，于是觉得一个科学的学习方法对自己十分重要，故进行如下总结。 2.自控力以及时间管理(1) 关于学习时间分配[1] 7:45 至 8:45 （路途学习一小时） 以音频课程与行业新知识为主 [2] 9:00 至 9:25 （review一天工作任务） 这个阶段">
-<meta name="twitter:image" content="http://www.neohuang.com/img/first.jpg">
+<meta name="twitter:title" content="Redux和React-redux完整工作原理解析">
+<meta name="twitter:description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
+<meta name="twitter:image" content="http://www.neohuang.com/img/mobx.jpeg">
     
 
     
@@ -174,7 +174,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-study-function" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -182,24 +182,10 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            改变学习方法
+            Redux和React-redux完整工作原理解析
         </h1>
     
 
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/05/03/study-function/">
-            <time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
                 
             </header>
         
@@ -207,70 +193,25 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>作者：Neo_Huang</p>
-<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>最近想改变一下自己学习编程以及计算机相关知识的学习方法。</p>
-<p>信息大爆炸时代最显著的特征就是：信息越多，有效越少，于是觉得一个科学的学习方法对自己十分重要，故进行如下总结。</p>
-<h2 id="2-自控力以及时间管理"><a href="#2-自控力以及时间管理" class="headerlink" title="2.自控力以及时间管理"></a>2.自控力以及时间管理</h2><h3 id="1-关于学习时间分配"><a href="#1-关于学习时间分配" class="headerlink" title="(1) 关于学习时间分配"></a>(1) 关于学习时间分配</h3><p>[1] 7:45 至 8:45 （路途学习一小时）</p>
-<p>以音频课程与行业新知识为主</p>
-<p>[2] 9:00 至 9:25 （review一天工作任务）</p>
-<p>这个阶段用note，将每日任务以及目标进行划分</p>
-<p>[3] 9:30 至 12:00 （处理工作）</p>
-<p>[4] 1:00 至 1:25 （午休）</p>
-<p>[5] 1:25 至 2:25 （学习一小时，一道算法题，提高算法能力，不管是否能够完成）</p>
-<p>[6] 2:25 至 4:55 （工作时间）</p>
-<p>[7] 5:00 至 6:15 （学习一小时）</p>
-<p>[8] 8:00 至 9:30 （学习一个半小时）</p>
-<p>[9] 10:30 至 11:00 （review一天学习内容） </p>
-<h3 id="2-关于学习时间集中"><a href="#2-关于学习时间集中" class="headerlink" title="(2) 关于学习时间集中"></a>(2) 关于学习时间集中</h3><p>(1) 以1小时为单位25分钟为一个工作时间块</p>
-<p>(2) 分配可打断时间为10分钟，并且有5分钟可以适当休息</p>
-<h3 id="3-关于新闻与知识的权衡"><a href="#3-关于新闻与知识的权衡" class="headerlink" title="(3) 关于新闻与知识的权衡"></a>(3) 关于新闻与知识的权衡</h3><p>(1) 保证每天浏览业界新闻，但不超过1个25分钟</p>
-<p>(2) 若浏览业界新闻中，发现有需要深度学习的知识可排入学习计划中</p>
-<h3 id="4-关于学习目标"><a href="#4-关于学习目标" class="headerlink" title="(4) 关于学习目标"></a>(4) 关于学习目标</h3><p>(1) 每周制定一周学习计划</p>
-<p>(2) 每日9:00 至 9:25阶段制定每日学习目标与计划 （可适当根据周计划来调整）</p>
-<h2 id="3-学习方法"><a href="#3-学习方法" class="headerlink" title="3.学习方法"></a>3.学习方法</h2><p>具体学习阶段，我自己目标将学习分为三个阶段：</p>
+            <h2 id="Redux和React-redux完整工作原理解析"><a href="#Redux和React-redux完整工作原理解析" class="headerlink" title="Redux和React-redux完整工作原理解析"></a>Redux和React-redux完整工作原理解析</h2><p>本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。</p>
+<p><img src="/img/redux-process-1.jpeg" alt=""></p>
+<p><img src="/img/redux-process-2.jpeg" alt=""></p>
+<p><img src="/img/redux-process-3.jpeg" alt="">    </p>
+<h3 id="一、Redux源码分析"><a href="#一、Redux源码分析" class="headerlink" title="一、Redux源码分析"></a>一、Redux源码分析</h3><p>下图是我们使用redux更新应用状态的主要流程：</p>
+<p>从源码上分析来说，这里只简单分析createStore，因为它是整个redux最核心的部分</p>
+<p>createStore它可以接受三个参数，reducer、preloadedState、enhancer：</p>
+<p>会返回四个主要函数：</p>
 <ul>
-<li>分析知识点，结构阶段</li>
-<li>学习、理解阶段</li>
-<li>复习阶段</li>
+<li><p>dispatch</p>
+</li>
+<li><p>reducer</p>
+</li>
+<li><p>getState</p>
+</li>
+<li><p>replaceReducer</p>
+</li>
 </ul>
-<p>如下根据一些管用的学习技巧，我总结了一下自己准备贯彻的学习方法。</p>
-<h3 id="（1）“第一性原理”思考法-（分析知识点，结构阶段）"><a href="#（1）“第一性原理”思考法-（分析知识点，结构阶段）" class="headerlink" title="（1）“第一性原理”思考法 （分析知识点，结构阶段）"></a>（1）“第一性原理”思考法 （分析知识点，结构阶段）</h3><p>第一原理的思考方式是用物理学的角度看待世界的方法，也就是说一层层剥开事物的表象，看到里面的本质，然后再从本质一层层往上走。</p>
-<p>目前我将其尽量应用到我的学习方法中，具体应用：</p>
-<h4 id="1-学习知识前分析与拆分问题"><a href="#1-学习知识前分析与拆分问题" class="headerlink" title="[1] 学习知识前分析与拆分问题"></a>[1] 学习知识前分析与拆分问题</h4><p>应用： 大体浏览后创建思维导图或大纲</p>
-<h4 id="2-从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限"><a href="#2-从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限" class="headerlink" title="[2] 从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限"></a>[2] 从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限</h4><p>通过搜索引擎，以及相关资料在一个时间块（即使25分钟内暂定一个上限下限，避免无尽的仅在探索上下限，而无法开展真正学习，当然可适当在学习中调整上下限）</p>
-<h4 id="3-深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了"><a href="#3-深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了" class="headerlink" title="[3] 深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了"></a>[3] 深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了</h4><p>在结构完并且安排完自己想要学习的知识后，可以采用费恩曼技巧去学习、理解从而达到记忆问题的效果。</p>
-<h3 id="（2）费恩曼技巧-（学习、理解阶段）"><a href="#（2）费恩曼技巧-（学习、理解阶段）" class="headerlink" title="（2）费恩曼技巧 （学习、理解阶段）"></a>（2）费恩曼技巧 （学习、理解阶段）</h3><p>其实应该本质上来说：是以大妈级的语言来解释一些专业上的问题，用我们日常随处可见的现象来解释专业上的问题。总之：他是用极其具象的东西来回答高度抽象的东西。</p>
-<p>实际应用下来主要四个部分：</p>
-<h4 id="1-确定学习目标（通过：第一性原理）"><a href="#1-确定学习目标（通过：第一性原理）" class="headerlink" title="1.    确定学习目标（通过：第一性原理）"></a>1.    确定学习目标（通过：第一性原理）</h4><h4 id="2-模拟教学学习法"><a href="#2-模拟教学学习法" class="headerlink" title="2.    模拟教学学习法"></a>2.    模拟教学学习法</h4><p>以教促学，我自己将这个阶段再拆解一下</p>
-<p>[1] 说给八十岁的老太太听，说给八岁的小孩子听（简明解释）</p>
-<p>[2] 举例子</p>
-<p>[3] 假设提问</p>
-<h4 id="3-学习中的回顾（为避免与之后复习混淆）"><a href="#3-学习中的回顾（为避免与之后复习混淆）" class="headerlink" title="3.    学习中的回顾（为避免与之后复习混淆）"></a>3.    学习中的回顾（为避免与之后复习混淆）</h4><p>如果你感觉卡壳了, 就回顾一下学习资料,无论何时你感觉卡壳了, 都要回到原始的学习资料并重新学习让你感到卡壳的那部分, 直到你领会得足够顺畅, 不要仅仅是在头脑中假想, 直接把自己要如何向别人讲解 “费曼技巧” 的过程简要地写下来/说出来。</p>
-<h4 id="4-简化归纳"><a href="#4-简化归纳" class="headerlink" title="4.    简化归纳"></a>4.    简化归纳</h4><p>为了让你的讲解通俗易懂，简化语言表达,最终的目的, 是用你自己的语言, 而不是学习资料中的语言来解释概念。完成这个阶段可以理解成基本学会了，可以进入复习阶段了。</p>
-<h3 id="（3）艾宾浩斯记忆法（复习阶段）"><a href="#（3）艾宾浩斯记忆法（复习阶段）" class="headerlink" title="（3）艾宾浩斯记忆法（复习阶段）"></a>（3）艾宾浩斯记忆法（复习阶段）</h3><p>信息输入大脑后，遗忘也就随之开始了。遗忘率随时间的流逝而先快后慢，特别是在刚刚识记的短时间里，遗忘最快，这就是著名的艾宾浩斯遗忘曲线。遵循艾宾浩斯遗忘曲线所揭示的记忆规律，对所学知识及时进行复习，这种记忆方法即为艾宾浩斯记忆法。</p>
-<p>其实应用来说就是针对遗忘曲线进行回顾和自测，目前针对这个我自己将其分为四回顾四自测：</p>
-<p>为避免过度追求学习方法，其实就是进行8轮重复学习，每1轮回顾后进行1次自测，一共8次，历时半个月完成。</p>
-<ol>
-<li>第一个记忆周期：5分钟 （进行一轮回顾）</li>
-<li>第二个记忆周期：30分钟 （进行一轮自测）</li>
-<li>第三个记忆周期：12小时 （进行一轮回顾）</li>
-<li>第四个记忆周期：1天 （进行一轮自测）</li>
-<li>第五个记忆周期：2天 （进行一轮回顾）</li>
-<li>第六个记忆周期：4天 （进行一轮自测）</li>
-<li>第七个记忆周期：7天 （进行一轮回顾）</li>
-<li>第八个记忆周期：15天（进行一轮自测）</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>（1） 严格按学习计划执行。</p>
-<p>（2）将学习时间分成25分钟为1块进行管理，增加集中力。</p>
-<p>（3）每天用25分钟收集业界内的新知识，若无法短时间消化的知点，可以排入未来学习计划中</p>
-<p>（4）每天使用25分钟安排每日学习计划，每周花一个25分钟制定周学习计划</p>
-<p>（5）将学习步骤拆分为如下3种，并根据第一原理、费曼技巧以及艾宾浩斯记忆法执行</p>
-<ul>
-<li>分析知识点，结构阶段</li>
-<li>学习、理解阶段</li>
-<li>复习阶段</li>
-</ul>
-
+<h3 id="二、Redux工作原理以及工作流程总结"><a href="#二、Redux工作原理以及工作流程总结" class="headerlink" title="二、Redux工作原理以及工作流程总结"></a>二、Redux工作原理以及工作流程总结</h3><h3 id="三、React-Redux源码分析"><a href="#三、React-Redux源码分析" class="headerlink" title="三、React-Redux源码分析"></a>三、React-Redux源码分析</h3><h3 id="四、React-Redux工作原理以及工作流程总结"><a href="#四、React-Redux工作原理以及工作流程总结" class="headerlink" title="四、React-Redux工作原理以及工作流程总结"></a>四、React-Redux工作原理以及工作流程总结</h3><h3 id="五、React性能优化"><a href="#五、React性能优化" class="headerlink" title="五、React性能优化"></a>五、React性能优化</h3><h4 id="1-reselect"><a href="#1-reselect" class="headerlink" title="(1) reselect"></a>(1) reselect</h4><h4 id="2-Immutable-State"><a href="#2-Immutable-State" class="headerlink" title="(2) Immutable State"></a>(2) Immutable State</h4>
         
         </div>
         <footer class="article-footer">
@@ -280,7 +221,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjhpubtfo0006eam7tqj9zjhf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html" data-id="cjhpubtft000ceam77eyxdci7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -348,32 +289,13 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
     </div>
     
         
-<nav id="article-nav">
-    
-        <a href="/2018/05/04/js-review-script/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    js复习之基础概念以及script
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/05/03/study-plan/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">2018年学习大纲</div>
-        </a>
-    
-</nav>
-
 
     
 </article>

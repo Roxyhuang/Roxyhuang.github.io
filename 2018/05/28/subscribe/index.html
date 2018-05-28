@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>发布订阅模式 | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="发布订阅模式">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/05/28/subscribe/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/subscribe.jpeg">
+<meta property="og:updated_time" content="2018-05-28T06:00:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="发布订阅模式">
+<meta name="twitter:description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+<meta name="twitter:image" content="http://www.neohuang.com/img/subscribe.jpeg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                5
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-subscribe" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            发布订阅模式
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/28/subscribe/">
+            <time datetime="2018-05-27T16:00:00.000Z" itemprop="datePublished">2018-05-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="一、结合代码白话理解javascript中的观察者模式与发布订阅"><a href="#一、结合代码白话理解javascript中的观察者模式与发布订阅" class="headerlink" title="一、结合代码白话理解javascript中的观察者模式与发布订阅"></a>一、结合代码白话理解javascript中的观察者模式与发布订阅</h2><ul>
+<li><p>参考：<a href="https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85</a></p>
+</li>
+<li><p>参考：<a href="https://www.zhihu.com/question/23486749" target="_blank" rel="noopener">https://www.zhihu.com/question/23486749</a> - No zuo must die - 知乎用户的回答 - 知乎</p>
+</li>
+<li><p>参考：<a href="https://juejin.im/post/5a14e9edf265da4312808d86#comment" target="_blank" rel="noopener">https://juejin.im/post/5a14e9edf265da4312808d86#comment</a></p>
+</li>
+</ul>
+<h3 id="1-概念解释："><a href="#1-概念解释：" class="headerlink" title="1 概念解释："></a>1 概念解释：</h3><h4 id="（1）观察者设计模式"><a href="#（1）观察者设计模式" class="headerlink" title="（1）观察者设计模式"></a>（1）观察者设计模式</h4><h5 id="标准解释："><a href="#标准解释：" class="headerlink" title="标准解释："></a>标准解释：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">观察者模式： 是一种设计模式，在软件设计中往往是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。</span><br></pre></td></tr></table></figure>
+<p>来源：维基百科</p>
+<h5 id="图示："><a href="#图示：" class="headerlink" title="图示："></a>图示：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮  Fire Event  ╭──────────────╮</span><br><span class="line">│             │─────────────&gt;│              │</span><br><span class="line">│   Subject   │              │   Observer   │</span><br><span class="line">│             │&lt;─────────────│              │</span><br><span class="line">╰─────────────╯  Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<h5 id="白话讲解："><a href="#白话讲解：" class="headerlink" title="白话讲解："></a>白话讲解：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">假设你想去xx公司应聘前端工程师，但xx公司hr告知你目前没有岗位空缺，你向留下了联系方式，让其在有岗位空缺时，通知你。当然公司还会通知同样已留下联系方式的其他候选者。</span><br><span class="line"></span><br><span class="line">Observers（观察者）: 候选人</span><br><span class="line"></span><br><span class="line">Subject（被观察者）： xx公司</span><br><span class="line"></span><br><span class="line">Fire Event (事件)： xx公司有了新前端空缺</span><br><span class="line"></span><br><span class="line">Subscribe（订阅）： 候选人将联系方式留给了xx公司</span><br><span class="line"></span><br><span class="line">Notify (通知) ： xx公司向候选人致电</span><br><span class="line"></span><br><span class="line">观察者模式运行流程：</span><br><span class="line"></span><br><span class="line">Observers -&gt; Subscribe -&gt; Subject -&gt; Fire Event -&gt; Notify -&gt; Observers</span><br></pre></td></tr></table></figure>
+<h4 id="（2）发布订阅模式"><a href="#（2）发布订阅模式" class="headerlink" title="（2）发布订阅模式"></a>（2）发布订阅模式</h4><h5 id="标准解释：-1"><a href="#标准解释：-1" class="headerlink" title="标准解释："></a>标准解释：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">发布订阅模式属于广义上的观察者模式，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</span><br></pre></td></tr></table></figure>
+<p>来源：维基百科</p>
+<h5 id="图示：-1"><a href="#图示：-1" class="headerlink" title="图示："></a>图示：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮                 ╭───────────────╮   Fire Event   ╭──────────────╮</span><br><span class="line">│             │  Publish Event  │               │───────────────&gt;│              │</span><br><span class="line">│  Publisher  │────────────────&gt;│ Event Channel │                │  Subscriber  │</span><br><span class="line">│             │                 │               │&lt;───────────────│              │</span><br><span class="line">╰─────────────╯                 ╰───────────────╯    Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<h5 id="白话讲解：-1"><a href="#白话讲解：-1" class="headerlink" title="白话讲解："></a>白话讲解：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- 你想成为一个前端工程师，但目前没有明确目标，你可以联系了猎头让其有前端相关岗位时通知你。</span><br><span class="line"></span><br><span class="line">- 猎头可能与多家公司都有合作，这些公司发布职位会告知猎头</span><br><span class="line"></span><br><span class="line">- 这个过程xx公司，只需要根据自身情况，只需要根据自己实际的岗位情况，告知猎头自己需要什么岗位的候选人，无需知道有哪些具体候选人，候选人在订阅过程中，只是向猎头公司订阅了有前端相关岗位时通知自己</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Publisher（发布者）: xx公司</span><br><span class="line"></span><br><span class="line">Publish Event（发布事件）： 发布职位</span><br><span class="line"></span><br><span class="line">Event Channel (事件通道)： 猎头公司</span><br><span class="line"></span><br><span class="line">Fire Event（事件）： xx公司发布职位后，猎头公司根据职位发送联系相应岗位候选人</span><br><span class="line"></span><br><span class="line">Subscriber（订阅者)： 候选人</span><br><span class="line"></span><br><span class="line">Subscribe（订阅）： 候选人将联系方式留给hr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">运行流程：</span><br><span class="line"></span><br><span class="line">Subscriber -&gt; Subscribe -&gt; Event Channel</span><br><span class="line"></span><br><span class="line">Publisher -&gt; Publish Event -&gt; Event Channel -&gt; Fire Event -&gt; Subscriber</span><br></pre></td></tr></table></figure>
+<h3 id="2-观察者模式和发布订阅模式有什么不同："><a href="#2-观察者模式和发布订阅模式有什么不同：" class="headerlink" title="2 观察者模式和发布订阅模式有什么不同："></a>2 观察者模式和发布订阅模式有什么不同：</h3><p>发布订阅模式属于广义上的观察者模式。发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式。</p>
+<p>区别：</p>
+<ul>
+<li>发布订阅模式多了个事件通道</li>
+</ul>
+<p>在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应</p>
+<ul>
+<li>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件</li>
+</ul>
+<p>以此避免发布者和订阅者之间产生依赖关系。</p>
+<h3 id="3-观察者模式代码实现"><a href="#3-观察者模式代码实现" class="headerlink" title="3. 观察者模式代码实现"></a>3. 观察者模式代码实现</h3><p>使用观察者模式的好处：</p>
+<ul>
+<li>支持简单的广播通信，自动通知所有已经订阅过的对象。</li>
+<li>页面载入后目标对象很容易与观察者存在一种动态关联，增加了灵活性。</li>
+<li>目标对象与观察者之间的抽象耦合关系能够单独扩展以及重用。</li>
+</ul>
+<p>最简单观察者模式在js中的运用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'body 被观察'</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>观察者模式实现数据打包下载功能:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 观察者模式 实现下载任务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 观察者</span></span><br><span class="line"><span class="comment"> * @param id</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DownloadTask</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.id = id;</span><br><span class="line">  <span class="keyword">this</span>.loaded = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">this</span>.url = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadTask.prototype.finish = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.loaded = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">this</span>.url = url;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Task '</span> + <span class="keyword">this</span>.id + <span class="string">' load data from '</span> + url);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被观察者</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DataHub</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks = []; <span class="comment">// 观察者列表</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.addDownloadTask = <span class="function"><span class="keyword">function</span>(<span class="params">downloadTask</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks.push(downloadTask);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.removeDownloadTask = <span class="function"><span class="keyword">function</span>(<span class="params">downloadTask</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (item === downloadTask) &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// this.downloadTasks.remove(downloadTask);</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> downloadTaskCount = <span class="keyword">this</span>.downloadTasks.length;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; downloadTaskCount; i++) &#123;</span><br><span class="line">    <span class="keyword">this</span>.downloadTasks[i].finish(url);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> DataHub();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> task1 = <span class="keyword">new</span> DownloadTask(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> task2 = <span class="keyword">new</span> DownloadTask(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">d.addDownloadTask(task1);</span><br><span class="line">d.addDownloadTask(task2);</span><br><span class="line"></span><br><span class="line">d.removeDownloadTask(task1);</span><br><span class="line"></span><br><span class="line">d.notify(<span class="string">'http://somedomain.someaddress'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="4-发布订阅代码实现"><a href="#4-发布订阅代码实现" class="headerlink" title="4. 发布订阅代码实现"></a>4. 发布订阅代码实现</h3><ul>
+<li>发布订阅模式属于广义上的观察者模式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</span><br></pre></td></tr></table></figure>
+<ul>
+<li>发布订阅模式多了个事件通道</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发布者</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.fnList = []; <span class="comment">// 订阅者列表</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Observer.prototype = &#123;</span><br><span class="line">  subscribe: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123; <span class="comment">// 增加订阅者</span></span><br><span class="line">    <span class="keyword">this</span>.fnList.push(fn);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  unsubscribe: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123; <span class="comment">// 移除订阅者</span></span><br><span class="line">    <span class="keyword">this</span>.fnList = <span class="keyword">this</span>.fnList.filter(<span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (el !== fn)&#123;</span><br><span class="line">        <span class="keyword">return</span> el;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">  notify: <span class="function"><span class="keyword">function</span> (<span class="params">p, thisObj</span>) </span>&#123; <span class="comment">//发布消息函数</span></span><br><span class="line">    <span class="keyword">var</span> scope = thisObj || <span class="built_in">window</span>;</span><br><span class="line">    <span class="keyword">this</span>.fnList.forEach(</span><br><span class="line">        <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">          el.call(scope, o);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.fnList);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> Observer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f1 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Robbin: '</span> + data + <span class="string">', 赶紧干活了！'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f2 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Randall: '</span> + data + <span class="string">', 找他加点工资去！'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">o.subscribe(f1);</span><br><span class="line">o.subscribe(f2);</span><br><span class="line"></span><br><span class="line">o.notify(<span class="string">"Tom回来了！"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//退订f1</span></span><br><span class="line">o.unsubscribe(f1);</span><br><span class="line"><span class="comment">//再来验证</span></span><br><span class="line">o.notify(<span class="string">"Tom回来了！"</span>);</span><br></pre></td></tr></table></figure>
+<p>发布定远模式实现数据打包下载功能:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发布者</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DataHub</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params">url, callback</span>) </span>&#123;</span><br><span class="line">  callback(url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件通道</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DownloadManager</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  <span class="keyword">this</span>.uId = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadManager.prototype.publish = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.events[eventType]) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> subscribers = <span class="keyword">this</span>.events[eventType],</span><br><span class="line">    count = subscribers ? subscribers.length : <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (count--) &#123;</span><br><span class="line">    <span class="keyword">var</span> subscriber = subscribers[count];</span><br><span class="line">    subscriber.handler(eventType, subscriber.taskId, url);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadManager.prototype.subscribe = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, handler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.events[eventType]) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events[eventType] = [];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> taskId = (++<span class="keyword">this</span>.uId).toString();</span><br><span class="line">  <span class="keyword">this</span>.events[eventType].push(&#123;</span><br><span class="line">    taskId: taskId,</span><br><span class="line">    handler: handler</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> taskId;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个数据中心</span></span><br><span class="line"><span class="keyword">var</span> dataHub = <span class="keyword">new</span> DataHub();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个下载事件管理器</span></span><br><span class="line"><span class="keyword">var</span> downloadManager = <span class="keyword">new</span> DownloadManager();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个下载器</span></span><br><span class="line"><span class="keyword">var</span> dataLoader = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, taskId, url</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Task '</span> + taskId + <span class="string">' load data from '</span> + url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户来请求数据了</span></span><br><span class="line"><span class="keyword">var</span> downloadTask1 = downloadManager.subscribe(<span class="string">'dataReady'</span>, dataLoader);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据打包完成了</span></span><br><span class="line"></span><br><span class="line">dataHub.notify(<span class="string">'http://somedomain.someaddress'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">  downloadManager.publish(<span class="string">'dataReady'</span>, url);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjhpubtfr000aeam7mlm2pkbu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/05/04/js-review-script/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">js复习之基础概念以及script</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/28/subscribe/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/subscribe.jpeg)" alt="发布订阅模式" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/28/subscribe/" class="title">发布订阅模式</a></p>
+                            <p class="item-date"><time datetime="2018-05-27T16:00:00.000Z" itemprop="datePublished">2018-05-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/04/js-review-script/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-reivew-script.png)" alt="js复习之基础概念以及script" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/04/js-review-script/" class="title">js复习之基础概念以及script</a></p>
+                            <p class="item-date"><time datetime="2018-05-03T16:00:00.000Z" itemprop="datePublished">2018-05-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/03/study-function/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/first.jpg)" alt="改变学习方法" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/03/study-function/" class="title">改变学习方法</a></p>
+                            <p class="item-date"><time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/03/study-plan/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/study.jpeg)" alt="2018年学习大纲" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/03/study-plan/" class="title">2018年学习大纲</a></p>
+                            <p class="item-date"><time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/13/hexo/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/hexo.jpeg)" alt="Hexo博客一些常用的命令" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/13/hexo/" class="title">Hexo博客一些常用的命令</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
