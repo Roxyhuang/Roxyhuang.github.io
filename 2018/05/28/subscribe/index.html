@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>发布订阅模式 | Neo</title>
+    <title>结合代码白话理解javascript中的观察者模式与发布订阅 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+    <meta name="description" content="参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.im/post/5a14e9edf265da4312808d86">
 <meta property="og:type" content="article">
-<meta property="og:title" content="发布订阅模式">
+<meta property="og:title" content="结合代码白话理解javascript中的观察者模式与发布订阅">
 <meta property="og:url" content="http://www.neohuang.com/child/2018/05/28/subscribe/index.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+<meta property="og:description" content="参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.im/post/5a14e9edf265da4312808d86">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/subscribe.jpeg">
-<meta property="og:updated_time" content="2018-05-28T06:00:54.000Z">
+<meta property="og:updated_time" content="2018-05-28T06:04:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="发布订阅模式">
-<meta name="twitter:description" content="一、结合代码白话理解javascript中的观察者模式与发布订阅 参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.">
+<meta name="twitter:title" content="结合代码白话理解javascript中的观察者模式与发布订阅">
+<meta name="twitter:description" content="参考：https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85  参考：https://www.zhihu.com/question/23486749 - No zuo must die - 知乎用户的回答 - 知乎  参考：https://juejin.im/post/5a14e9edf265da4312808d86">
 <meta name="twitter:image" content="http://www.neohuang.com/img/subscribe.jpeg">
     
 
@@ -182,7 +182,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            发布订阅模式
+            结合代码白话理解javascript中的观察者模式与发布订阅
         </h1>
     
 
@@ -207,7 +207,7 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="一、结合代码白话理解javascript中的观察者模式与发布订阅"><a href="#一、结合代码白话理解javascript中的观察者模式与发布订阅" class="headerlink" title="一、结合代码白话理解javascript中的观察者模式与发布订阅"></a>一、结合代码白话理解javascript中的观察者模式与发布订阅</h2><ul>
+            <ul>
 <li><p>参考：<a href="https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85</a></p>
 </li>
 <li><p>参考：<a href="https://www.zhihu.com/question/23486749" target="_blank" rel="noopener">https://www.zhihu.com/question/23486749</a> - No zuo must die - 知乎用户的回答 - 知乎</p>
@@ -264,7 +264,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjhpubtfr000aeam7mlm2pkbu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjhpulo3a0006m4m7k2cyhdwc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -379,7 +379,7 @@
                             <a href="/2018/05/28/subscribe/" class="thumbnail">
     
     
-        <span style="background-image:url(/img/subscribe.jpeg)" alt="发布订阅模式" class="thumbnail-image"></span>
+        <span style="background-image:url(/img/subscribe.jpeg)" alt="结合代码白话理解javascript中的观察者模式与发布订阅" class="thumbnail-image"></span>
     
 </a>
 
@@ -387,7 +387,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/05/28/subscribe/" class="title">发布订阅模式</a></p>
+                            <p class="item-title"><a href="/2018/05/28/subscribe/" class="title">结合代码白话理解javascript中的观察者模式与发布订阅</a></p>
                             <p class="item-date"><time datetime="2018-05-27T16:00:00.000Z" itemprop="datePublished">2018-05-28</time></p>
                         </div>
                     </li>
