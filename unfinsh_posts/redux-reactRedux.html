@@ -5,18 +5,18 @@
     
     <title>Redux和React-redux完整工作原理解析 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
+    <meta name="description" content="Redux和React-redux完整工作原理解析 参考：React-Redux源码分析  本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Redux和React-redux完整工作原理解析">
 <meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
+<meta property="og:description" content="Redux和React-redux完整工作原理解析 参考：React-Redux源码分析  本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/mobx.jpeg">
-<meta property="og:updated_time" content="2018-05-16T04:12:26.000Z">
+<meta property="og:updated_time" content="2018-05-31T05:36:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux和React-redux完整工作原理解析">
-<meta name="twitter:description" content="Redux和React-redux完整工作原理解析本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说，这里只简单分析createStore，因">
+<meta name="twitter:description" content="Redux和React-redux完整工作原理解析 参考：React-Redux源码分析  本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。        一、Redux源码分析下图是我们使用redux更新应用状态的主要流程： 从源码上分析来说">
 <meta name="twitter:image" content="http://www.neohuang.com/img/mobx.jpeg">
     
 
@@ -75,7 +75,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -94,10 +94,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Entradas',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -122,7 +122,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
     </div>
 
                 </td>
@@ -142,16 +142,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                5
-                <span>posts</span>
+                6
+                <span>Entradas</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Etiqueta</span>
             </div>
         </div>
         
@@ -193,12 +193,15 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="Redux和React-redux完整工作原理解析"><a href="#Redux和React-redux完整工作原理解析" class="headerlink" title="Redux和React-redux完整工作原理解析"></a>Redux和React-redux完整工作原理解析</h2><p>本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。</p>
+            <h2 id="Redux和React-redux完整工作原理解析"><a href="#Redux和React-redux完整工作原理解析" class="headerlink" title="Redux和React-redux完整工作原理解析"></a>Redux和React-redux完整工作原理解析</h2><ul>
+<li>参考：<a href="https://juejin.im/post/59cb5eba5188257e84671aca" target="_blank" rel="noopener">React-Redux源码分析</a></li>
+</ul>
+<p>本文是本人在进行mobx分析时对mobx和redux工作原理进行分析,过程中对React、React-Redux源码进行了一次浅析，并且去尝试剖析了它们的实现的流程。特此把这部分内容独立抽离到本文本文中。</p>
 <p><img src="/img/redux-process-1.jpeg" alt=""></p>
 <p><img src="/img/redux-process-2.jpeg" alt=""></p>
 <p><img src="/img/redux-process-3.jpeg" alt="">    </p>
 <h3 id="一、Redux源码分析"><a href="#一、Redux源码分析" class="headerlink" title="一、Redux源码分析"></a>一、Redux源码分析</h3><p>下图是我们使用redux更新应用状态的主要流程：</p>
-<p>从源码上分析来说，这里只简单分析createStore，因为它是整个redux最核心的部分</p>
+<p>从源码上分析来说，createStore，因为它是整个redux最核心的部分</p>
 <p>createStore它可以接受三个参数，reducer、preloadedState、enhancer：</p>
 <p>会返回四个主要函数：</p>
 <ul>
@@ -221,7 +224,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html" data-id="cjhpulo3f000em4m7lbhz93ki" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html" data-id="cjhvrzu4u000fbom77k5eyh4d" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -289,7 +292,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/redux-reactRedux.html#comments" class="article-comment-link">Comentarios</a>
     
 -->
         </footer>
@@ -316,9 +319,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/04/week-question-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/github-ms.jpeg)" alt="6月第一周趣问" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/04/week-question-1/" class="title">6月第一周趣问</a></p>
+                            <p class="item-date"><time datetime="2018-06-03T16:00:00.000Z" itemprop="datePublished">2018-06-04</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -396,25 +418,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/13/hexo/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/hexo.jpeg)" alt="Hexo博客一些常用的命令" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/04/13/hexo/" class="title">Hexo博客一些常用的命令</a></p>
-                            <p class="item-date"><time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -424,9 +427,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -437,7 +440,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Links</h3>
         <div class="widget">
             <ul>
                 

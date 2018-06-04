@@ -5,18 +5,18 @@
     
     <title>Mobx | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+    <meta name="description" content="浅析如何从Redux迁移至Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发现">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mobx">
 <meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+<meta property="og:description" content="浅析如何从Redux迁移至Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发现">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/mobx.jpeg">
-<meta property="og:updated_time" content="2018-05-22T12:24:32.000Z">
+<meta property="og:updated_time" content="2018-06-01T05:41:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mobx">
-<meta name="twitter:description" content="一、浅析如何从Redux迁移Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发">
+<meta name="twitter:description" content="浅析如何从Redux迁移至Mobx 作者：Neo_Huang 参考：https://tech.youzan.com/mobx_vs_redux/ 参考：http://es6.ruanyifeng.com/#docs/decorator  Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发现">
 <meta name="twitter:image" content="http://www.neohuang.com/img/mobx.jpeg">
     
 
@@ -75,7 +75,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -94,10 +94,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Entradas',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -122,7 +122,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
     </div>
 
                 </td>
@@ -142,16 +142,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                5
-                <span>posts</span>
+                6
+                <span>Entradas</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Etiqueta</span>
             </div>
         </div>
         
@@ -193,16 +193,15 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="一、浅析如何从Redux迁移Mobx"><a href="#一、浅析如何从Redux迁移Mobx" class="headerlink" title="一、浅析如何从Redux迁移Mobx"></a>一、浅析如何从Redux迁移Mobx</h2><ul>
+            <h2 id="浅析如何从Redux迁移至Mobx"><a href="#浅析如何从Redux迁移至Mobx" class="headerlink" title="浅析如何从Redux迁移至Mobx"></a>浅析如何从Redux迁移至Mobx</h2><ul>
 <li>作者：Neo_Huang</li>
 <li>参考：<a href="https://tech.youzan.com/mobx_vs_redux/" target="_blank" rel="noopener">https://tech.youzan.com/mobx_vs_redux/</a></li>
 <li>参考：<a href="http://es6.ruanyifeng.com/#docs/decorator" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/decorator</a></li>
 </ul>
 <p>Redux目前是React生态下，最主流的状态管理解决方案，通常用来管理大型应用相对较复杂的状态，但实际在团队成员并非全员具备完善的Redux使用经验前，常常发现使用Redux反而会降低开发效率，并且会让代码存在许多隐患，并且Redux写法相对比较繁琐，若开发人员不重视代码规范比较容易导致代码可读性较低。但之前苦于没有更好的选择，然后再看过Redux之父这一番推荐后”unhappy with redux? try mobx”，于是便诞生了这篇文章。</p>
-<h3 id="2-Redux与Mobx原理的浅析"><a href="#2-Redux与Mobx原理的浅析" class="headerlink" title="2. Redux与Mobx原理的浅析"></a>2. Redux与Mobx原理的浅析</h3><p>要分析到底选择Redux还是Mobx 还是应该知道两者实现的大致思路与原理，然后知其特性再进行选择。</p>
-<h4 id="1-react"><a href="#1-react" class="headerlink" title="(1)react"></a>(1)react</h4><p>这部分尝试写了一下，发现内容真的较多所以特此并且认为这部分内容无法省略,所以将只简述最小化流程，若要看详细分析。请移步…</p>
-<p><a href="">Redux和React-redux完整工作原理解析</a></p>
-<p>最小化的主要流程:</p>
+<h3 id="1-Redux与Mobx原理的浅析"><a href="#1-Redux与Mobx原理的浅析" class="headerlink" title="1. Redux与Mobx原理的浅析"></a>1. Redux与Mobx原理的浅析</h3><p>要分析到底选择Redux还是Mobx 还是应该知道两者实现的大致思路与原理，然后知其特性再进行选择。</p>
+<h4 id="1-Redux"><a href="#1-Redux" class="headerlink" title="(1)Redux"></a>(1)Redux</h4><p>这部分尝试写了一下，发现内容真的较多所以特此并且认为这部分内容无法省略,所以将只简述最小化流程，若要看详细分析。请期待我之后更新的文章或者自行Google…</p>
+<p>在这里最小化的主要流程:</p>
 <p>redux最核心的函数是createStore</p>
 <p>会返回四个主要函数：</p>
 <ul>
@@ -215,17 +214,89 @@
 <li><p>replaceReducer</p>
 </li>
 </ul>
-<h5 id="1-使用函数createStore创建store数据点"><a href="#1-使用函数createStore创建store数据点" class="headerlink" title="[1] 使用函数createStore创建store数据点"></a>[1] 使用函数createStore创建store数据点</h5><h5 id="2-创建Reducer。它要改变的组件，它获取state和action，生成新的state"><a href="#2-创建Reducer。它要改变的组件，它获取state和action，生成新的state" class="headerlink" title="[2] 创建Reducer。它要改变的组件，它获取state和action，生成新的state"></a>[2] 创建Reducer。它要改变的组件，它获取state和action，生成新的state</h5><h5 id="3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener"><a href="#3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener" class="headerlink" title="[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener"></a>[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这一步非常容易让人混淆实际 用来订阅状态的变化。</span><br></pre></td></tr></table></figure>
-<h5 id="4-dispatch执行，reducer-currentState-action-处理当前dispatch后的传入的action-type并返回给currentState处理后的state，通过currentListeners-forEach-v-gt-v-执行监听函数，并最后返回当前-action状态"><a href="#4-dispatch执行，reducer-currentState-action-处理当前dispatch后的传入的action-type并返回给currentState处理后的state，通过currentListeners-forEach-v-gt-v-执行监听函数，并最后返回当前-action状态" class="headerlink" title="[4] dispatch执行，reducer(currentState,action)处理当前dispatch后的传入的action.type并返回给currentState处理后的state，通过currentListeners.forEach(v=&gt;v())执行监听函数，并最后返回当前 action状态"></a>[4] dispatch执行，reducer(currentState,action)处理当前dispatch后的传入的action.type并返回给currentState处理后的state，通过currentListeners.forEach(v=&gt;v())执行监听函数，并最后返回当前 action状态</h5><h5 id="5-Binding-To-React"><a href="#5-Binding-To-React" class="headerlink" title="[5]Binding To React"></a>[5]Binding To React</h5><p>首先发起dispatch(action)，调用 dispatch后所有的监听函数</p>
-<p>通过调用dispatch（action）一旦调用 dispatch所有的监听函数就会执行,然后调用相应的调用reducer    </p>
-<p>当<br>调用 subscribe，传入一个函数作为参数，那么就会给 nextListeners 列表 push 这个函数；</p>
-<p>这其中state的不可变或者是可变全部由使用者来控制，Redux并不知道state有没有发生变化，更不知道state具体哪里发生了变化。所以，如果view层需要知道哪一部分需要更新，只能通过脏检查。</p>
+<h5 id="1-使用函数createStore创建store数据点"><a href="#1-使用函数createStore创建store数据点" class="headerlink" title="[1] 使用函数createStore创建store数据点"></a>[1] 使用函数createStore创建store数据点</h5><h5 id="2-创建Reducer。它获取state和action，生成新的state"><a href="#2-创建Reducer。它获取state和action，生成新的state" class="headerlink" title="[2] 创建Reducer。它获取state和action，生成新的state"></a>[2] 创建Reducer。它获取state和action，生成新的state</h5><h5 id="3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener"><a href="#3-reducer执行后返回的新状态会更新到store-tree中，触发由store-subscribe-注册的所有listener" class="headerlink" title="[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener"></a>[3] reducer执行后返回的新状态会更新到store tree中，触发由store.subscribe()注册的所有listener</h5><p>这一步非常容易让人混淆实际 用来订阅状态的变化。</p>
+<h5 id="4-执行dispatch"><a href="#4-执行dispatch" class="headerlink" title="[4] 执行dispatch"></a>[4] 执行dispatch</h5><p>reducer(currentState,action)处理当前dispatch后的传入的action.type并返回currentState，通过currentListeners.forEach(v=&gt;v())执行监听函数，并通过getState获得currentState。</p>
+<h5 id="5-binding-to-React"><a href="#5-binding-to-React" class="headerlink" title="[5] binding to React"></a>[5] binding to React</h5><ul>
+<li><p>react-redux库提供Provider组件通过context方式向应用注入store</p>
+</li>
+<li><p>然后     使用connect高阶方法，获取并监听store</p>
+</li>
+<li><p>然后根据store state和组件自身props计算得到新props，注入该组件，并且可以通过监听store，比较计算出的新props判断是否需要更新组件</p>
+</li>
+<li><p>在store.subscribe（刚才提过）上挂回调，每次发生subscribe就调用connect传进去mapStateToProps和mapDispatchToProps，然后脏检测props的每一项。当然，我们可以利用不可变数据的特点，去减少prop的数量从而减少脏检测的次数，但是哪有props都来自同一个子树这么好的事呢？</p>
+</li>
+<li><p>这其中state的不可变或者是可变全部由使用者来控制，Redux并不知道state有没有发生变化，更不知道state具体哪里发生了变化。所以，如果view层需要知道哪一部分需要更新，只能通过脏检查。</p>
+</li>
+</ul>
 <h4 id="2-Mobx"><a href="#2-Mobx" class="headerlink" title="(2)Mobx"></a>(2)Mobx</h4><p>Mobx是一个透明函数响应式编程（Transparently Functional Reactive Programming，TFRP）的状态管理库，它使得状态管理简单可伸缩。</p>
-<p><img src="/img/mobx-process.png" alt="Mobx简单流程图"></p>
+<p><img src="https://qiutc.me/img/section-mobx-flow.png" alt="Mobx简单流程图"></p>
 <p>图片来源：<a href="http://cn.mobx.js.org/" target="_blank" rel="noopener">http://cn.mobx.js.org/</a></p>
-<p>它由几个部分组成：Actions、State、Computed Values、Reactions</p>
+<p>它由几个部分组成：Actions、State、Computed Values、Reactions。使用 MobX 将一个应用变成响应式的可归纳为以下步骤:</p>
 <p>在整个数据流中，通过事件驱动（UI 事件、网络请求…）触发 Actions，在 Actions 中修改了 State 中的值，这里的 State 既应用中的 store 树（存储数据），然后根据新的 State 中的数据计算出所需要的计算属性（computed values）值，最后响应（react）到 UI 视图层。</p>
-<h5 id="Mobx-思想的实现原理"><a href="#Mobx-思想的实现原理" class="headerlink" title="Mobx 思想的实现原理"></a>Mobx 思想的实现原理</h5><p>而Mobx的处理如下：</p>
+<h5 id="1-Mobx-思想的实现原理"><a href="#1-Mobx-思想的实现原理" class="headerlink" title="[1] Mobx 思想的实现原理"></a>[1] Mobx 思想的实现原理</h5><p>为了方便理解先总的这里也简单说一下mobx的实现思路：</p>
+<p>MobX 中实现数据绑定的原理主要是通过 Object.defineProperty ，在对状态进行读写操作的时候会触发其 getter 和 setter 函数以进行响应，而这一点和 Vue 的原理其实是非常类似的。</p>
+<p>在初始化或者添加状态时会给目标对象添加一个代理对象，并且重写目标对象中需要观察的属性的 getter 和 setter 函数，讲其读写操作代理到代理对象之上；</p>
+<p>当初始化 autorun 函数时，会首次运行一遍监听函数，以触发状态的 getter 函数，然后收集依赖，将依赖与监听函数进行双向绑定；</p>
+<p>在之后修改状态时会触发其 setter 函数，获取 Reactions 并运行其监听函数，同时更新其监听函数的依赖；</p>
+<p>因此，MobX 的依赖绑定是实时性的，并且实现了依赖的最小颗粒度。</p>
+<p>而Mobx最核心的是这2个函数</p>
+<ul>
+<li><p>Observable 。用来包装一个属性为 被观察者</p>
+</li>
+<li><p>autorun 。用来包装一个方法为 观察者</p>
+</li>
+</ul>
+<p>整个mobx就是围绕这2个函数来实现状态管理的</p>
+<p>下面源码分析很多是TS代码，，因此对于 TypeSript 不熟悉的同学可以提前了解；</p>
+<h5 id="2-Observable："><a href="#2-Observable：" class="headerlink" title="[2] Observable："></a>[2] Observable：</h5><p>包装对象值的 Observable ，核心原理是 Object.defineProperty ，给被包装的属性套上 get 和 set 的钩子，在 get 中响应依赖收集，在 set 中触发监听函数。</p>
+<p>在 MobX 中可以使用 @observable 来实现一个类中属性的可观察化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Store &#123;</span><br><span class="line">  id = Math.random()</span><br><span class="line">  @observable data = []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 而该写法使用了修饰器，其等同于：</span><br><span class="line"></span><br><span class="line">function Store() &#123;</span><br><span class="line">    this.id = Math.random()</span><br><span class="line">    extendObservable(this, &#123;</span><br><span class="line">        data: []</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此可以说 observable 实质是 extendObservable 函数的语法糖形式。此处源码极为复杂</p>
+<p>有兴趣的同学可以看一下完成分析，我这里只写出最关键的部分</p>
+<p><a href="https://qiutc.me/post/mobx-core.html" target="_blank" rel="noopener">MobX 核心源码解析</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// src/types/observableobject.ts</span><br><span class="line"></span><br><span class="line">export function defineObservableProperty(</span><br><span class="line">	adm: ObservableObjectAdministration,</span><br><span class="line">	propName: string,</span><br><span class="line">	newValue,</span><br><span class="line">	enhancer: IEnhancer&lt;any&gt;</span><br><span class="line">) &#123;</span><br><span class="line">	...</span><br><span class="line">	if (hasInterceptors(adm)) &#123;</span><br><span class="line">		const change = interceptChange&lt;IObjectWillChange&gt;(adm, &#123;</span><br><span class="line">			object: adm.target,</span><br><span class="line">			name: propName,</span><br><span class="line">			type: &quot;add&quot;,</span><br><span class="line">			newValue</span><br><span class="line">		&#125;);</span><br><span class="line">		if (!change)</span><br><span class="line">			return;</span><br><span class="line">		newValue = change.newValue;</span><br><span class="line">	&#125;</span><br><span class="line">	const observable = adm.values[propName] = new ObservableValue(newValue, enhancer, `$&#123;adm.name&#125;.$&#123;propName&#125;`, false);</span><br><span class="line">	newValue = (observable as any).value;</span><br><span class="line">	</span><br><span class="line">	// 最核心的代码在这里</span><br><span class="line">	</span><br><span class="line">	Object.defineProperty(adm.target, propName, generateObservablePropConfig(propName));</span><br><span class="line">	notifyPropertyAddition(adm, adm.target, propName, newValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而属性描述则是通过 generateObservablePropConfig 函数生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">export function generateObservablePropConfig(propName) &#123;</span><br><span class="line">	return observablePropertyConfigs[propName] || (</span><br><span class="line">		observablePropertyConfigs[propName] = &#123;</span><br><span class="line">			configurable: true,</span><br><span class="line">			enumerable: true,</span><br><span class="line">			get: function() &#123;</span><br><span class="line">				return this.$mobx.values[propName].get();</span><br><span class="line">			&#125;,</span><br><span class="line">			set: function(v) &#123;</span><br><span class="line">				setPropertyValue(this, propName, v);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正如前文的猜想，在属性描述中重写了其对象的 setter 和 getter，对目标对象中的可观察属性进行读写操作的时候都会代理到 target.\$mobx 代理对象中进行操作；</p>
+<p>到这里为止，简单的说就是当给目标函数添加一系列可观察属性的时候，会先给目标函数生成一个 \$mobx 属性作为其代理对象，而后将每个属性值转化为一个 ObservableValue 对象，并存储在 \$mobx.value[propName] 中，最后给目标对象设置每个可观察属性的属性描述，通过重写 get 和 set 函数来将外界对目标对象的读写操作代理到其代理对象。</p>
+<h5 id="3-autorun"><a href="#3-autorun" class="headerlink" title="[3]autorun"></a>[3]autorun</h5><p>初始化可观察对象之后，则需要执行 autorun ，同时传入监听函数以监听可观察属性的变化；</p>
+<p>Mobx 最关键的函数在于 autoRun，举个例子，它可以达到这样的效果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = observable(&#123;</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="number">2</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">autoRun(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(obj.a)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">obj.b = <span class="number">3</span> <span class="comment">// 什么都没有发生</span></span><br><span class="line">obj.a = <span class="number">2</span> <span class="comment">// observe 函数的回调触发了，控制台输出：2</span></span><br></pre></td></tr></table></figure>
+<p>在 autorun 中所做的工作则是初始化执行监听函数，收集依赖，进行依赖绑定；</p>
+<p>直接来看 autorun 函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// src/api/autorun.ts</span><br><span class="line"></span><br><span class="line">export function autorun(arg1: any, arg2: any, arg3?: any) &#123;</span><br><span class="line">	let name: string,</span><br><span class="line">		view: (r: IReactionPublic) =&gt; any,</span><br><span class="line">		scope: any;</span><br><span class="line"></span><br><span class="line">	if (typeof arg1 === &quot;string&quot;) &#123;</span><br><span class="line">		name = arg1;</span><br><span class="line">		view = arg2;</span><br><span class="line">		scope = arg3;</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		name = arg1.name || (&quot;Autorun@&quot; + getNextId());</span><br><span class="line">		view = arg1;</span><br><span class="line">		scope = arg2;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	...</span><br><span class="line">	if (scope)</span><br><span class="line">		view = view.bind(scope);</span><br><span class="line"></span><br><span class="line">	const reaction = new Reaction(name, function () &#123;</span><br><span class="line">		this.track(reactionRunner);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	function reactionRunner() &#123;</span><br><span class="line">		view(reaction);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	reaction.schedule();</span><br><span class="line"></span><br><span class="line">	return reaction.getDisposer();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 autorun 函数可以传入监听函数、作用域、名字，在一开始初始化判断操作之后，可以看出 view 既是需要的监听函数；</p>
+<ul>
+<li>首先是获得一个 Reaction 实例对象：</li>
+<li><p>调用 reaction.schedule() 方法，在该方法中，先是向 globalState.pendingReactions 中增加了其自身（Reaction 实例）（globalState 是用来在 MobX 内部生命周期内存储各种全局执行状态的一个对象），然后调用 runReactions() 函数；</p>
+</li>
+<li><p>在 runReactions 函数中执行了 reactionScheduler 函数，在 reactionScheduler 执行了其参数 runReactionsHelper：</p>
+</li>
+</ul>
+<h5 id="依赖绑定"><a href="#依赖绑定" class="headerlink" title="依赖绑定"></a>依赖绑定</h5><p>在上一步中，到了初始化执行 autorun 中的监听函数这一步骤，而去收集依赖的方法就是通过执行观察函数的时候，如果依赖一个可观察属性就会读取其值，也就是会触发其属性描述中的 get 函数；</p>
+<p>等等等….是不是有点晕了，因此这里只分析大致流程，有兴趣的同学可以自己去，慢慢阅读</p>
+<p><a href="https://qiutc.me/post/mobx-core.html" target="_blank" rel="noopener">MobX 核心源码解析</a></p>
+<p>其实在该函数中，真正完成了对依赖的绑定：</p>
+<p>首先 derivation.observing = derivation.newObserving，将该 Reaction 依赖的 ObservableValue 都存储在其 observing 属性中；<br>之后遍历每个 ObservableValue 通过 addObserver 方法将依赖 ObservableValue 的 Reaction 添加到 ObservableValue 的 observers 属性中；</p>
+<p>因此，在 Reaction 中可以获取到其依赖的 ObservableValue ，而在 ObservableValue 中也可获取到依赖它的 Reaction；</p>
+<p>这就完成了一个双向的绑定。其实这步就是干这些。</p>
+<h5 id="触发-Reaction"><a href="#触发-Reaction" class="headerlink" title="触发 Reaction"></a>触发 Reaction</h5><p>当目标对象中的可观察属性的值发生改变的时候，则会触发在传入 autorun 中依赖该属性的函数；<br>在这里主要是通过改变属性值时通过触发其属性描述中的 set 函数，在其中做出一系列响应。</p>
+<p>最核心的原理其实就是</p>
+<p>执行 Reaction.onBecomeStale 方法中执行了 Reaction.schedule 方法，之后的流程和 autorun - 第二步 之后是一样的，会触发其监听函数，并更新依赖。</p>
+<h5 id="在-React-中使用-MobX"><a href="#在-React-中使用-MobX" class="headerlink" title="在 React 中使用 MobX"></a>在 React 中使用 MobX</h5><p>前面，完成了双向绑定以及可以触发属性的变化，实际在React中要完成View层的更新还需要mobx-react</p>
+<p>它的核心是：</p>
+<ul>
+<li>Provider</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其类似于react-redux中的 Provider，提供一个顶层的组件来注入store</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@inject</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其类似于react-redux中的 connect，给组件注入其需要的 store（利用 React context 机制）；</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@observer</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@observer 将 React 组件转化成响应式组件，它用 mobx.autorun 包装了组件的 render 函数以确保任何组件渲染中使用的数据变化时都可以强制刷新组件：</span><br></pre></td></tr></table></figure>
 <h3 id="Redux存在的问题"><a href="#Redux存在的问题" class="headerlink" title="Redux存在的问题"></a>Redux存在的问题</h3><p>首先总结一下自己与团队Redux实践中所遇到的一些问题：</p>
 <p>Redux和Mobx更新状态，以及状态更新后更新View的过程以及原理其中牵扯到不少代码细节，以下只把大致思路进行一个分析:</p>
 <h4 id="1-若没有配套方案，View层更新颗粒划分不够小"><a href="#1-若没有配套方案，View层更新颗粒划分不够小" class="headerlink" title="(1) 若没有配套方案，View层更新颗粒划分不够小"></a>(1) 若没有配套方案，View层更新颗粒划分不够小</h4><p>根据之前的Redux的源码分析，createStore只有一个函数，返回4个闭包。dispatch只做了一件事，调用reducer然后调用subscribe的listener，这其中state的不可变或者是可变全部由使用者来控制，Redux并不知道state有没有发生变化，更不知道state具体哪里发生了变化。所以，如果view层需要知道哪一部分需要更新，只能通过脏检查。</p>
@@ -233,33 +304,63 @@
 <p>所以，如果有n个组件connect，每当dispatch一个action的时候，无论做了什么粒度的更新，都会发生O(n)时间复杂度的脏检测。</p>
 <p>更糟糕的是，每次reducer执行完Redux就直接调用listener了，如果在短时间内发生了多次修改（例如用户输入），不可变的开销，加上redux用字符串匹配action的开销，脏检测的开销，再加上view层的开销，整个性能表现会非常糟糕，即使在用户输入的时候往往只需要更新一个”input”。应用规模越大，性能表现越糟糕。（这里的应用指单个页面。这里的单页不是SPA的单页的意思，因为有Router的情况下，被切走的页面其所有组件都被unmount了）</p>
 <p>在应用规模增大的同时，异步请求数量一多，Redux所宣传的Predictable也根本就是泡影，更多的时候是配合各种工具沦为数据可视化工具。</p>
-<h4 id="2-处理异步需引入额外方案，不够优雅"><a href="#2-处理异步需引入额外方案，不够优雅" class="headerlink" title="(2) 处理异步需引入额外方案，不够优雅"></a>(2) 处理异步需引入额外方案，不够优雅</h4><p>在我们使用Redux时，会需要额外引入处理异步的方案，如Redux-thunk,Redux-promise,Redux saga，并且引入这些中间件都是全局</p>
-<h4 id="3-若对性能有要求，需自行优化"><a href="#3-若对性能有要求，需自行优化" class="headerlink" title="(3) 若对性能有要求，需自行优化"></a>(3) 若对性能有要求，需自行优化</h4><h4 id="4-Predictable成本与意义权衡-（仅针对我们团队的项目）"><a href="#4-Predictable成本与意义权衡-（仅针对我们团队的项目）" class="headerlink" title="(4) Predictable成本与意义权衡 （仅针对我们团队的项目）"></a>(4) Predictable成本与意义权衡 （仅针对我们团队的项目）</h4><p>React有一项非常重要的特性即是 Predictable state container for JavaScript apps.因此这一度被认为使用Redux架构的最重要的目的之一</p>
+<h4 id="2-处理异步需引入额外方案，不够优雅"><a href="#2-处理异步需引入额外方案，不够优雅" class="headerlink" title="(2) 处理异步需引入额外方案，不够优雅"></a>(2) 处理异步需引入额外方案，不够优雅</h4><p>在我们使用Redux时，会需要额外引入处理异步的方案，如Redux-thunk,Redux-promise,Redux saga，并且引入这些中间件都是全局。实际使用Redux saga时往往使用者很容易进入一个误区，redux 中间件的问题就是它只能是全局的，在局部看起来就是 black magic……藏起来的业务复杂度最终还是要还回去的……，</p>
+<h4 id="3-若对性能有要求，需自行优化"><a href="#3-若对性能有要求，需自行优化" class="headerlink" title="(3) 若对性能有要求，需自行优化"></a>(3) 若对性能有要求，需自行优化</h4><ol>
+<li><p>mobx不严格区分容器组件和展示组件，或者说官方更推荐把展示组件也变成容器组件，这样性能更高。</p>
+</li>
+<li><p>Mobx利用getter和setter来收集组件的数据依赖关系，从而在数据发生变化的时候精确知道哪些组件需要重绘，在界面的规模变大的时候，往往会有很多细粒度更新，虽然响应式设计会有额外的开销，在界面规模大的时候，这种开销是远比对每一个组件做脏检查小的，因此在这种情况下Mobx会很容易得到比Redux更好的性能。而在数据全部发生改变时，基于脏检查的实现会比Mobx这类响应式有更好的性能，但这类情况很少。同时，有些benchmark并不是最佳实践，其结果也不能反映真实的情况。但是，由于React本身提供了利用不可变数据结构来减少无用渲染的机制（例如PureComponent，函数式组件），同时，React的一些生态和Immutable绑定了（例如Draft.js），因此在配合可变的观察者模式的数据结构时并不是那么舒服。</p>
+</li>
+</ol>
+<h4 id="4-Predictable成本与意义权衡-（仅针对我们团队的项目）"><a href="#4-Predictable成本与意义权衡-（仅针对我们团队的项目）" class="headerlink" title="(4) Predictable成本与意义权衡 （仅针对我们团队的项目）"></a>(4) Predictable成本与意义权衡 （仅针对我们团队的项目）</h4><p>React有一项非常重要的特性即是 Predictable state container for JavaScript apps.因此这一度被认为使用Redux架构的最重要的目的之一</p>
 <p>当然Mobx的进行时间旅行，不过需要额外引入mobxjs/mobx-state-tree，在此不深入讨论</p>
 <h4 id="（5）实际编码中遇到的问题总结"><a href="#（5）实际编码中遇到的问题总结" class="headerlink" title="（5）实际编码中遇到的问题总结"></a>（5）实际编码中遇到的问题总结</h4><p>（1） action的流向到底是什么？</p>
 <p>（2） payload的结构到底是什么？</p>
 <p>（3） redux的setup都是写到最上层app上，很难做一个redux component复用。</p>
-<h3 id="2-mobx相对于Redux的优势以及其自身的劣势"><a href="#2-mobx相对于Redux的优势以及其自身的劣势" class="headerlink" title="2. mobx相对于Redux的优势以及其自身的劣势"></a>2. mobx相对于Redux的优势以及其自身的劣势</h3><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><p>(1) 使用成本低，配置简单</p>
-<h5 id="数据更新颗粒度更"><a href="#数据更新颗粒度更" class="headerlink" title="数据更新颗粒度更"></a>数据更新颗粒度更</h5><p>为每个组件创建一个Watcher，在数据的getter和setter上加钩子，当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。</p>
+<h3 id="2-mobx的一些特点"><a href="#2-mobx的一些特点" class="headerlink" title="2. mobx的一些特点"></a>2. mobx的一些特点</h3><h4 id="1-使用成本低，配置简单"><a href="#1-使用成本低，配置简单" class="headerlink" title="(1) 使用成本低，配置简单"></a>(1) 使用成本低，配置简单</h4><h4 id="2-数据更新颗粒度更细"><a href="#2-数据更新颗粒度更细" class="headerlink" title="(2) 数据更新颗粒度更细"></a>(2) 数据更新颗粒度更细</h4><p>为每个组件创建一个Watcher，在数据的getter和setter上加钩子，当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。</p>
 <p>这样，每个组件所需要的数据时精确可知的，因此当数据发生变化时，可以精确地知道哪些组件需要被重绘，数据变化时重绘的过程是O(1)的时间复杂度。</p>
-<h4 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h4><p>(1) 代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理</p>
-<p>(2) 不引入Mobx State Tree，并不强制约定使用统一的state tree</p>
-<h3 id="3-相关知识和库"><a href="#3-相关知识和库" class="headerlink" title="3. 相关知识和库"></a>3. 相关知识和库</h3><h4 id="1-decorator"><a href="#1-decorator" class="headerlink" title="(1) decorator"></a>(1) decorator</h4><h4 id="2-Mobx-react"><a href="#2-Mobx-react" class="headerlink" title="(2) Mobx-react"></a>(2) Mobx-react</h4><h4 id="3-Mobx-State-Tree"><a href="#3-Mobx-State-Tree" class="headerlink" title="(3)     Mobx State Tree"></a>(3)     Mobx State Tree</h4><h3 id="5-开始使用Mobx"><a href="#5-开始使用Mobx" class="headerlink" title="5. 开始使用Mobx"></a>5. 开始使用Mobx</h3><p>这边希望用尽量简短的篇幅简明扼要的介绍一下，如何在React项目中使用</p>
+<h4 id="3-尚佳的性能表现"><a href="#3-尚佳的性能表现" class="headerlink" title="(3) 尚佳的性能表现"></a>(3) 尚佳的性能表现</h4><p>自始至终一份引用，不需要 immutable，也没有复制对象的额外开销。因此在性能方面无须象Redux那样</p>
+<h4 id="4-代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理"><a href="#4-代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理" class="headerlink" title="(4) 代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理"></a>(4) 代码风格和规范并没有太强的规约，容易导致代码风格差异比较大，难以管理</h4><h4 id="5-若不引入Mobx-State-Tree，并不强制约定使用统一的state-tree"><a href="#5-若不引入Mobx-State-Tree，并不强制约定使用统一的state-tree" class="headerlink" title="(5) 若不引入Mobx State Tree，并不强制约定使用统一的state tree"></a>(5) 若不引入Mobx State Tree，并不强制约定使用统一的state tree</h4><h4 id="6-没有过多magic，所以没有中间件机制"><a href="#6-没有过多magic，所以没有中间件机制" class="headerlink" title="(6)没有过多magic，所以没有中间件机制"></a>(6)没有过多magic，所以没有中间件机制</h4><p>业务开发不是脑筋急转弯，少一些 magic，多一些效率，mobx中的Provider 和 inject是mobx的附加功能，实际上不用这两个方法，功能依然可以正常运作，这是mobx比redux更简便的一点。当然同时带来的是没法通过 magic 加快工作效率（这里 magic 是指 action 分发到 reducer 的过程）。</p>
+<h3 id="3-相关知识和库"><a href="#3-相关知识和库" class="headerlink" title="3. 相关知识和库"></a>3. 相关知识和库</h3><h4 id="1-decorator"><a href="#1-decorator" class="headerlink" title="(1) decorator"></a>(1) decorator</h4><p>在 MobX 的使用中，使用 ES7 语法的 修饰器（Decorator） 将可以极大的简化组织代码，当然，如果使用 ES5 的语法也未尝不可，但是我这里还是强烈建议大家使用 修饰器，并且本文中的所有例子也都基于修饰器来说明。</p>
+<p>对于修饰器这里简要说明一下，修饰器其实是对于一种函数形式的语法糖，通过以下例子可以一目了然其行为作用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@decorator</span><br><span class="line">class A &#123;&#125;</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line">class A &#123;&#125;</span><br><span class="line">A = decorator(A) || A;</span><br></pre></td></tr></table></figure>
+<p>这边只做初步说明，如果想进一步了解怎么使用decorator，请移步</p>
+<p><a href="http://es6.ruanyifeng.com/#docs/decorator" target="_blank" rel="noopener">ECMAScript 6 入门 – decorator</a></p>
+<h4 id="2-Mobx-State-Tree"><a href="#2-Mobx-State-Tree" class="headerlink" title="(2)     Mobx State Tree"></a>(2)     Mobx State Tree</h4><p>Mobx并不完美。Mobx不要求数据在一颗树上，因此对Mobx进行数据可是化或者是记录每次的数据变化变得不太容易。在Mobx的基础上，Mobx State Tree诞生了。同Redux一样，Mobx State Tree要求数据在一颗树上，这样对数据进行可视化和追踪就变得非常容易，对开发来说是福音。同时Mobx State Tree非常容易得到准确的TypeScript类型定义，这一点Redux不容易做到。同时还提供了运行时的类型安全检查。由于数据在一颗树上了，便可以实现snapshot和追踪异步action</p>
+<p>这里不深入讨论，若需要使用或者深入研究可以移步</p>
+<p><a href="https://juejin.im/post/5a1e25ad5188253d681756a5" target="_blank" rel="noopener">我为什么从Redux迁移到了Mobx</a></p>
+<h3 id="5-开始使用Mobx"><a href="#5-开始使用Mobx" class="headerlink" title="5. 开始使用Mobx"></a>5. 开始使用Mobx</h3><p>这边希望用尽量简短的篇幅简明扼要的介绍一下，如何在React项目中使用</p>
 <p>最简化来说我们要做的三个步骤其实很简单</p>
-<h4 id="1-定义状态并使其可观察"><a href="#1-定义状态并使其可观察" class="headerlink" title="(1)定义状态并使其可观察"></a>(1)定义状态并使其可观察</h4><h4 id="2-创建视图以响应状态的变化"><a href="#2-创建视图以响应状态的变化" class="headerlink" title="(2)创建视图以响应状态的变化"></a>(2)创建视图以响应状态的变化</h4><h4 id="3-更改状态"><a href="#3-更改状态" class="headerlink" title="(3)更改状态"></a>(3)更改状态</h4><h3 id="6-在React项目中使用"><a href="#6-在React项目中使用" class="headerlink" title="6. 在React项目中使用"></a>6. 在React项目中使用</h3><p>当然要完成View层的更新，我们不能仅更改状态，这时候需要用到另外一个库Mobx-React,先说一下最基础的使用方式：</p>
-<h4 id="0-配置"><a href="#0-配置" class="headerlink" title="(0) 配置"></a>(0) 配置</h4><p>使用需要引入的库一共只有2个:mobx以及mobx-react</p>
+<h3 id="6-在React项目中使用"><a href="#6-在React项目中使用" class="headerlink" title="6. 在React项目中使用"></a>6. 在React项目中使用</h3><p>当然要完成View层的更新，我们不能仅更改状态，这时候需要用到另外一个库Mobx-React,先说一下最基础的使用方式：</p>
+<h4 id="1-安装"><a href="#1-安装" class="headerlink" title="(1) 安装"></a>(1) 安装</h4><p>使用需要引入的库一共只有2个mobx以及mobx-react</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mobx  mobx-react -S</span><br></pre></td></tr></table></figure>
+<h4 id="2-入口配置"><a href="#2-入口配置" class="headerlink" title="(2) 入口配置"></a>(2) 入口配置</h4><p>此处因为我们项目已配置了 transform-decorators-legacy ,所以这部分就暂时不介绍配置方面的问题了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; configure &#125; <span class="keyword">from</span> <span class="string">'mobx'</span>; <span class="comment">// mobx</span></span><br><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span>; <span class="comment">// mobx-react</span></span><br><span class="line"><span class="keyword">import</span> DevTools <span class="keyword">from</span> <span class="string">"mobx-react-devtools"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'assets/css/global.less'</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">'assets/css/mod_css/normal.less'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> routers <span class="keyword">from</span> <span class="string">'../../routes/route'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> AuthModel <span class="keyword">from</span> <span class="string">"../../models/AuthModel"</span>;</span><br><span class="line"><span class="keyword">import</span> CheckModel <span class="keyword">from</span> <span class="string">"../../models/CheckModel"</span>;</span><br><span class="line"><span class="keyword">import</span> LoginModel <span class="keyword">from</span> <span class="string">"../../models/LoginModel"</span>;</span><br><span class="line"><span class="keyword">import</span> TerminalModel <span class="keyword">from</span> <span class="string">"../../models/TerminalModel"</span>;</span><br><span class="line"><span class="keyword">import</span> PaymentModel <span class="keyword">from</span> <span class="string">"../../models/PaymentModel"</span>;</span><br><span class="line"><span class="keyword">import</span> GlobalModel <span class="keyword">from</span> <span class="string">"../../models/GlobalModel"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> stores = &#123;</span><br><span class="line">  AuthModel,</span><br><span class="line">  CheckModel,</span><br><span class="line">  LoginModel,</span><br><span class="line">  TerminalModel,</span><br><span class="line">  PaymentModel,</span><br><span class="line">  GlobalModel,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> MOUNT_NODE = <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>._____APP_STATE_____ = stores; <span class="comment">// 方便调试</span></span><br><span class="line"></span><br><span class="line">configure(&#123; <span class="attr">enforceActions</span>: <span class="literal">true</span> &#125;); <span class="comment">// 配置需action方可改变state</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;Provider &#123;...stores&#125;&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &#123;process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp; process.env.DEBUG ? <span class="xml"><span class="tag">&lt;<span class="name">DevTools</span>/&gt;</span></span> : <span class="literal">null</span>&#125;</span><br><span class="line">    &#123; routers &#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>Provider&gt;, MOUNT_NODE,</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<h4 id="1-注入Model"><a href="#1-注入Model" class="headerlink" title="(1)注入Model"></a>(1)注入Model</h4><h4 id="2-将组建转化为响应式"><a href="#2-将组建转化为响应式" class="headerlink" title="(2)将组建转化为响应式"></a>(2)将组建转化为响应式</h4><h4 id="3-通过props获取状态"><a href="#3-通过props获取状态" class="headerlink" title="(3)通过props获取状态"></a>(3)通过props获取状态</h4><h4 id="4-通过action改变状态"><a href="#4-通过action改变状态" class="headerlink" title="(4)通过action改变状态"></a>(4)通过action改变状态</h4><h4 id="5-方便的"><a href="#5-方便的" class="headerlink" title="(5)方便的"></a>(5)方便的</h4><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>MobX 的理念是通过观察者模式对数据做出追踪处理，在对可观察属性的作出变更或者引用的时候，触发其依赖的监听函数，在 React 中既是在 @observer 中对组件进行数据更新并渲染到视图层面，其核心与开发模式和 Vue 非常相似。</p>
+<h4 id="1-定义状态并使其可观察"><a href="#1-定义状态并使其可观察" class="headerlink" title="(1)定义状态并使其可观察"></a>(1)定义状态并使其可观察</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@observable  classProperty = value</span><br></pre></td></tr></table></figure>
+<p>@observable 接受任何类型的 js 值（原始类型、引用、纯对象、类实例、数组和、maps），observable 的属性值在其变化的时候 mobx 会自动追踪并作出响应。</p>
+<p>当 value 是一个对象类型值的时候，它会默认克隆该对象并且把其中每个属性变为可观察的值，这里默认是深拷贝，也就是说其对象的后代属性都会变成可观察的，比如 @observable classProperty = { obj: { name: ‘q’ } } ，当 classProperty.obj.name 改变的时候，在 MobX 中也是可以观察到并响应的；</p>
+<p>当然在这里可以加一些调节器来做一些配置：</p>
+<ol>
+<li>@observable.deep （默认）对对象进行深拷贝；</li>
+<li>@observable.shallow 它只对对象进行浅拷贝；</li>
+<li>@observable.ref 禁用对象的自动转化，只转化其引用；</li>
+</ol>
+<p>这里需要注意的是，当定义好其 observable 的对象值后，对象中后来添加的值是不会变为可观察的，这时需要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">const &#123; observable, action, computed, autorun, extendObservable &#125; = mobx;</span><br><span class="line"></span><br><span class="line">class Store &#123;</span><br><span class="line">  @observable oo = &#123;</span><br><span class="line">    name: 1</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const mstore = new Store();</span><br><span class="line"></span><br><span class="line">extendObservable(mstore, &#123;</span><br><span class="line">  oo: &#123;</span><br><span class="line">    age: 0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var i = 1;</span><br><span class="line">setInterval(() =&gt; &#123;</span><br><span class="line">  mstore.oo.age = i++;</span><br><span class="line">&#125;, 2000);</span><br><span class="line"></span><br><span class="line">autorun(() =&gt; &#123;</span><br><span class="line">  console.log(mstore.oo.age);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>好那这样，我们就可以开始编写一个Model了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, action, computed &#125; <span class="keyword">from</span> <span class="string">'mobx'</span>;</span><br><span class="line"><span class="keyword">import</span> api <span class="keyword">from</span> <span class="string">'../backend/api'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CheckModel</span> </span>&#123;</span><br><span class="line">  @observable idContent = <span class="string">''</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> CheckModel();</span><br></pre></td></tr></table></figure>
+<h4 id="2-创建视图、并注入数据模型"><a href="#2-创建视图、并注入数据模型" class="headerlink" title="(2)创建视图、并注入数据模型"></a>(2)创建视图、并注入数据模型</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Form, Icon, Input, Button, message, Tooltip &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; inject, observer &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span>;</span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">'../../../assets/img/logo/top-logo.png'</span>;</span><br><span class="line"><span class="keyword">import</span> s <span class="keyword">from</span> <span class="string">'./check.less'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> FormItem = Form.Item;</span><br><span class="line"></span><br><span class="line">@inject(<span class="string">'AuthModel'</span>, <span class="string">'CheckModel'</span>) <span class="comment">// 注入数据模型</span></span><br><span class="line">@observer <span class="comment">// 将组件转换为响应式组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Check</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Form className=<span class="string">"login-form"</span>&gt;</span><br><span class="line">        &lt;div className=&#123;s.logoContainer&#125;&gt;</span><br><span class="line">          &lt;img src=&#123;logo&#125; className=&#123;s.logo&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;FormItem&gt;</span></span><br><span class="line"><span class="regexp">          &lt;label className=&#123;s.labelStyle&#125;&gt;请输入邮箱&lt;/</span>label&gt;</span><br><span class="line">          &lt;Input</span><br><span class="line">                 size=<span class="string">"large"</span></span><br><span class="line">                 placeholder=<span class="string">"请输入邮箱"</span></span><br><span class="line">                 onChange=&#123;<span class="keyword">this</span>.onChange&#125;</span><br><span class="line">                 maxLength=<span class="string">"30"</span></span><br><span class="line">          /&gt;</span><br><span class="line">        &lt;<span class="regexp">/FormItem&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Button</span></span><br><span class="line"><span class="regexp">                type="primary"</span></span><br><span class="line"><span class="regexp">                onClick=&#123;this.handleSubmit&#125;</span></span><br><span class="line"><span class="regexp">                className=&#123;s.submit&#125;</span></span><br><span class="line"><span class="regexp">                size="large"</span></span><br><span class="line"><span class="regexp">        &gt;</span></span><br><span class="line"><span class="regexp">          下一步</span></span><br><span class="line"><span class="regexp">        &lt;/</span>Button&gt;</span><br><span class="line">      &lt;<span class="regexp">/Form&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Check;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-创建action以及更改状态"><a href="#3-创建action以及更改状态" class="headerlink" title="(3)创建action以及更改状态"></a>(3)创建action以及更改状态</h4><p>在之前建立的数据模型内添加</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; observable, action, computed &#125; <span class="keyword">from</span> <span class="string">'mobx'</span>;</span><br><span class="line"><span class="keyword">import</span> api <span class="keyword">from</span> <span class="string">'../backend/api'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CheckModel</span> </span>&#123;</span><br><span class="line">  @observable idContent = <span class="string">''</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 创建action</span></span><br><span class="line">  @action changeIdContent(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.idContent = value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> CheckModel();</span><br></pre></td></tr></table></figure>
+<h4 id="3-通过props获取状态"><a href="#3-通过props获取状态" class="headerlink" title="(3)通过props获取状态"></a>(3)通过props获取状态</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Form, Icon, Input, Button, message, Tooltip &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; inject, observer &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span>;</span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">'../../../assets/img/logo/top-logo.png'</span>;</span><br><span class="line"><span class="keyword">import</span> s <span class="keyword">from</span> <span class="string">'./check.less'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> FormItem = Form.Item;</span><br><span class="line"></span><br><span class="line">@inject(<span class="string">'AuthModel'</span>, <span class="string">'CheckModel'</span>) <span class="comment">// 注入数据模型</span></span><br><span class="line">@observer <span class="comment">// 将组件转换为响应式组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Check</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Form className=<span class="string">"login-form"</span>&gt;</span><br><span class="line">        &lt;div className=&#123;s.logoContainer&#125;&gt;</span><br><span class="line">          &lt;img src=&#123;logo&#125; className=&#123;s.logo&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;FormItem&gt;</span></span><br><span class="line"><span class="regexp">          &lt;label className=&#123;s.labelStyle&#125;&gt;请输入邮箱&lt;/</span>label&gt;</span><br><span class="line">          &lt;Input</span><br><span class="line">                 size=<span class="string">"large"</span></span><br><span class="line">                 placeholder=<span class="string">"请输入邮箱"</span></span><br><span class="line">                 onChange=&#123;<span class="keyword">this</span>.onChange&#125;</span><br><span class="line">                 maxLength=<span class="string">"30"</span></span><br><span class="line">          /&gt;</span><br><span class="line">        &lt;<span class="regexp">/FormItem&gt;</span></span><br><span class="line"><span class="regexp">        &lt;Button</span></span><br><span class="line"><span class="regexp">        		   disabled=&#123;!this.props.CheckModel.idContent&#125; /</span><span class="regexp">/ 获取注入的Model</span></span><br><span class="line"><span class="regexp">                type="primary"</span></span><br><span class="line"><span class="regexp">                onClick=&#123;this.handleSubmit&#125;</span></span><br><span class="line"><span class="regexp">                className=&#123;s.submit&#125;</span></span><br><span class="line"><span class="regexp">                size="large"</span></span><br><span class="line"><span class="regexp">        &gt;</span></span><br><span class="line"><span class="regexp">          下一步</span></span><br><span class="line"><span class="regexp">        &lt;/</span>Button&gt;</span><br><span class="line">      &lt;<span class="regexp">/Form&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Check;</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-通过action改变状态"><a href="#4-通过action改变状态" class="headerlink" title="(4)通过action改变状态"></a>(4)通过action改变状态</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; Form, Icon, Input, Button, message, Tooltip &#125; from &apos;antd&apos;;</span><br><span class="line">import &#123; inject, observer &#125; from &apos;mobx-react&apos;;</span><br><span class="line">import logo from &apos;../../../assets/img/logo/top-logo.png&apos;;</span><br><span class="line">import s from &apos;./check.less&apos;;</span><br><span class="line"></span><br><span class="line">const FormItem = Form.Item;</span><br><span class="line"></span><br><span class="line">@inject(&apos;AuthModel&apos;, &apos;CheckModel&apos;)</span><br><span class="line">@observer</span><br><span class="line">class Check extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    console.log(this.props);</span><br><span class="line">    this.props.CheckModel.changeIdContent(&apos;&apos;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  onChange = (e) =&gt; &#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    this.props.CheckModel.changeIdContent(e.target.value); // 调用action</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  handleSubmit = (e) =&gt; &#123;</span><br><span class="line">    e.stopPropagation();</span><br><span class="line">    const MATCH_MOBILE = new RegExp(/^1[34578]\d&#123;9&#125;$/);</span><br><span class="line">    const MATCH_EMAIL = new RegExp(/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/);</span><br><span class="line">    const userName = this.props.CheckModel.idContent.replace(/(^\s*)|(\s*$)/g, &apos;&apos;);</span><br><span class="line"></span><br><span class="line">    if (!userName) &#123;</span><br><span class="line">      message.error(&apos;用户名不能为空&apos;);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (!MATCH_MOBILE.test(userName) &amp;&amp; !MATCH_EMAIL.test(userName)) &#123;</span><br><span class="line">      message.error(&apos;用户名必须邮箱&apos;);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;Form className=&quot;login-form&quot;&gt;</span><br><span class="line">        &lt;div className=&#123;s.logoContainer&#125;&gt;</span><br><span class="line">          &lt;img src=&#123;logo&#125; className=&#123;s.logo&#125; /&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;FormItem&gt;</span><br><span class="line">          &lt;label className=&#123;s.labelStyle&#125;&gt;请输入邮箱&lt;/label&gt;</span><br><span class="line">          &#123;/*&lt;Tooltip placement=&quot;topLeft&quot; title=&quot;请输入手机号或邮箱&quot;&gt;*/&#125;</span><br><span class="line">          &lt;Input</span><br><span class="line">                 // prefix=&#123;&lt;Icon type=&quot;user&quot; style=&#123;&#123; color: &apos;rgba(0,0,0,.25)&apos;,fontSize: &apos;16px&apos; &#125;&#125; /&gt;&#125;</span><br><span class="line">                 size=&quot;large&quot;</span><br><span class="line">                 placeholder=&quot;请输入邮箱&quot;</span><br><span class="line">                 onChange=&#123;this.onChange&#125;</span><br><span class="line">                 maxLength=&quot;30&quot;</span><br><span class="line">          /&gt;</span><br><span class="line">          &#123;/*&lt;/Tooltip&gt;*/&#125;</span><br><span class="line">        &lt;/FormItem&gt;</span><br><span class="line">        &lt;Button disabled=&#123;!this.props.CheckModel.idContent&#125;</span><br><span class="line">                type=&quot;primary&quot;</span><br><span class="line">                onClick=&#123;this.handleSubmit&#125;</span><br><span class="line">                className=&#123;s.submit&#125;</span><br><span class="line">                size=&quot;large&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          下一步</span><br><span class="line">        &lt;/Button&gt;</span><br><span class="line">      &lt;/Form&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default Check;</span><br></pre></td></tr></table></figure>
+<h4 id="5-方便的computed"><a href="#5-方便的computed" class="headerlink" title="(5)方便的computed"></a>(5)方便的computed</h4><p>计算属性值实际上是一类衍生值，它是根据现有的状态或者其他值计算而来，原则上在计算属性中尽可能地不对当前状态做任何修改；<br>同时对于任何可以通过现有状态数据得到的值都应该通过计算属性获取。<br>语法为：@computed get computesValue [function]；</p>
+<p>如上面的例子中，只需要获取其 list 属性的总数 total 的时候，我们可以根据其 list 来计算出 total，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Store &#123;</span><br><span class="line">  @observable list = []</span><br><span class="line">  // getTotal 计算属性</span><br><span class="line">  @computed get getTotal() &#123;</span><br><span class="line">    return this.list.length;</span><br><span class="line">  &#125;</span><br><span class="line">  // setTotal 计算属性</span><br><span class="line">   @computed set setTotal() &#123;</span><br><span class="line">    return this.list.length;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  @action change () &#123;</span><br><span class="line">    this.list.push(this.list.length);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">autorun(() =&gt; &#123;</span><br><span class="line">  console.log(mstore.total);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="6-关于异步"><a href="#6-关于异步" class="headerlink" title="(6) 关于异步"></a>(6) 关于异步</h4><p>在很多时候，比如网络请求 ，其 Actions 行为是异步的，这里通过以下一个例子说明如何编写异步的 Action</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import &#123; observable, action, computed &#125; from &apos;mobx&apos;;</span><br><span class="line">import api from &apos;../backend/api&apos;;</span><br><span class="line"></span><br><span class="line">class CheckModel &#123;</span><br><span class="line">  @observable idContent = &apos;&apos;;</span><br><span class="line">  @action changeIdContent(value) &#123;</span><br><span class="line">    this.idContent = value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 请求 可以在action处通过async、await 进行流程控制</span><br><span class="line">  @action async getOptList(params) &#123;</span><br><span class="line">    let response;</span><br><span class="line">    response = await api.getOperList(params);</span><br><span class="line">    return response;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default new CheckModel();</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>MobX 的理念是通过观察者模式对数据做出追踪处理，在对可观察属性的作出变更或者引用的时候，触发其依赖的监听函数，在 React 中既是在 @observer 中对组件进行数据更新并渲染到视图层面，其核心与开发模式和 Vue 非常相似。</p>
 <p>相比于 Redux 纯函数的形式，它在代码层面却是给开发者减少了不少工作量，但在多人维护的大项目中，个人认为还是 Redux 更加有利，一旦项目中的数据交互增多，其在 MobX 中对于数据流的变化就变得难以理清，而只能依靠约定来限制触发场景。</p>
 <p>在 Redux 于 MobX 的选择中，其两者还是各具优势同时也各有缺点，而如何进行抉择还应该结合项目需求与业务场景。</p>
-<p>写的时候的一些资料点</p>
-<ol>
-<li>mobx不严格区分容器组件和展示组件，或者说官方更推荐把展示组件也变成容器组件，这样性能更高。</li>
-<li><p>Provider 和 inject是mobx的附加功能，实际上不用这两个方法，功能依然可以正常运作，这是mobx比redux更简便的一点。</p>
-</li>
-<li><p>redux 中间件的问题就是它只能是全局的，在局部看起来就是 black magic……藏起来的业务复杂度最终还是要还回去的……</p>
-</li>
-</ol>
 
         
         </div>
@@ -270,7 +371,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html" data-id="cjhpulo3e000cm4m71g9xcqef" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html" data-id="cjhvrzu4s000dbom748muprxw" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -338,7 +439,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/mobx-start.html#comments" class="article-comment-link">Comentarios</a>
     
 -->
         </footer>
@@ -365,9 +466,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/04/week-question-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/github-ms.jpeg)" alt="6月第一周趣问" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/04/week-question-1/" class="title">6月第一周趣问</a></p>
+                            <p class="item-date"><time datetime="2018-06-03T16:00:00.000Z" itemprop="datePublished">2018-06-04</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -445,25 +565,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/13/hexo/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/hexo.jpeg)" alt="Hexo博客一些常用的命令" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/04/13/hexo/" class="title">Hexo博客一些常用的命令</a></p>
-                            <p class="item-date"><time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -473,9 +574,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -486,7 +587,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Links</h3>
         <div class="widget">
             <ul>
                 
