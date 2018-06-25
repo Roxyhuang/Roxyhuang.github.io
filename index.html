@@ -140,7 +140,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -169,6 +169,234 @@
 
             
             <section id="main">
+    <article id="post-js-review-base-md" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/06/25/js-review-base-md/">js复习基本概念（语法、严格模式）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/06/25/js-review-base-md/">
+            <time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="js-review-base.png" alt=""></p>
+<h2 id="1-语法"><a href="#1-语法" class="headerlink" title="1.语法"></a>1.语法</h2><p>ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。</p>
+<h3 id="（1）区分大小写"><a href="#（1）区分大小写" class="headerlink" title="（1）区分大小写"></a>（1）区分大小写</h3><ul>
+<li><p>ECMAScript中的一切（变量、函数名和操作符都区分大小写。</p>
+</li>
+<li><p>拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写</p>
+</li>
+</ul>
+<p>[1] js写在html中是否区分大小写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）</span><br><span class="line">- 事件内的部分需要区分大小写 如：onclick=&quot;这部分&quot;</span><br></pre></td></tr></table></figure>
+<p>[2] data属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data写入属性都会转为小写 如： data-Name === data-name (chrome下测试并不是,ie下会有问题)</span><br><span class="line"></span><br><span class="line">一旦涉及-都会涉及大小写问题，主要表现就是定义时如果存在大写，调用时需要用小写，负责会出现undefined</span><br></pre></td></tr></table></figure>
+<h3 id="（2）标识符"><a href="#（2）标识符" class="headerlink" title="（2）标识符"></a>（2）标识符</h3><p>所谓标识符，就是指变量、函数、属性的名字，或者函数的参数。</p>
+<p>js中标识符是按下列格式规则组合起来的一或多个字符：</p>
+<ul>
+<li><p>第一个字符可以是：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(1)字母 (2)下划线（_）(3)美元符号（$）；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他字符可以是： </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1）字母 (2）下划线 （3）美元符号 (4）数字</span><br><span class="line">// 汉字也是字符，unicode（不建议使用，除涉及数学计算）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECMAScirpt推荐标识符采用驼峰大小写格式</p>
+</li>
+</ul>
+<h3 id="3-注释"><a href="#3-注释" class="headerlink" title="(3) 注释"></a>(3) 注释</h3><p>ECMAScirpt推荐标识符采用驼峰大小写格式使用C风格的注释</p>
+<p>包含</p>
+<ul>
+<li>[1] 单行注释</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// 单行注释</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[2] 多行注释</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/* * 这是一个多行</span><br><span class="line"> *	（块级注释） */</span><br></pre></td></tr></table></figure>
+<p>第二第三行的*不是必须的，纯粹为了提高可读性。</p>
+<h2 id="2-严格模式"><a href="#2-严格模式" class="headerlink" title="2.严格模式"></a>2.严格模式</h2><p>ES5引入了严格模式（strict mode）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 进入表示</span><br><span class="line"></span><br><span class="line">&quot;use strict&quot;;</span><br></pre></td></tr></table></figure>
+<p>老版本的浏览器会把它当作一行普通字符串，加以忽略。</p>
+<p>“严格模式”有两种调用方法，适用于不同的场合。</p>
+<h3 id="1-启用（整个脚本启用）"><a href="#1-启用（整个脚本启用）" class="headerlink" title="[1] 启用（整个脚本启用）"></a>[1] 启用（整个脚本启用）</h3><p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
+<p>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">　　　"use strict";</span></span><br><span class="line"><span class="undefined">　　　console.log("这是严格模式。");</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">　　　console.log("这是正常模式。");kly, it's almost 2 years ago now. I can admit it now - I run it on my school's network that has about 50 computers.</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-启用（指定函数启用）"><a href="#2-启用（指定函数启用）" class="headerlink" title="[2] 启用（指定函数启用）"></a>[2] 启用（指定函数启用）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">strict</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="meta">　　　"use strict"</span>;</span><br><span class="line">　　　<span class="keyword">return</span> <span class="string">"这是严格模式。"</span>;</span><br><span class="line">　&#125;</span><br><span class="line"></span><br><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">notStrict</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　<span class="keyword">return</span> <span class="string">"这是正常模式。"</span>;</span><br><span class="line">　&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-脚本文件的变通写法"><a href="#3-脚本文件的变通写法" class="headerlink" title="[3] 脚本文件的变通写法"></a>[3] 脚本文件的变通写法</h3><p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">　(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">　　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　　<span class="comment">// some code here</span></span><br><span class="line"></span><br><span class="line">　&#125;)();</span><br></pre></td></tr></table></figure>
+<h3 id="4-严格模式目的"><a href="#4-严格模式目的" class="headerlink" title="[4] 严格模式目的"></a>[4] 严格模式目的</h3><ul>
+<li>消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;</li>
+<li>消除代码运行的一些不安全之处，保证代码运行的安全；</li>
+<li>提高编译器效率，增加运行速度；</li>
+<li>为未来新版本的Javascript做好铺垫。</li>
+</ul>
+<h3 id="5-语法和行为改变"><a href="#5-语法和行为改变" class="headerlink" title="[5] 语法和行为改变"></a>[5] 语法和行为改变</h3><h4 id="1-全局变量显示声明"><a href="#1-全局变量显示声明" class="headerlink" title="(1) 全局变量显示声明"></a>(1) 全局变量显示声明</h4><p>在正常模式中，如果一个变量没有声明就赋值，默认是全局变量。严格模式禁止这种用法，全局变量必须显式声明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line">v = <span class="number">1</span>; <span class="comment">// 报错，v未声明</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123; <span class="comment">// 报错，i未声明</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，严格模式下，变量都必须先用var命令声明，然后再使用。</p>
+<h4 id="2-静态绑定"><a href="#2-静态绑定" class="headerlink" title="(2) 静态绑定"></a>(2) 静态绑定</h4><p>[1] 禁止使用with语句<br>因为with语句无法在编译时就确定，属性到底归属哪个对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> v = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">with</span> (o)&#123; <span class="comment">// 语法错误 </span></span><br><span class="line">　　　v = <span class="number">2</span>;</span><br><span class="line">　&#125;</span><br></pre></td></tr></table></figure>
+<p>[2] 创设eval作用域</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">正常模式下，Javascript语言有两种变量作用域（scope）：全局作用域和函数作用域。严格模式创设了第三种作用域：eval作用域。</span><br><span class="line"></span><br><span class="line">正常模式下，eval语句的作用域，取决于它处于全局作用域，还是处于函数作用域。严格模式下，eval语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于eval内部。</span><br></pre></td></tr></table></figure>
+<h4 id="3-增强的安全措施"><a href="#3-增强的安全措施" class="headerlink" title="(3) 增强的安全措施"></a>(3) 增强的安全措施</h4><p>[1] 禁止this关键字指向全局对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">　　　<span class="keyword">return</span> !<span class="keyword">this</span>;</span><br><span class="line">　&#125; </span><br><span class="line">　<span class="comment">// 返回false，因为"this"指向全局对象，"!this"就是false</span></span><br><span class="line"></span><br><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123; </span><br><span class="line"><span class="meta">　　　"use strict"</span>;</span><br><span class="line">　　　<span class="keyword">return</span> !<span class="keyword">this</span>;</span><br><span class="line">　&#125; </span><br><span class="line">　<span class="comment">// 返回true，因为严格模式下，this的值为undefined，所以"!this"为true。</span></span><br></pre></td></tr></table></figure>
+<p>[2] 禁止在函数内部遍历调用栈</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　f1.caller; <span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line">　　f1.arguments; <span class="comment">// 报错</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f1();</span><br></pre></td></tr></table></figure>
+<h4 id="4-禁止删除变量"><a href="#4-禁止删除变量" class="headerlink" title="(4) 禁止删除变量"></a>(4) 禁止删除变量</h4><p>严格模式下无法删除变量。只有configurable设置为true的对象属性，才能被删除。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> x;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">delete</span> x; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> o = <span class="built_in">Object</span>.create(<span class="literal">null</span>, &#123;<span class="string">'x'</span>: &#123;</span><br><span class="line">　　　　　value: <span class="number">1</span>,</span><br><span class="line">　　　　　configurable: <span class="literal">true</span></span><br><span class="line">　&#125;&#125;);</span><br><span class="line"></span><br><span class="line">　<span class="keyword">delete</span> o.x; <span class="comment">// 删除成功</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-显式报错"><a href="#5-显式报错" class="headerlink" title="(5) 显式报错"></a>(5) 显式报错</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> o = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">　<span class="built_in">Object</span>.defineProperty(o, <span class="string">"v"</span>, &#123; <span class="attr">value</span>: <span class="number">1</span>, <span class="attr">writable</span>: <span class="literal">false</span> &#125;);</span><br><span class="line"></span><br><span class="line">　o.v = <span class="number">2</span>; <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<p>严格模式下，对一个使用getter方法读取的属性进行赋值，会报错。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> o = &#123;</span><br><span class="line"></span><br><span class="line">　　　get v() &#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line"></span><br><span class="line">　&#125;;</span><br><span class="line"></span><br><span class="line">　o.v = <span class="number">2</span>; <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-重名错误"><a href="#6-重名错误" class="headerlink" title="(6) 重名错误"></a>(6) 重名错误</h4><p>严格模式新增了一些语法错误。</p>
+<p>（1）对象不能有重名的属性</p>
+<p>正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">var</span> o = &#123;</span><br><span class="line">　　　　p: <span class="number">1</span>,</span><br><span class="line">　　　　p: <span class="number">2</span></span><br><span class="line">　　&#125;; <span class="comment">// 语法错误</span></span><br></pre></td></tr></table></figure>
+<p>（2）函数不能有重名的参数</p>
+<p>正常模式下，如果函数有多个重名的参数，可以用arguments[i]读取。严格模式下，这属于语法错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">a, a, b</span>) </span>&#123; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　　<span class="keyword">return</span> ;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-禁止八进制表示法"><a href="#7-禁止八进制表示法" class="headerlink" title="(7) 禁止八进制表示法"></a>(7) 禁止八进制表示法</h4><p>正常模式下，整数的第一位如果是0，表示这是八进制数，比如0100等于十进制的64。严格模式禁止这种表示法，整数第一位为0，将报错。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　<span class="keyword">var</span> n = <span class="number">0100</span>; <span class="comment">// 语法错误</span></span><br></pre></td></tr></table></figure>
+<h4 id="8-arguments对象的限制"><a href="#8-arguments对象的限制" class="headerlink" title="(8) arguments对象的限制"></a>(8) arguments对象的限制</h4><p>arguments是函数的参数对象，严格模式对它的使用做了限制。</p>
+<p>(1) 不允许对arguments赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　<span class="built_in">arguments</span>++; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　<span class="keyword">var</span> obj = &#123; set p(<span class="built_in">arguments</span>) &#123; &#125; &#125;; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　<span class="keyword">try</span> &#123; &#125; <span class="keyword">catch</span> (<span class="built_in">arguments</span>) &#123; &#125; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">arguments</span>(<span class="params"></span>) </span>&#123; &#125; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　<span class="keyword">var</span> f = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"arguments"</span>, <span class="string">"'use strict'; return 17;"</span>); <span class="comment">// 语法错误</span></span><br></pre></td></tr></table></figure>
+<p>（2）arguments不再追踪参数的变化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">　　　　a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">return</span> [a, <span class="built_in">arguments</span>[<span class="number">0</span>]];</span><br><span class="line"></span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line">　　f(<span class="number">1</span>); <span class="comment">// 正常模式为[2,2]</span></span><br><span class="line"></span><br><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">　　　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　　　a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">return</span> [a, <span class="built_in">arguments</span>[<span class="number">0</span>]];</span><br><span class="line"></span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line">　　f(<span class="number">1</span>); <span class="comment">// 严格模式为[2,1]</span></span><br></pre></td></tr></table></figure>
+<p>（3）禁止使用arguments.callee</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">arguments</span>.callee; &#125;;</span><br><span class="line"></span><br><span class="line">　　f(); <span class="comment">// 报错</span></span><br></pre></td></tr></table></figure>
+<h4 id="9-函数必须声明在顶层"><a href="#9-函数必须声明在顶层" class="headerlink" title="(9) 函数必须声明在顶层"></a>(9) 函数必须声明在顶层</h4><p>将来Javascript的新版本会引入”块级作用域”。为了与新版本接轨，严格模式只允许在全局作用域或函数作用域的顶层声明函数。也就是说，不允许在非函数的代码块内声明函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123; &#125; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">　　　　<span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123; &#125; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="10-保留字"><a href="#10-保留字" class="headerlink" title="(10) 保留字"></a>(10) 保留字</h4><p>为了向将来Javascript的新版本过渡，严格模式新增了一些保留字：implements, interface, let, package, private, protected, public, static, yield。</p>
+<p>使用这些词作为变量名将会报错。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="function"><span class="keyword">function</span> <span class="title">package</span>(<span class="params">protected</span>) </span>&#123; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line"><span class="meta">　　　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　　　<span class="keyword">var</span> implements; <span class="comment">// 语法错误</span></span><br><span class="line"></span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
+<p>此外，ECMAscript第五版本身还规定了另一些保留字（class, enum, export, extends, import, super），以及各大浏览器自行增加的const保留字，也是不能作为变量名的。</p>
+<h3 id="3-语句"><a href="#3-语句" class="headerlink" title="[3] 语句"></a>[3] 语句</h3><p>（1）语句以一个分号结尾；如果省略分号，则由解释器确定语句的结尾（建议不要忽略）</p>
+<h3 id="4-关键字和保留字"><a href="#4-关键字和保留字" class="headerlink" title="[4] 关键字和保留字"></a>[4] 关键字和保留字</h3><p>es3 es5(*标识):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">break	do instanceof typeof</span><br><span class="line"></span><br><span class="line">case	else	new		var</span><br><span class="line"></span><br><span class="line">catch	finally	return		void</span><br><span class="line"></span><br><span class="line">debugger*	function	this	with</span><br><span class="line"></span><br><span class="line">default	if	throw</span><br><span class="line"></span><br><span class="line">delete		in	try</span><br></pre></td></tr></table></figure>
+<p>ecma-262还描述了另外一组不能用标识符的保留字。尽管保留字。尽管保留字在这门</p>
+<p>es3: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">abstract	enum	int short</span><br><span class="line"></span><br><span class="line">boolean	export	interface	static</span><br><span class="line"></span><br><span class="line">byte	extentds	long	super</span><br><span class="line"></span><br><span class="line">char	final	native	synchronized</span><br><span class="line"></span><br><span class="line">class	float	package	throws</span><br><span class="line"></span><br><span class="line">const goto	private	transient</span><br><span class="line"></span><br><span class="line">debugger	implement	protected	volatile</span><br><span class="line"></span><br><span class="line">double	import	public</span><br></pre></td></tr></table></figure>
+<p>es5:</p>
+<p>把非严格模式下运行时的保留字缩减为下列这些：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class	enum	extends	super</span><br><span class="line"></span><br><span class="line">const	export	import</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">implement	package	public</span><br><span class="line"></span><br><span class="line">interface	private	static</span><br><span class="line"></span><br><span class="line">let		protected	yield</span><br></pre></td></tr></table></figure>
+<h2 id="3-语句-1"><a href="#3-语句-1" class="headerlink" title="3.语句"></a>3.语句</h2><h3 id="（1）分号"><a href="#（1）分号" class="headerlink" title="（1）分号"></a>（1）分号</h3><h4 id="Q1-解释器如何判断是否需自动增加分号："><a href="#Q1-解释器如何判断是否需自动增加分号：" class="headerlink" title="Q1: 解释器如何判断是否需自动增加分号："></a>Q1: 解释器如何判断是否需自动增加分号：</h4><p>解释器会判断前后语句是否可以放一起执行，如果可以合并为一句，如果不可以就补全分号，再不行就报错。</p>
+<p><strong>特例</strong>有如下2个</p>
+<h4 id="1-return-breank-contiune"><a href="#1-return-breank-contiune" class="headerlink" title="[1] return breank contiune"></a>[1] return breank contiune</h4><p>不会合并，直接结束。（return后的部分请不要换行）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> res = <span class="string">'aaa'</span>;</span><br><span class="line">	<span class="keyword">return</span> </span><br><span class="line">		res; <span class="comment">// 不会返回aaa</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-–等操作符"><a href="#2-–等操作符" class="headerlink" title="[2] ++ –等操作符"></a>[2] ++ –等操作符</h4><p>不会与上行语句合并，而会与下语句合并</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">a</span><br><span class="line">++</span><br><span class="line">b</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+<h3 id="（2）括号"><a href="#（2）括号" class="headerlink" title="（2）括号"></a>（2）括号</h3><p>建议能使用则使用</p>
+<h2 id="补充（变量类型）"><a href="#补充（变量类型）" class="headerlink" title="补充（变量类型）"></a>补充（变量类型）</h2><p>js在定义变量时，不会严格限制类型，而是使用（调用的时候）的时候分配类型</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjitobp91000ro6m79yxjq1j0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-promise-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -376,7 +604,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjiph476s000758m7ojnwy68r" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjitoab3n000bo6m7trh473xl" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -593,7 +821,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjiph476o000558m77b3lslqa" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjitoab3g0007o6m7x0aavk2s" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -740,7 +968,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjiph4773000h58m7oinikdtp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjitoab3r000ho6m7dqjccgsj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -908,7 +1136,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjiph4774000j58m7x6yci5ro" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjitoab3s000jo6m7bkyl0c02" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1266,7 +1494,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjiph476y000b58m7qr2kumg9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjitoab3j0009o6m7n5xdx4fk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1450,7 +1678,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjiph4770000d58m7p5a8u9fd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjitoab3p000do6m7sq17vo6b" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1617,7 +1845,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjiph4771000f58m76emtjazw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjitoab3q000fo6m7d9pa8nj6" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1748,7 +1976,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjiph476u000958m7w41vmpyv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjitoab3c0005o6m78be1yxth" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1838,6 +2066,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/06/25/js-review-base-md/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-base.png)" alt="js复习基本概念（语法、严格模式）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/25/js-review-base-md/" class="title">js复习基本概念（语法、严格模式）</a></p>
+                            <p class="item-date"><time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/06/22/promise-2/" class="thumbnail">
     
     
@@ -1911,25 +2158,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/05/04/js-review-script/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-reivew-script.png)" alt="js复习之基础概念以及script" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/05/04/js-review-script/" class="title">js复习之基础概念以及script</a></p>
-                            <p class="item-date"><time datetime="2018-05-03T16:00:00.000Z" itemprop="datePublished">2018-05-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1941,7 +2169,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 

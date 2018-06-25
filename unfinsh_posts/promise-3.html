@@ -3,19 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Neo</title>
+    <title>白话分析promise（三） promise实现 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="title: 白话分析promise内部实现原理 date: 2018/5/10 thumbnail: /img/mobx.jpeg author: Neo_huang白话分析promise（三） promise实现上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 （1）创建实例以及增加实例方法the">
+    <meta name="description" content="图片来源：https://objcer.com/2017/05/07/About-Promise/ 上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 目标：  可以创建promise对象实例 实现成功以及失败回调  （1）创建实例以及增加实例方法then()12345678var Promise =">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Neo">
+<meta property="og:title" content="白话分析promise（三） promise实现">
 <meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/promise-3.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="title: 白话分析promise内部实现原理 date: 2018/5/10 thumbnail: /img/mobx.jpeg author: Neo_huang白话分析promise（三） promise实现上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 （1）创建实例以及增加实例方法the">
+<meta property="og:description" content="图片来源：https://objcer.com/2017/05/07/About-Promise/ 上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 目标：  可以创建promise对象实例 实现成功以及失败回调  （1）创建实例以及增加实例方法then()12345678var Promise =">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-17T17:03:34.000Z">
+<meta property="og:image" content="http://www.neohuang.com/img/do-you-promise.png">
+<meta property="og:updated_time" content="2018-06-25T01:07:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Neo">
-<meta name="twitter:description" content="title: 白话分析promise内部实现原理 date: 2018/5/10 thumbnail: /img/mobx.jpeg author: Neo_huang白话分析promise（三） promise实现上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 （1）创建实例以及增加实例方法the">
+<meta name="twitter:title" content="白话分析promise（三） promise实现">
+<meta name="twitter:description" content="图片来源：https://objcer.com/2017/05/07/About-Promise/ 上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。 ###一、 基础功能 目标：  可以创建promise对象实例 实现成功以及失败回调  （1）创建实例以及增加实例方法then()12345678var Promise =">
+<meta name="twitter:image" content="http://www.neohuang.com/img/do-you-promise.png">
     
 
     
@@ -144,7 +146,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -176,20 +178,33 @@
     <div class="article-inner">
         
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            白话分析promise（三） promise实现
+        </h1>
+    
+
+                
+            </header>
+        
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            <hr>
-<p>title: 白话分析promise内部实现原理</p>
-<p>date: 2018/5/10</p>
-<p>thumbnail: /img/mobx.jpeg</p>
-<h2 id="author-Neo-huang"><a href="#author-Neo-huang" class="headerlink" title="author: Neo_huang"></a>author: Neo_huang</h2><h2 id="白话分析promise（三）-promise实现"><a href="#白话分析promise（三）-promise实现" class="headerlink" title="白话分析promise（三） promise实现"></a>白话分析promise（三） promise实现</h2><p>上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。</p>
+            <p><img src="/img/do-you-promise.png" alt="promise"></p>
+<p>图片来源：<a href="https://objcer.com/2017/05/07/About-Promise/" target="_blank" rel="noopener">https://objcer.com/2017/05/07/About-Promise/</a></p>
+<p>上一篇有用白话聊了一下promise规范，本篇最终想要达到的目标便是达到Promises/A+规范的要求的promise。</p>
 <p>###一、 基础功能</p>
-<h4 id="（1）创建实例以及增加实例方法then"><a href="#（1）创建实例以及增加实例方法then" class="headerlink" title="（1）创建实例以及增加实例方法then()"></a>（1）创建实例以及增加实例方法then()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var Promise = function(executor) &#123;</span><br><span class="line">	if (typeof executor !== &apos;function&apos;)&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	console.log(&apos;Neo Promise&apos;);</span><br><span class="line">	</span><br><span class="line">	 let self = this;</span><br><span class="line">    this.status = &apos;pending&apos;;</span><br><span class="line">    this.value = undefined;</span><br><span class="line">    this.reason = undefined;</span><br><span class="line">    this.onFulfilledCallbacks = [];</span><br><span class="line">    this.onRejectedCallbacks = [];</span><br><span class="line">    </span><br><span class="line">        function resolve(value) &#123;</span><br><span class="line">        if (value instanceof MyPromise) &#123;</span><br><span class="line">            return value.then(resolve, reject);</span><br><span class="line">        &#125;</span><br><span class="line">        if (self.status === &apos;pending&apos;) &#123;</span><br><span class="line">            self.value = value;</span><br><span class="line">            self.status = &apos;fulfilled&apos;;</span><br><span class="line">            self.onFulfilledCallbacks.forEach(item =&gt; item(value));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function reject(reason) &#123;</span><br><span class="line">        if (self.status === &apos;pending&apos;) &#123;</span><br><span class="line">            self.reason = reason;</span><br><span class="line">            self.status = &apos;rejected&apos;;  </span><br><span class="line">            self.onRejectedCallbacks.forEach(item =&gt; item(reason));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Promise.prototype.then = function() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="（2）-实现成功以及失败回调"><a href="#（2）-实现成功以及失败回调" class="headerlink" title="（2） 实现成功以及失败回调"></a>（2） 实现成功以及失败回调</h4><p>###二、 三种状态</p>
-<p>### </p>
-
+<p>目标：</p>
+<ul>
+<li>可以创建promise对象实例</li>
+<li>实现成功以及失败回调</li>
+</ul>
+<h4 id="（1）创建实例以及增加实例方法then"><a href="#（1）创建实例以及增加实例方法then" class="headerlink" title="（1）创建实例以及增加实例方法then()"></a>（1）创建实例以及增加实例方法then()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var Promise = function() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Promise.prototype = function()&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="（2）-实现成功以及失败回调"><a href="#（2）-实现成功以及失败回调" class="headerlink" title="（2） 实现成功以及失败回调"></a>（2） 实现成功以及失败回调</h4><p>###二、 状态的定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var Promise = function(executor) &#123;</span><br><span class="line">	if (typeof executor !== &apos;function&apos;)&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	console.log(&apos;Neo Promise&apos;);</span><br><span class="line">	</span><br><span class="line">	 let self = this;</span><br><span class="line">    this.status = &apos;pending&apos;;</span><br><span class="line">    this.value = undefined;</span><br><span class="line">    this.reason = undefined;</span><br><span class="line">    this.onFulfilledCallbacks = [];</span><br><span class="line">    this.onRejectedCallbacks = [];</span><br><span class="line">    </span><br><span class="line">        function resolve(value) &#123;</span><br><span class="line">        if (value instanceof MyPromise) &#123;</span><br><span class="line">            return value.then(resolve, reject);</span><br><span class="line">        &#125;</span><br><span class="line">        if (self.status === &apos;pending&apos;) &#123;</span><br><span class="line">            self.value = value;</span><br><span class="line">            self.status = &apos;fulfilled&apos;;</span><br><span class="line">            self.onFulfilledCallbacks.forEach(item =&gt; item(value));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function reject(reason) &#123;</span><br><span class="line">        if (self.status === &apos;pending&apos;) &#123;</span><br><span class="line">            self.reason = reason;</span><br><span class="line">            self.status = &apos;rejected&apos;;  </span><br><span class="line">            self.onRejectedCallbacks.forEach(item =&gt; item(reason));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Promise.prototype.then = function() &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
         </div>
         <footer class="article-footer">
@@ -199,7 +214,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/promise-3.html" data-id="cjiph4775000l58m7biooqgdi" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/promise-3.html" data-id="cjitoab3t000ko6m7oxew6eyf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -301,6 +316,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/06/25/js-review-base-md/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-base.png)" alt="js复习基本概念（语法、严格模式）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/25/js-review-base-md/" class="title">js复习基本概念（语法、严格模式）</a></p>
+                            <p class="item-date"><time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/06/22/promise-2/" class="thumbnail">
     
     
@@ -374,25 +408,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/05/04/js-review-script/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-reivew-script.png)" alt="js复习之基础概念以及script" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/05/04/js-review-script/" class="title">js复习之基础概念以及script</a></p>
-                            <p class="item-date"><time datetime="2018-05-03T16:00:00.000Z" itemprop="datePublished">2018-05-04</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -404,7 +419,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 

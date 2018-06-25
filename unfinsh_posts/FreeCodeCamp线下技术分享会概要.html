@@ -5,14 +5,17 @@
     
     <title>Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
+    <meta name="description" content="FreeCodeCamp线下技术分享会概要  作者:Neo  一、闲话CDN(1)什么是cdn，内容分发网络(2) cdn优点[1] 访问加速[2] 减轻源站负载[3] 抗住攻击（3）CDN访问原理（4）CDN架构（5） 一致性Hash（6）CDN应用(7) 应用须知[1] max-age 与 s-maxage[2] 缓存命中率[3] 是否命中缓存(8) https ()[1] 无私钥解决方案 (">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Neo">
-<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/302.html">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/FreeCodeCamp线下技术分享会概要.html">
 <meta property="og:site_name" content="Neo">
+<meta property="og:description" content="FreeCodeCamp线下技术分享会概要  作者:Neo  一、闲话CDN(1)什么是cdn，内容分发网络(2) cdn优点[1] 访问加速[2] 减轻源站负载[3] 抗住攻击（3）CDN访问原理（4）CDN架构（5） 一致性Hash（6）CDN应用(7) 应用须知[1] max-age 与 s-maxage[2] 缓存命中率[3] 是否命中缓存(8) https ()[1] 无私钥解决方案 (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-07T05:33:58.000Z">
+<meta property="og:updated_time" content="2018-06-24T12:55:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neo">
+<meta name="twitter:description" content="FreeCodeCamp线下技术分享会概要  作者:Neo  一、闲话CDN(1)什么是cdn，内容分发网络(2) cdn优点[1] 访问加速[2] 减轻源站负载[3] 抗住攻击（3）CDN访问原理（4）CDN架构（5） 一致性Hash（6）CDN应用(7) 应用须知[1] max-age 与 s-maxage[2] 缓存命中率[3] 是否命中缓存(8) https ()[1] 无私钥解决方案 (">
     
 
     
@@ -177,7 +180,133 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            
+            <h2 id="FreeCodeCamp线下技术分享会概要"><a href="#FreeCodeCamp线下技术分享会概要" class="headerlink" title="FreeCodeCamp线下技术分享会概要"></a>FreeCodeCamp线下技术分享会概要</h2><hr>
+<blockquote>
+<p>作者:Neo</p>
+</blockquote>
+<h3 id="一、闲话CDN"><a href="#一、闲话CDN" class="headerlink" title="一、闲话CDN"></a>一、闲话CDN</h3><h4 id="1-什么是cdn，内容分发网络"><a href="#1-什么是cdn，内容分发网络" class="headerlink" title="(1)什么是cdn，内容分发网络"></a>(1)什么是cdn，内容分发网络</h4><h4 id="2-cdn优点"><a href="#2-cdn优点" class="headerlink" title="(2) cdn优点"></a>(2) cdn优点</h4><h5 id="1-访问加速"><a href="#1-访问加速" class="headerlink" title="[1] 访问加速"></a>[1] 访问加速</h5><h5 id="2-减轻源站负载"><a href="#2-减轻源站负载" class="headerlink" title="[2] 减轻源站负载"></a>[2] 减轻源站负载</h5><h5 id="3-抗住攻击"><a href="#3-抗住攻击" class="headerlink" title="[3] 抗住攻击"></a>[3] 抗住攻击</h5><h4 id="（3）CDN访问原理"><a href="#（3）CDN访问原理" class="headerlink" title="（3）CDN访问原理"></a>（3）CDN访问原理</h4><h4 id="（4）CDN架构"><a href="#（4）CDN架构" class="headerlink" title="（4）CDN架构"></a>（4）CDN架构</h4><h4 id="（5）-一致性Hash"><a href="#（5）-一致性Hash" class="headerlink" title="（5） 一致性Hash"></a>（5） 一致性Hash</h4><h4 id="（6）CDN应用"><a href="#（6）CDN应用" class="headerlink" title="（6）CDN应用"></a>（6）CDN应用</h4><h4 id="7-应用须知"><a href="#7-应用须知" class="headerlink" title="(7) 应用须知"></a>(7) 应用须知</h4><h5 id="1-max-age-与-s-maxage"><a href="#1-max-age-与-s-maxage" class="headerlink" title="[1] max-age 与 s-maxage"></a>[1] max-age 与 s-maxage</h5><h5 id="2-缓存命中率"><a href="#2-缓存命中率" class="headerlink" title="[2] 缓存命中率"></a>[2] 缓存命中率</h5><h5 id="3-是否命中缓存"><a href="#3-是否命中缓存" class="headerlink" title="[3] 是否命中缓存"></a>[3] 是否命中缓存</h5><h4 id="8-https"><a href="#8-https" class="headerlink" title="(8) https ()"></a>(8) https ()</h4><h5 id="1-无私钥解决方案-深入看一下阿里云）"><a href="#1-无私钥解决方案-深入看一下阿里云）" class="headerlink" title="[1] 无私钥解决方案 (深入看一下阿里云）"></a>[1] 无私钥解决方案 (深入看一下阿里云）</h5><h5 id="2-资源预热（如何实现）"><a href="#2-资源预热（如何实现）" class="headerlink" title="[2] 资源预热（如何实现）"></a>[2] 资源预热（如何实现）</h5><p>事先上线之前资源已经预热</p>
+<h5 id="3-跨域"><a href="#3-跨域" class="headerlink" title="[3] 跨域"></a>[3] 跨域</h5><p>a. vary</p>
+<p>b. range回源</p>
+<h4 id="8-实战"><a href="#8-实战" class="headerlink" title="(8) 实战"></a>(8) 实战</h4><p>(1) 廉价cdn</p>
+<p>(2) 混合cdn</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h3 id="二、Deno"><a href="#二、Deno" class="headerlink" title="二、Deno"></a>二、Deno</h3><p>定义:runtime</p>
+<p>基于V8的Typescript运行时系统</p>
+<p>主要改进：</p>
+<h3 id="1-代码安全"><a href="#1-代码安全" class="headerlink" title="(1) 代码安全"></a>(1) 代码安全</h3><p>(1) call by message （不是直接调用）</p>
+<p>pub =&gt; v8 &gt; sub</p>
+<p>protobuf (编码方式) </p>
+<p>(2) 依赖 allow-net &amp;&amp; allow-write</p>
+<h3 id="2-依赖管理"><a href="#2-依赖管理" class="headerlink" title="(2) 依赖管理"></a>(2) 依赖管理</h3><p>package.json</p>
+<ul>
+<li>URL引入</li>
+<li>中心以来存储 (.deno/)\分布依赖获取 （重点）</li>
+<li>明确文件类型，降低二义性</li>
+</ul>
+<h3 id="3-面向ts"><a href="#3-面向ts" class="headerlink" title="(3) 面向ts"></a>(3) 面向ts</h3><h3 id="（4）美中不足"><a href="#（4）美中不足" class="headerlink" title="（4）美中不足"></a>（4）美中不足</h3><ul>
+<li>启动速度堪忧</li>
+<li>protobuf使用成本比较高</li>
+<li>依赖管理争议大</li>
+</ul>
+<p>救火方案：</p>
+<ul>
+<li>fastPath: 直接运行不启动 ts complier</li>
+<li>snapshot v8 ts complier snapshot</li>
+</ul>
+<p>救火方案</p>
+<p>CAP’N Proto</p>
+<p>Kenton Varda</p>
+<p>依赖管理：</p>
+<p>救火方案:</p>
+<ul>
+<li>中心化</li>
+<li>vgo (比较好的实现，中心化)</li>
+</ul>
+<p>RoadMap</p>
+<ul>
+<li>将go迁移rust （可能双重gc）</li>
+<li>完善常用Api (runtime)</li>
+<li>提供Top level awit (对应实现rust) rust promise</li>
+</ul>
+<p>v8<br>eventloop ecma spark</p>
+<p>如何看待</p>
+<p>为什么需要deno</p>
+<h3 id="三、前端状态管理"><a href="#三、前端状态管理" class="headerlink" title="三、前端状态管理"></a>三、前端状态管理</h3><ol>
+<li>什么是状态</li>
+</ol>
+<p>组件内状态：</p>
+<ul>
+<li>state: 驱动应用的数据源</li>
+<li>view: </li>
+<li>actions:</li>
+</ul>
+<ol start="2">
+<li><p>状态提升</p>
+</li>
+<li><p>event Bus</p>
+</li>
+</ol>
+<ul>
+<li>避免参数的嵌套传递</li>
+<li><p>解决兄弟组件通信问题</p>
+</li>
+<li><p>复杂情况难以维护</p>
+</li>
+</ul>
+<ol start="4">
+<li>共享store</li>
+</ol>
+<p>全局上下文</p>
+<ul>
+<li>全局单例</li>
+<li>所有组件都能访问到</li>
+</ul>
+<ol start="5">
+<li>全局对象</li>
+</ol>
+<p>数据流简单项目这些就够</p>
+<ol start="6">
+<li>flux</li>
+</ol>
+<p>actions</p>
+<ol start="7">
+<li>redux</li>
+</ol>
+<p>immutable</p>
+<p>combineReducers</p>
+<p>redux-saga</p>
+<p>redux-thunk</p>
+<p>redux-observable</p>
+<ol start="8">
+<li>mobx</li>
+</ol>
+<p>actions =&gt; state =&gt; </p>
+<p>多个store: 多store划分</p>
+<ol start="9">
+<li><p>vuex</p>
+</li>
+<li><p>server view store()</p>
+</li>
+</ol>
+<p>单一store</p>
+<p>统一store，通过namespace方式</p>
+<p>代价很大：</p>
+<ul>
+<li>修改状态大量样板代码</li>
+<li>需要组件中初始化或重置状态。需要自己重置</li>
+<li>store很大</li>
+</ul>
+<p>保留组件状态</p>
+<p>哪些状态放store</p>
+<p>复杂ui组件</p>
+<p>componentStore</p>
+<p>一些实例：</p>
+<h3 id="HTTPS-amp-amp-WHY"><a href="#HTTPS-amp-amp-WHY" class="headerlink" title="HTTPS &amp;&amp; WHY"></a>HTTPS &amp;&amp; WHY</h3><p>(1)TLS/SSL,CA,Encryption</p>
+<p>为什么要使用https</p>
+<p>(2)什么是https</p>
+<p>trasport layer security</p>
+<p>https over tsl ssl</p>
+<p>cloudFlare</p>
+<h3 id="四、模块演化之路之路"><a href="#四、模块演化之路之路" class="headerlink" title="四、模块演化之路之路"></a>四、模块演化之路之路</h3>
         
         </div>
         <footer class="article-footer">
@@ -187,7 +316,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/302.html" data-id="cjitoab2j0000o6m7zonk50jy" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/FreeCodeCamp线下技术分享会概要.html" data-id="cjitoab3f0006o6m74u5g8ipx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -255,7 +384,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/unfinsh_posts/302.html#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/FreeCodeCamp线下技术分享会概要.html#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
