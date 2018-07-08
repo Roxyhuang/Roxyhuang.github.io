@@ -5,18 +5,18 @@
     
     <title>js复习基本概念（语法、严格模式） | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写 12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分">
+    <meta name="description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分需">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js复习基本概念（语法、严格模式）">
 <meta property="og:url" content="http://www.neohuang.com/child/2018/06/25/js-review-base-md/index.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写 12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分">
+<meta property="og:description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分需">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/js-review-base.png">
-<meta property="og:updated_time" content="2018-06-25T03:01:40.000Z">
+<meta property="og:updated_time" content="2018-06-25T14:44:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js复习基本概念（语法、严格模式）">
-<meta name="twitter:description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写 12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分">
+<meta name="twitter:description" content="1.语法ECMAScript的语法大量借鉴了C及其他类C语言（如JAVA和Perl）的语法。 （1）区分大小写 ECMAScript中的一切（变量、函数名和操作符都区分大小写。  拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写   [1] js写在html中是否区分大小写12- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）- 事件内的部分需">
 <meta name="twitter:image" content="http://www.neohuang.com/img/js-review-base.png">
     
 
@@ -215,10 +215,8 @@
 <li><p>拓展 HTML（要求区分大小写，但实际浏览器会做兼容）和CSS中不区分大小写</p>
 </li>
 </ul>
-<p>[1] js写在html中是否区分大小写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）</span><br><span class="line">- 事件内的部分需要区分大小写 如：onclick=&quot;这部分&quot;</span><br></pre></td></tr></table></figure>
-<p>[2] data属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data写入属性都会转为小写 如： data-Name === data-name (chrome下测试并不是,ie下会有问题)</span><br><span class="line"></span><br><span class="line">一旦涉及-都会涉及大小写问题，主要表现就是定义时如果存在大写，调用时需要用小写，负责会出现undefined</span><br></pre></td></tr></table></figure>
+<h4 id="1-js写在html中是否区分大小写"><a href="#1-js写在html中是否区分大小写" class="headerlink" title="[1] js写在html中是否区分大小写"></a>[1] js写在html中是否区分大小写</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 事件 如（onclick属性不区分大小写，但是事件后的内容区分大小写）</span><br><span class="line">- 事件内的部分需要区分大小写 如：onclick=&quot;这部分&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="2-data属性"><a href="#2-data属性" class="headerlink" title="[2] data属性"></a>[2] data属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data写入属性都会转为小写 如： data-Name === data-name (chrome下测试并不是,ie下会有问题)</span><br><span class="line"></span><br><span class="line">一旦涉及-都会涉及大小写问题，主要表现就是定义时如果存在大写，调用时需要用小写，负责会出现undefined</span><br></pre></td></tr></table></figure>
 <h3 id="（2）标识符"><a href="#（2）标识符" class="headerlink" title="（2）标识符"></a>（2）标识符</h3><p>所谓标识符，就是指变量、函数、属性的名字，或者函数的参数。</p>
 <p>js中标识符是按下列格式规则组合起来的一或多个字符：</p>
 <ul>
@@ -313,7 +311,7 @@
 <h4 id="2-–等操作符"><a href="#2-–等操作符" class="headerlink" title="[2] ++ –等操作符"></a>[2] ++ –等操作符</h4><p>不会与上行语句合并，而会与下语句合并</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">a</span><br><span class="line">++</span><br><span class="line">b</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
 <h3 id="（2）括号"><a href="#（2）括号" class="headerlink" title="（2）括号"></a>（2）括号</h3><p>建议能使用则使用</p>
-<h2 id="补充（变量类型）"><a href="#补充（变量类型）" class="headerlink" title="补充（变量类型）"></a>补充（变量类型）</h2><p>js在定义变量时，不会严格限制类型，而是使用（调用的时候）的时候分配类型</p>
+<h2 id="补充（变量类型）"><a href="#补充（变量类型）" class="headerlink" title="补充（变量类型）"></a>补充（变量类型）</h2><p>ECMAscript的变量是松散类型的，所谓松散类型就是可以用来保存任何类型的数据。换句话说，每个变量仅仅是用于保存值的占位符而已。 js在定义变量时，不会严格限制类型，而是使用（调用的时候）的时候分配类型</p>
 
         
         </div>
@@ -324,7 +322,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjitobp91000ro6m79yxjq1j0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjiyeaio2000b3pm78lzz993x" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
