@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>正则表达式回顾笔记 | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+<meta property="og:type" content="website">
+<meta property="og:title" content="正则表达式回顾笔记">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/js-review-operators.png">
+<meta property="og:updated_time" content="2018-08-09T10:38:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式回顾笔记">
+<meta name="twitter:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+<meta name="twitter:image" content="http://www.neohuang.com/img/js-review-operators.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            正则表达式回顾笔记
+        </h1>
+    
+
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。</p>
+<h2 id="二、正则表达式字符匹配攻略"><a href="#二、正则表达式字符匹配攻略" class="headerlink" title="二、正则表达式字符匹配攻略"></a>二、正则表达式字符匹配攻略</h2><p><strong>1.核心原则</strong>：正则表达式是匹配模式，要么匹配字符，要么匹配位置</p>
+<h3 id="1-两种模糊匹配"><a href="#1-两种模糊匹配" class="headerlink" title="1.两种模糊匹配"></a>1.两种模糊匹配</h3><h4 id="1-横向模糊匹配"><a href="#1-横向模糊匹配" class="headerlink" title="(1)横向模糊匹配"></a>(1)横向模糊匹配</h4><h5 id="1-解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的"><a href="#1-解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的" class="headerlink" title="[1] 解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的"></a>[1] 解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的</h5><h5 id="2-实现方式：使用量词"><a href="#2-实现方式：使用量词" class="headerlink" title="[2] 实现方式：使用量词"></a>[2] 实现方式：使用量词</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;m,n&#125;</span><br><span class="line"></span><br><span class="line">/ab&#123;2,5&#125;c/ # 表示匹配这样一个字符串:第一个字符是 "a"，接下来是 2 到 5 个字符 "b"，最后是字符 "c"。</span><br></pre></td></tr></table></figure>
+<p>例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/ab&#123;2,5&#125;c/g</span>;<span class="keyword">var</span> string = <span class="string">"abc abbc abbbc abbbbc abbbbbc abbbbbbc"</span>;<span class="built_in">console</span>.log( string.match(regex) );<span class="comment">// =&gt; ["abbc", "abbbc", "abbbbc", "abbbbbc"]</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-纵向模糊匹配"><a href="#2-纵向模糊匹配" class="headerlink" title="(2) 纵向模糊匹配"></a>(2) 纵向模糊匹配</h4><h5 id="1-解释：纵向模糊指的是，一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种-可能。"><a href="#1-解释：纵向模糊指的是，一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种-可能。" class="headerlink" title="[1] 解释：纵向模糊指的是，一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种 可能。"></a>[1] 解释：纵向模糊指的是，一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种 可能。</h5><h5 id="2-实现方式：使用字符组"><a href="#2-实现方式：使用字符组" class="headerlink" title="[2] 实现方式：使用字符组"></a>[2] 实现方式：使用字符组</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">其实现的方式是使用字符组。譬如 [abc]，表示该字符是可以字符 <span class="string">"a"</span>、<span class="string">"b"</span>、<span class="string">"c"</span> 中的任何一个。 </span><br><span class="line"></span><br><span class="line">比如 /a[<span class="number">123</span>]b/ 可以匹配如下三种字符串: <span class="string">"a1b"</span>、<span class="string">"a2b"</span>、<span class="string">"a3b"</span>。</span><br></pre></td></tr></table></figure>
+<p>例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/a[123]b/g</span>;<span class="keyword">var</span> string = <span class="string">"a0b a1b a2b a3b a4b"</span>;<span class="built_in">console</span>.log( string.match(regex) );<span class="comment">// =&gt; ["a1b", "a2b", "a3b"]</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-字符组"><a href="#2-字符组" class="headerlink" title="2.字符组"></a>2.字符组</h3><p>需要强调的是，虽叫字符组(字符类)，但只是其中一个字符。</p>
+<p>例如 [abc]，表示匹配一个字符，它可以是 “a”、”b”、”c” 之一。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[abc]</span><br></pre></td></tr></table></figure>
+<h4 id="1-范围表示法"><a href="#1-范围表示法" class="headerlink" title="(1) 范围表示法"></a>(1) 范围表示法</h4><p>如果字符组里的字符特别多的话，怎么办?可以使用范围表示法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">123456</span>abcdefGHIJKLM] <span class="comment">// 等同于</span></span><br><span class="line">[<span class="number">1</span><span class="number">-6</span>a-fG-M]</span><br></pre></td></tr></table></figure>
+<p>因为连字符有特殊用途，那么要匹配 “a”、”-“、”z” 这三者中任意一个字符，该怎么做呢?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">可以写成如下的方式:</span><br><span class="line">[-az] 或 [az-] 或 [a\-z]。 </span><br><span class="line">即要么放在开头，要么放在结尾，要么转义。总之不会让引擎认为是范围表示法就行了。</span><br></pre></td></tr></table></figure>
+<h4 id="2-排除字符组"><a href="#2-排除字符组" class="headerlink" title="(2) 排除字符组"></a>(2) 排除字符组</h4><h5 id="1-解释："><a href="#1-解释：" class="headerlink" title="[1] 解释："></a>[1] 解释：</h5><p>某位字符可以是任何东，但不能是</p>
+<h5 id="2-形式："><a href="#2-形式：" class="headerlink" title="[2] 形式："></a>[2] 形式：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[^abc] <span class="comment">// 表示是一个除 "a"、"b"、"c"之外的任意一个字 符</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-例子："><a href="#3-例子：" class="headerlink" title="[3] 例子："></a>[3] 例子：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/123[^a-z]/</span>;</span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">'123d'</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">'123z'</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'123d'</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'123&amp;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1));</span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2));</span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3));</span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4));</span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4));</span><br></pre></td></tr></table></figure>
+<h4 id="3-常见的简写形式"><a href="#3-常见的简写形式" class="headerlink" title="(3) 常见的简写形式"></a>(3) 常见的简写形式</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\d表示 [<span class="number">0</span><span class="number">-9</span>]。表示是一位数字。 记忆方式:其英文是 digit(数字)。\D表示 [^<span class="number">0</span><span class="number">-9</span>]。表示除数字外的任意字符。\w表示 [<span class="number">0</span><span class="number">-9</span>a-zA-Z_]。表示数字、大小写字母和下划线。 记忆方式:w 是 word 的简写，也称单词字符。\W表示 [^<span class="number">0</span><span class="number">-9</span>a-zA-Z_]。非单词字符。\s表示 [ \t\v\n\r\f]。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页 符。记忆方式:s 是 space 的首字母，空白符的单词是 white space。\S表示 [^ \t\v\n\r\f]。 非空白符。.表示 [^\n\r\u2028\u2029]。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符 除外。记忆方式:想想省略号 ... 中的每个点，都可以理解成占位符，表示任何类似的东西。</span><br></pre></td></tr></table></figure>
+<h3 id="3-量词"><a href="#3-量词" class="headerlink" title="3.量词"></a>3.量词</h3><h5 id="1-解释：-1"><a href="#1-解释：-1" class="headerlink" title="[1] 解释："></a>[1] 解释：</h5><p>量词也称重复。掌握 {m,n} 的准确含义后，只需要记住一些简写形式。</p>
+<h5 id="2-简写形式："><a href="#2-简写形式：" class="headerlink" title="[2] 简写形式："></a>[2] 简写形式：</h5><table>
+<thead>
+<tr>
+<th>量词</th>
+<th>具体含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{m,}</td>
+<td>表示至少出现 m 次。</td>
+</tr>
+<tr>
+<td>{m}</td>
+<td>等价于 {m,m}，表示出现 m 次。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>等价于 {0,1}，表示出现或者不出现。 记忆方式:问号的意思表示，有吗?</td>
+</tr>
+<tr>
+<td>+</td>
+<td>等价于 {1,}，表示出现至少一次。 记忆方式:加号是追加的意思，得先有一个，然后才考虑追加。</td>
+</tr>
+<tr>
+<td>*</td>
+<td>等价于 {0,}，表示出现任意次，有可能不出现。 记忆方式:看看天上的星星，可能一颗没有，可能零散有几颗，可能数也数不过来。</td>
+</tr>
+</tbody>
+</table>
+<h5 id="3-例子：-1"><a href="#3-例子：-1" class="headerlink" title="[3] 例子："></a>[3] 例子：</h5><p>{m,}:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\w&#123;9,&#125;/g</span>;</span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">'123456789'</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">'987654321'</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'10987654321'</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'1234567891'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(str3.match(reg));</span><br></pre></td></tr></table></figure>
+<p>{m}:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d&#123;5,&#125;/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="number">12345</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="number">1234</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="number">1234567</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> str5 = <span class="number">1234567890</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str5)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>?:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">+:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br></pre></td></tr></table></figure>
+<p>*:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 4.多选分支</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### 解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。#### 具体形式：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">(p1|p2|p3)，其中 p1、p2 和 p3 是子模式，用 |(管道符)分隔，表示其中任何之一。</span><br></pre></td></tr></table></figure>
+<h5 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/good|nice/g</span>;  <span class="keyword">var</span> string = <span class="string">"good idea, nice try."</span>;  <span class="built_in">console</span>.log( string.match(regex) );  <span class="comment">// =&gt; ["good", "nice"]</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-案例"><a href="#5-案例" class="headerlink" title="5.案例"></a>5.案例</h3>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html" data-id="cjkou6ojm000wufjenk00tabm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/11/new-operators/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/new-op.jpg)" alt="白话说说new操作符的背后" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/11/new-operators/" class="title">白话说说new操作符的背后</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/08/js-review-datatype/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-datetype.png)" alt="js复习基本概念（数据类型）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/07/08/js-review-datatype/" class="title">js复习基本概念（数据类型）</a></p>
+                            <p class="item-date"><time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished">2018-07-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/25/js-review-base-md/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-base.png)" alt="js复习基本概念（语法、严格模式）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/25/js-review-base-md/" class="title">js复习基本概念（语法、严格模式）</a></p>
+                            <p class="item-date"><time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/22/promise-2/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/do-you-promise.png)" alt="白话分析promise（二） promise规范" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/22/promise-2/" class="title">白话分析promise（二） promise规范</a></p>
+                            <p class="item-date"><time datetime="2018-06-21T16:00:00.000Z" itemprop="datePublished">2018-06-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/10/promise-1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/do-you-promise.png)" alt="白话分析promise（一） 概念及使用" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/10/promise-1/" class="title">白话分析promise（一） 概念及使用</a></p>
+                            <p class="item-date"><time datetime="2018-06-09T16:00:00.000Z" itemprop="datePublished">2018-06-10</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

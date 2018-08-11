@@ -3,19 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Neo</title>
+    <title>js复习基本概念（逻辑操作符） | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="title: 白话来说从javascript内存分配到weakMap date: 2018/5/10 thumbnail: /img/weakmap.jpeg author: Neo_huang白话来说从javascript内存分配到weakMap 参考1：http://www.ruanyifeng.com/blog/2017/04/memory-leak.html 参考2：https://zh">
+    <meta name="description" content="一、逻辑操作符号1.逻辑非 !2.逻辑与 &amp;amp;&amp;amp; 判断  表达式  短路写法   3.逻辑或 || 判断  表达式  短路写法   二、三目运算符三、优先级逻辑非（一元） &amp;gt; 逻辑与 （二元） &amp;gt; 逻辑或 （二元） &amp;gt; 三目运算符 （三元）">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Neo">
-<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/weakMap.html">
+<meta property="og:title" content="js复习基本概念（逻辑操作符）">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/js-review-logical-operators.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="title: 白话来说从javascript内存分配到weakMap date: 2018/5/10 thumbnail: /img/weakmap.jpeg author: Neo_huang白话来说从javascript内存分配到weakMap 参考1：http://www.ruanyifeng.com/blog/2017/04/memory-leak.html 参考2：https://zh">
+<meta property="og:description" content="一、逻辑操作符号1.逻辑非 !2.逻辑与 &amp;amp;&amp;amp; 判断  表达式  短路写法   3.逻辑或 || 判断  表达式  短路写法   二、三目运算符三、优先级逻辑非（一元） &amp;gt; 逻辑与 （二元） &amp;gt; 逻辑或 （二元） &amp;gt; 三目运算符 （三元）">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-08T07:59:04.000Z">
+<meta property="og:image" content="http://www.neohuang.com/img/js-review-operators.png">
+<meta property="og:updated_time" content="2018-07-10T13:03:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Neo">
-<meta name="twitter:description" content="title: 白话来说从javascript内存分配到weakMap date: 2018/5/10 thumbnail: /img/weakmap.jpeg author: Neo_huang白话来说从javascript内存分配到weakMap 参考1：http://www.ruanyifeng.com/blog/2017/04/memory-leak.html 参考2：https://zh">
+<meta name="twitter:title" content="js复习基本概念（逻辑操作符）">
+<meta name="twitter:description" content="一、逻辑操作符号1.逻辑非 !2.逻辑与 &amp;amp;&amp;amp; 判断  表达式  短路写法   3.逻辑或 || 判断  表达式  短路写法   二、三目运算符三、优先级逻辑非（一元） &amp;gt; 逻辑与 （二元） &amp;gt; 逻辑或 （二元） &amp;gt; 三目运算符 （三元）">
+<meta name="twitter:image" content="http://www.neohuang.com/img/js-review-operators.png">
     
 
     
@@ -176,40 +178,39 @@
     <div class="article-inner">
         
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            js复习基本概念（逻辑操作符）
+        </h1>
+    
+
+                
+            </header>
+        
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            <hr>
-<p>title: 白话来说从javascript内存分配到weakMap</p>
-<p>date: 2018/5/10</p>
-<p>thumbnail: /img/weakmap.jpeg</p>
-<h2 id="author-Neo-huang"><a href="#author-Neo-huang" class="headerlink" title="author: Neo_huang"></a>author: Neo_huang</h2><h2 id="白话来说从javascript内存分配到weakMap"><a href="#白话来说从javascript内存分配到weakMap" class="headerlink" title="白话来说从javascript内存分配到weakMap"></a>白话来说从javascript内存分配到weakMap</h2><ul>
-<li>参考1：<a href="http://www.ruanyifeng.com/blog/2017/04/memory-leak.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2017/04/memory-leak.html</a></li>
-<li>参考2：<a href="https://zhuanlan.zhihu.com/p/30552148" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30552148</a> </li>
-<li>参考3：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap</a></li>
-</ul>
-<p>今天有同学问了我一些关于weakmap相关的问题，这位同学表示不能完全理解weakmap，以及他的应用。所以我想话点时间来白话的说一下。</p>
-<p>首先我觉得要系统的分析内存管理以及weakMap,需要从头开始说起，如果前置的知识或者概念没有理解清晰，对于这个概念理解是不够透彻的，但这块往往牵扯的基础知识特别多，因此我特整理了一些自己的学习资料，这部分仅供参考：</p>
-<h3 id="一、计算机存储结构分析"><a href="#一、计算机存储结构分析" class="headerlink" title="一、计算机存储结构分析"></a>一、计算机存储结构分析</h3><p>cpu属于计算机的运算模块，主要功能是处理运算，并将输出运算结果，因此指令的存储、运算过程中中间状态的存储、结果的保存等都需要存储器。</p>
-<p>存储器属于计算机的存储模块，大致可以分为以下层次：</p>
-<ul>
-<li><p>寄存器</p>
+            <h2 id="一、逻辑操作符号"><a href="#一、逻辑操作符号" class="headerlink" title="一、逻辑操作符号"></a>一、逻辑操作符号</h2><h3 id="1-逻辑非"><a href="#1-逻辑非" class="headerlink" title="1.逻辑非 !"></a>1.逻辑非 !</h3><h3 id="2-逻辑与-amp-amp"><a href="#2-逻辑与-amp-amp" class="headerlink" title="2.逻辑与 &amp;&amp;"></a>2.逻辑与 &amp;&amp;</h3><ol>
+<li><p>判断</p>
 </li>
-<li><p>高速缓存</p>
+<li><p>表达式</p>
 </li>
-<li><p>主存（DRAM）</p>
+<li><p>短路写法</p>
 </li>
-<li><p>本地二级</p>
+</ol>
+<h3 id="3-逻辑或"><a href="#3-逻辑或" class="headerlink" title="3.逻辑或 ||"></a>3.逻辑或 ||</h3><ol>
+<li><p>判断</p>
 </li>
-<li><p>其他存储</p>
+<li><p>表达式</p>
 </li>
-</ul>
-<p>计算机的存储设计的这么复杂，并不是设计者故意要搞得麻烦，而是主要</p>
-<p>要兼顾性能和价格综合考量的一个因素，</p>
-<h3 id="一、程序角度来看内存是什么"><a href="#一、程序角度来看内存是什么" class="headerlink" title="一、程序角度来看内存是什么"></a>一、程序角度来看内存是什么</h3><p>从程序角度来看，我们可以把整个计算机内存看作是我们可以读写的一个大的位组</p>
-<h3 id="二、内存生命周期"><a href="#二、内存生命周期" class="headerlink" title="二、内存生命周期"></a>二、内存生命周期</h3><h4 id="（1）分配你所需要的内存"><a href="#（1）分配你所需要的内存" class="headerlink" title="（1）分配你所需要的内存"></a>（1）分配你所需要的内存</h4><h4 id="（2）使用分配到的内存"><a href="#（2）使用分配到的内存" class="headerlink" title="（2）使用分配到的内存"></a>（2）使用分配到的内存</h4><h4 id="（3）不需要时将其释放-归还"><a href="#（3）不需要时将其释放-归还" class="headerlink" title="（3）不需要时将其释放\归还"></a>（3）不需要时将其释放\归还</h4><h3 id="二、关于垃圾回收"><a href="#二、关于垃圾回收" class="headerlink" title="二、关于垃圾回收"></a>二、关于垃圾回收</h3><p>现在各大浏览器通常用采用的垃圾回收机制有两种方法：标记清除、引用计数。</p>
-<h3 id="三、关于内存泄漏"><a href="#三、关于内存泄漏" class="headerlink" title="三、关于内存泄漏"></a>三、关于内存泄漏</h3><h3 id="四、weakMap-polyfill"><a href="#四、weakMap-polyfill" class="headerlink" title="四、weakMap polyfill"></a>四、weakMap polyfill</h3>
+<li><p>短路写法</p>
+</li>
+</ol>
+<h3 id="二、三目运算符"><a href="#二、三目运算符" class="headerlink" title="二、三目运算符"></a>二、三目运算符</h3><h3 id="三、优先级"><a href="#三、优先级" class="headerlink" title="三、优先级"></a>三、优先级</h3><p>逻辑非（一元） &gt; 逻辑与 （二元） &gt; 逻辑或 （二元） &gt; 三目运算符 （三元）</p>
+
         
         </div>
         <footer class="article-footer">
@@ -219,7 +220,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/weakMap.html" data-id="cjkou6ojo000zufje7rli1p6k" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/js-review-logical-operators.html" data-id="cjkou6oje000nufje63xis0l1" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -287,7 +288,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/unfinsh_posts/weakMap.html#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/js-review-logical-operators.html#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
