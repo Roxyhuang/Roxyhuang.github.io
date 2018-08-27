@@ -69,7 +69,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -88,9 +88,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            CATEGORIES: 'Catégories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -116,7 +116,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -136,16 +136,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                11
-                <span>posts</span>
+                12
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Tag</span>
             </div>
         </div>
         
@@ -169,7 +169,7 @@
 
             
             <section id="main">
-    <article id="post-new-operators" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-position-sticky" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -177,7 +177,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/11/new-operators/">白话说说new操作符的背后</a>
+            <a class="article-title" href="/2018/08/22/position-sticky/">白话聊聊position sticky</a>
         </h1>
     
 
@@ -186,8 +186,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/11/new-operators/">
-            <time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time>
+        <a href="/2018/08/22/position-sticky/">
+            <time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time>
         </a>
     </div>
 
@@ -202,23 +202,24 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>今天群里有一段代码，发现小伙伴想尝试模拟new操作符，想想写一篇相关的博客吧。</p>
-<h3 id="二、作用"><a href="#二、作用" class="headerlink" title="二、作用"></a>二、作用</h3><p>new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。</p>
-<h3 id="三、语法"><a href="#三、语法" class="headerlink" title="三、语法"></a>三、语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">constructor</span>[([arguments])]</span><br></pre></td></tr></table></figure>
-<p>参数：</p>
-<ul>
-<li>constructor</li>
-<li>arguments</li>
-</ul>
-<h3 id="四、new执行的背后"><a href="#四、new执行的背后" class="headerlink" title="四、new执行的背后"></a>四、new执行的背后</h3><p>举例当new Foo(…) 执行时，会发生以下事情：</p>
-<ol>
-<li>一个继承自 Foo.prototype 的新对象被创建。</li>
-<li>使用指定的参数调用构造函数 Foo ，并将 this 绑定到新创建的对象。new Foo 等同于 new Foo()，也就是没有指定参数列表，Foo 不带任何参数调用的情况。</li>
-<li>由构造函数返回的对象就是 new 表达式的结果。如果构造函数没有显式返回一个对象，则使用步骤1创建的对象。（一般情况下，构造函数不返回值，但是用户可以选择主动返回对象，来覆盖正常的对象创建步骤）</li>
-</ol>
-<h3 id="五、自己模拟new实现"><a href="#五、自己模拟new实现" class="headerlink" title="五、自己模拟new实现"></a>五、自己模拟new实现</h3><p>既然已经知道new操作符背后做了些什么我们可以尝试自己模拟下。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = objectFactory(Constructor,...);</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">objectFactory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> Constructor = [].shift.call(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   obj.__proto__ = Constructor.prototype;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> ret = Constructor.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">typeof</span> ret === <span class="string">'object'</span> ? ret : obj;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>项目中有一个同事遇到了一个吸顶效果的需求，于是帮助他完成的同时顺便分析下position：sticky。</p>
+<h2 id="二、position：sticky是什么"><a href="#二、position：sticky是什么" class="headerlink" title="二、position：sticky是什么"></a>二、position：sticky是什么</h2><p>粘性定位元素（stickily positioned element）：粘性定位可以被认为是相对定位和固定定位的混合。元素在跨越特定阈值前为相对定位，之后为固定定位。</p>
+<p>最白话来说，其实这句话想表达的是： 粘性定位（position：sticky） = 相对定位(position：relative) + 固定定位 (position：fixed)</p>
+<h2 id="三、position：sticky作用以及兼容"><a href="#三、position：sticky作用以及兼容" class="headerlink" title="三、position：sticky作用以及兼容"></a>三、position：sticky作用以及兼容</h2><h3 id="1-作用："><a href="#1-作用：" class="headerlink" title="1. 作用："></a>1. 作用：</h3><p>其作用为了在iOS下实现吸顶效果，原先吸顶效果的基本的开发思路如下：</p>
+<p>利用scroll事件进行监听scrollTop的值，当scrollTop达到一定的值得时候设置吸顶元素的position : fixed;属性。</p>
+<p>但是问题是：安卓支持scroll事件和fixed属性，但是ios8.0的scroll事件不是连续触发的，只会在scroll事件结束后触发一次scroll事件，同时ios下fixed属性的支持一直是个问题。</p>
+<h3 id="2-兼容性探究："><a href="#2-兼容性探究：" class="headerlink" title="2. 兼容性探究："></a>2. 兼容性探究：</h3><h4 id="1-MDN"><a href="#1-MDN" class="headerlink" title="(1) MDN"></a>(1) <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank" rel="noopener">MDN</a></h4><p><img src="/img/sticky-mdn.png" alt=""></p>
+<h4 id="2-caniuse"><a href="#2-caniuse" class="headerlink" title="(2) caniuse"></a>(2) <a href="https://caniuse.com/#search=sticky" target="_blank" rel="noopener">caniuse</a></h4><p><img src="/img/sticky-use.png" alt=""></p>
+<p>####( 3) 因为mdn以及caniuse给到的兼容性并不一致，同时如上面所述主要在iOS使用，因此实际使用仍需要对iOS机型进行实际测试，并考虑polyfill方案</p>
+<p>之后在实际找到设备测试后，会持续更新</p>
+<h4 id="4-polyfill方案"><a href="#4-polyfill方案" class="headerlink" title="(4) polyfill方案:"></a>(4) polyfill方案:</h4><p><a href="[https://github.com/wilddeer/stickyfill">https://github.com/wilddeer/stickyfill</a></p>
+<h2 id="三、position：sticky触发条件"><a href="#三、position：sticky触发条件" class="headerlink" title="三、position：sticky触发条件"></a>三、position：sticky触发条件</h2><p>1、具有sticky属性的元素，其父级高度必须大于sticky元素的高度。</p>
+<p>2、sticky元素的底部，不能和父级底部重叠。（这条不好表述，文后详细说明）</p>
+<p>3、sticky元素的父级不能含有overflow:hidden 和 overflow:auto 属性 （不包括祖先，仅直接包含的父容器）</p>
+<p>4、必须具有top，或 bottom 属性。</p>
+<h2 id="四、移动端吸顶效果实战"><a href="#四、移动端吸顶效果实战" class="headerlink" title="四、移动端吸顶效果实战"></a>四、移动端吸顶效果实战</h2><h3 id="1-position：sticky"><a href="#1-position：sticky" class="headerlink" title="1.position：sticky"></a>1.position：sticky</h3><p>使用position：sticky 一定要记得处理浏览器兼容，并且指定top或bottom</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.sticky &#123;</span><br><span class="line">  position: -webkit-sticky;</span><br><span class="line">  position: sticky;</span><br><span class="line">  top: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-实战"><a href="#2-实战" class="headerlink" title="2.实战"></a>2.实战</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--适配移动端js--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">      (<span class="function"><span class="keyword">function</span> (<span class="params">doc, win</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> docEl = doc.documentElement,</span></span><br><span class="line"><span class="javascript">            resizeEvt = <span class="string">'orientationchange'</span> <span class="keyword">in</span> <span class="built_in">window</span> ? <span class="string">'orientationchange'</span> : <span class="string">'resize'</span>,</span></span><br><span class="line"><span class="javascript">            recalc = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">var</span> clientWidth = docEl.clientWidth;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span> (!clientWidth) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">              docEl.style.fontSize = <span class="number">75</span> * (clientWidth / <span class="number">750</span>) + <span class="string">'px'</span>;</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (doc.addEventListener) &#123;</span></span><br><span class="line"><span class="javascript">          win.addEventListener(resizeEvt, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="javascript">          doc.addEventListener(<span class="string">'DOMContentLoaded'</span>, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">      &#125;)(<span class="built_in">document</span>, <span class="built_in">window</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    * &#123;</span></span><br><span class="line"><span class="undefined">        margin: 0;</span></span><br><span class="line"><span class="undefined">        padding: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .container &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .banner &#123;</span></span><br><span class="line"><span class="undefined">        height: 2rem;</span></span><br><span class="line"><span class="undefined">        background-color: #009EE0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky &#123;</span></span><br><span class="line"><span class="undefined">        position: -webkit-sticky;</span></span><br><span class="line"><span class="undefined">        position: sticky;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .fixed &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        left: 0;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .relative &#123;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky-title &#123;</span></span><br><span class="line"><span class="undefined">        height: 1.4rem;</span></span><br><span class="line"><span class="undefined">        background-color: pink;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky-content &#123;</span></span><br><span class="line"><span class="undefined">        height: 20.3rem;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"banner"</span>&gt;</span></span><br><span class="line">                Banner部分</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sticky"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-title"</span>&gt;</span>吸顶结构标题。。。<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-content"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 安卓吸顶方案</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> scrollWrapper = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>); <span class="comment">// 假设windows 为滚动容器</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> stickyDom = <span class="built_in">document</span>.getElementById(<span class="string">'sticky'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> u = navigator.userAgent;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isAndroid = u.indexOf(<span class="string">'Android'</span>) &gt; <span class="number">-1</span> || u.indexOf(<span class="string">'Adr'</span>) &gt; <span class="number">-1</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isiOS = !!u.match(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    scrollWrapper.addEventListener(<span class="string">'scroll'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (isAndroid) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> bannerHeight = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'banner'</span>)[<span class="number">0</span>].clientHeight;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (<span class="keyword">this</span>.scrollTop &gt; <span class="number">72</span>) &#123;</span></span><br><span class="line"><span class="javascript">          stickyDom.className = <span class="string">'fixed'</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(isiOS &amp;&amp; (CSS.supports(<span class="string">"position"</span>, <span class="string">"sticky"</span>) || CSS.supports(<span class="string">"position"</span>, <span class="string">"-webkit-sticky"</span>)))&#123;</span></span><br><span class="line"><span class="javascript">        stickyDom.className = <span class="string">'stickay'</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -229,7 +230,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjkou78ld0011ufjeu9cjwj61" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlbn3z5v00146nm75d2xw4mq" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -297,7 +298,145 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/08/22/position-sticky/#comments" class="article-comment-link">Commentaires</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-new-operators" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/11/new-operators/">白话说说new操作符的背后</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/11/new-operators/">
+            <time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>今天群里有一段代码，发现小伙伴想尝试模拟new操作符，想想写一篇相关的博客吧。</p>
+<h3 id="二、作用"><a href="#二、作用" class="headerlink" title="二、作用"></a>二、作用</h3><p>new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。</p>
+<h3 id="三、语法"><a href="#三、语法" class="headerlink" title="三、语法"></a>三、语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">constructor</span>[([arguments])]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>constructor</li>
+<li>arguments</li>
+</ul>
+<h3 id="四、new执行的背后"><a href="#四、new执行的背后" class="headerlink" title="四、new执行的背后"></a>四、new执行的背后</h3><p>举例当new Foo(…) 执行时，会发生以下事情：</p>
+<ol>
+<li>一个继承自 Foo.prototype 的新对象被创建。</li>
+<li>使用指定的参数调用构造函数 Foo ，并将 this 绑定到新创建的对象。new Foo 等同于 new Foo()，也就是没有指定参数列表，Foo 不带任何参数调用的情况。</li>
+<li>由构造函数返回的对象就是 new 表达式的结果。如果构造函数没有显式返回一个对象，则使用步骤1创建的对象。（一般情况下，构造函数不返回值，但是用户可以选择主动返回对象，来覆盖正常的对象创建步骤）</li>
+</ol>
+<h3 id="五、自己模拟new实现"><a href="#五、自己模拟new实现" class="headerlink" title="五、自己模拟new实现"></a>五、自己模拟new实现</h3><p>既然已经知道new操作符背后做了些什么我们可以尝试自己模拟下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = objectFactory(Constructor,...);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">objectFactory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> Constructor = [].shift.call(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   obj.__proto__ = Constructor.prototype;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> ret = Constructor.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">typeof</span> ret === <span class="string">'object'</span> ? ret : obj;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlbn3cy4000a6nm7lxfikx2v" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -807,7 +946,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjkou6oiy0008ufje2vjq3q6o" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlbn3cy6000c6nm7ldgtw9h0" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -875,7 +1014,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -1033,7 +1172,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjkou6oit0006ufje4rnaq14m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlbn3cxw00066nm7928n5imr" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1101,7 +1240,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -1318,7 +1457,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjkou6oj8000eufje4zvaoz6k" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlbn3cy9000g6nm7e07qe2cr" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1386,7 +1525,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -1535,7 +1674,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjkou6oj9000gufjewqdgqb8a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjlbn3cyb000i6nm7yvjsapkw" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1603,7 +1742,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -1682,7 +1821,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjkou6oje000mufjeekqykdoc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjlbn3cyf000o6nm7cmfhpjok" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1750,7 +1889,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -1850,7 +1989,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjkou6ojc000kufjegypbplcq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjlbn3cyg000q6nm7lpfxydjc" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1918,7 +2057,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -2208,7 +2347,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjkou6oj3000aufjes8890bew" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjlbn3cy7000e6nm7glwr728c" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2276,7 +2415,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -2392,7 +2531,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjkou6oj6000cufjeutz9igwh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjlbn3cyc000k6nm7n1ripeak" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2460,174 +2599,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comments</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-study-plan" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/03/study-plan/">2018年学习大纲</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/05/03/study-plan/">
-            <time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>作者：Neo_Huang</p>
-<p><img src="/img/study.jpeg" alt=""></p>
-<h2 id="学习大纲"><a href="#学习大纲" class="headerlink" title="学习大纲"></a>学习大纲</h2><h3 id="1-js"><a href="#1-js" class="headerlink" title="1. js"></a>1. js</h3><ul>
-<li>参考1: 《Javascript 高级程序设计》</li>
-<li>参考2: <a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">《ECMAScript 6 入门》</a> </li>
-<li>参考3: <a href="https://www.tslang.cn/docs/home.html" target="_blank" rel="noopener">《TypeScript 入门》</a></li>
-<li>参考4: 《JavaScript语言精粹》</li>
-<li>参考5：《你不知道的JavaScript》</li>
-<li>参考6: <a href="http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html" target="_blank" rel="noopener">《tom大叔深入js系列》</a></li>
-<li>参考7: <a href="https://github.com/mqyqingfeng/Blog/issues/17" target="_blank" rel="noopener">《冴羽深入js系列》</a></li>
-</ul>
-<h3 id="2-正则"><a href="#2-正则" class="headerlink" title="2. 正则"></a>2. 正则</h3><ul>
-<li>参考1: 《JavaScript正则表达式迷你书（1.1版》</li>
-</ul>
-<h3 id="3-html"><a href="#3-html" class="headerlink" title="3. html"></a>3. html</h3><ul>
-<li>参考:  w3c文档 （暂未找到更好的学习方式）</li>
-</ul>
-<h3 id="4-css"><a href="#4-css" class="headerlink" title="4. css"></a>4. css</h3><ul>
-<li>参考1: 《精通 CSS》 或 《CSS秘密花园》</li>
-</ul>
-<h3 id="5-react、redux、mobx、vue（以及常用框架和库的一些解析）"><a href="#5-react、redux、mobx、vue（以及常用框架和库的一些解析）" class="headerlink" title="5.react、redux、mobx、vue（以及常用框架和库的一些解析）"></a>5.react、redux、mobx、vue（以及常用框架和库的一些解析）</h3><ul>
-<li>react源码解读以及深入react技术栈</li>
-<li>redux源码解读</li>
-<li>mobx源码解读</li>
-</ul>
-<h3 id="6-数据结构、算法、语言"><a href="#6-数据结构、算法、语言" class="headerlink" title="6. 数据结构、算法、语言"></a>6. 数据结构、算法、语言</h3><ul>
-<li>参考1: 《学习javascript数据结构与算法》以及《数据结构与算法分析》</li>
-<li>参考2:  <a href="https://leetcode.com/" target="_blank" rel="noopener">leetcode</a></li>
-</ul>
-<h3 id="7-webpack、工程化相关"><a href="#7-webpack、工程化相关" class="headerlink" title="7.webpack、工程化相关"></a>7.webpack、工程化相关</h3><ul>
-<li><a href="https://webpack.js.org/concepts/" target="_blank" rel="noopener">webpack官方文档阅览</a> </li>
-<li>webpack load plugins 编写原理</li>
-<li>webpack源码解析</li>
-</ul>
-<h3 id="8-node-js、服务端运维"><a href="#8-node-js、服务端运维" class="headerlink" title="8.node.js、服务端运维"></a>8.node.js、服务端运维</h3><ul>
-<li>暂未定</li>
-</ul>
-<h3 id="9-计算网络浏览器内核"><a href="#9-计算网络浏览器内核" class="headerlink" title="9.计算网络浏览器内核"></a>9.计算网络浏览器内核</h3><ul>
-<li>暂未定</li>
-</ul>
-<h3 id="10-操作系统和计算基础"><a href="#10-操作系统和计算基础" class="headerlink" title="10.操作系统和计算基础"></a>10.操作系统和计算基础</h3><ul>
-<li>暂未定</li>
-</ul>
-<h3 id="11-知识总回顾"><a href="#11-知识总回顾" class="headerlink" title="11.知识总回顾"></a>11.知识总回顾</h3><ul>
-<li>暂未定</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjkou6ojb000iufjeffff621w" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/05/03/study-plan/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -2638,7 +2610,7 @@
 
 
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Suiv &raquo;</a>
     </nav>
 </section>
             
@@ -2646,9 +2618,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/22/position-sticky/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/position-sticky.jpeg)" alt="白话聊聊position sticky" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/22/position-sticky/" class="title">白话聊聊position sticky</a></p>
+                            <p class="item-date"><time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2726,25 +2717,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/06/10/promise-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/do-you-promise.png)" alt="白话分析promise（一） 概念及使用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/06/10/promise-1/" class="title">白话分析promise（一） 概念及使用</a></p>
-                            <p class="item-date"><time datetime="2018-06-09T16:00:00.000Z" itemprop="datePublished">2018-06-10</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2754,9 +2726,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2767,7 +2739,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 

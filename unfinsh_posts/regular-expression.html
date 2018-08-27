@@ -5,18 +5,18 @@
     
     <title>正则表达式回顾笔记 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+    <meta name="description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、整体知识结构 字符匹配 纵向匹配 字符组   横向匹配 量词     位置匹配 括号作用 回溯法原理 正则拆分 正则构建 正则表达式 –">
 <meta property="og:type" content="website">
 <meta property="og:title" content="正则表达式回顾笔记">
 <meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+<meta property="og:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、整体知识结构 字符匹配 纵向匹配 字符组   横向匹配 量词     位置匹配 括号作用 回溯法原理 正则拆分 正则构建 正则表达式 –">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/js-review-operators.png">
-<meta property="og:updated_time" content="2018-08-09T10:38:24.000Z">
+<meta property="og:updated_time" content="2018-08-18T12:11:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式回顾笔记">
-<meta name="twitter:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、正则表达式字符匹配攻略1.核心原则：正则表达式是匹配模式，要么匹配字符，要么匹配位置 1.两种模糊匹配(1)横向模糊匹配[1] 解释：横">
+<meta name="twitter:description" content="一、背景笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。 二、整体知识结构 字符匹配 纵向匹配 字符组   横向匹配 量词     位置匹配 括号作用 回溯法原理 正则拆分 正则构建 正则表达式 –">
 <meta name="twitter:image" content="http://www.neohuang.com/img/js-review-operators.png">
     
 
@@ -75,7 +75,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -94,9 +94,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            CATEGORIES: 'Catégories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -122,7 +122,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -142,16 +142,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                11
-                <span>posts</span>
+                12
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Tag</span>
             </div>
         </div>
         
@@ -194,6 +194,25 @@
         
             
             <h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>笔者最近连续加班25天，下午安排上线基本完成，又恰逢自己头痛，也暂时没有心情花很细的心思去看特别复杂的知识，所以决定看看正则转换一下心情，目标是选择老姚前辈的—-《JavaScript 正则表达式迷你书》，该书很适合前端同时篇幅又不是特别长。正适合。</p>
+<h2 id="二、整体知识结构"><a href="#二、整体知识结构" class="headerlink" title="二、整体知识结构"></a>二、整体知识结构</h2><ul>
+<li>字符匹配<ul>
+<li>纵向匹配<ul>
+<li>字符组</li>
+</ul>
+</li>
+<li>横向匹配<ul>
+<li>量词</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>位置匹配</li>
+<li>括号作用</li>
+<li>回溯法原理</li>
+<li>正则拆分</li>
+<li>正则构建</li>
+<li>正则表达式 – js中的编写</li>
+</ul>
 <h2 id="二、正则表达式字符匹配攻略"><a href="#二、正则表达式字符匹配攻略" class="headerlink" title="二、正则表达式字符匹配攻略"></a>二、正则表达式字符匹配攻略</h2><p><strong>1.核心原则</strong>：正则表达式是匹配模式，要么匹配字符，要么匹配位置</p>
 <h3 id="1-两种模糊匹配"><a href="#1-两种模糊匹配" class="headerlink" title="1.两种模糊匹配"></a>1.两种模糊匹配</h3><h4 id="1-横向模糊匹配"><a href="#1-横向模糊匹配" class="headerlink" title="(1)横向模糊匹配"></a>(1)横向模糊匹配</h4><h5 id="1-解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的"><a href="#1-解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的" class="headerlink" title="[1] 解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的"></a>[1] 解释：横向模糊指的是，一个正则可匹配的字符串的长度不是固定的</h5><h5 id="2-实现方式：使用量词"><a href="#2-实现方式：使用量词" class="headerlink" title="[2] 实现方式：使用量词"></a>[2] 实现方式：使用量词</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;m,n&#125;</span><br><span class="line"></span><br><span class="line">/ab&#123;2,5&#125;c/ # 表示匹配这样一个字符串:第一个字符是 "a"，接下来是 2 到 5 个字符 "b"，最后是字符 "c"。</span><br></pre></td></tr></table></figure>
 <p>例子:</p>
@@ -248,11 +267,26 @@
 <p>{m}:</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d&#123;5,&#125;/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="number">12345</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="number">1234</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="number">1234567</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> str5 = <span class="number">1234567890</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str5)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p>?:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">+:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d\/?/g</span>; \/? 需要使用</span><br><span class="line"><span class="keyword">var</span> str1 = <span class="number">11111</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">'helloworld'</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'hel111'</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'222222'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>+:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d+/g</span>;</span><br><span class="line"><span class="keyword">var</span> str1 = <span class="number">11111</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">'helloworld'</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'hel111'</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'222222'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p>*:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 4.多选分支</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### 解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。#### 具体形式：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">(p1|p2|p3)，其中 p1、p2 和 p3 是子模式，用 |(管道符)分隔，表示其中任何之一。</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/1\/*/g</span>;</span><br><span class="line"><span class="keyword">var</span> str1 = <span class="number">11111</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">'helloworld'</span>;</span><br><span class="line"><span class="keyword">var</span> str3 = <span class="string">'hel111'</span>;</span><br><span class="line"><span class="keyword">var</span> str4 = <span class="string">'222222'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str3)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str4)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-多选分支"><a href="#4-多选分支" class="headerlink" title="4.多选分支"></a>4.多选分支</h3><h4 id="解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。"><a href="#解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。" class="headerlink" title="解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。"></a>解释：一个模式可以实现横向和纵向模糊匹配。而多选分支可以支持多个子模式任选其一。</h4><h4 id="具体形式："><a href="#具体形式：" class="headerlink" title="具体形式："></a>具体形式：</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(p1|p2|p3)，其中 p1、p2 和 p3 是子模式，用 |(管道符)分隔，表示其中任何之一。</span><br></pre></td></tr></table></figure>
 <h5 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/good|nice/g</span>;  <span class="keyword">var</span> string = <span class="string">"good idea, nice try."</span>;  <span class="built_in">console</span>.log( string.match(regex) );  <span class="comment">// =&gt; ["good", "nice"]</span></span><br></pre></td></tr></table></figure>
-<h3 id="5-案例"><a href="#5-案例" class="headerlink" title="5.案例"></a>5.案例</h3>
+<h3 id="5-题目"><a href="#5-题目" class="headerlink" title="5.题目"></a>5.题目</h3><h4 id="1-匹配-16-进制颜色值"><a href="#1-匹配-16-进制颜色值" class="headerlink" title="(1)匹配 16 进制颜色值"></a>(1)匹配 16 进制颜色值</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="2-匹配时间"><a href="#2-匹配时间" class="headerlink" title="(2) 匹配时间"></a>(2) 匹配时间</h4><h4 id="3-匹配日期"><a href="#3-匹配日期" class="headerlink" title="(3) 匹配日期"></a>(3) 匹配日期</h4><h4 id="4-window-操作系统文件路径"><a href="#4-window-操作系统文件路径" class="headerlink" title="(4) window 操作系统文件路径"></a>(4) window 操作系统文件路径</h4><h4 id="5-匹配id"><a href="#5-匹配id" class="headerlink" title="(5) 匹配id"></a>(5) 匹配id</h4><h2 id="三、正则表达式位置匹配攻略"><a href="#三、正则表达式位置匹配攻略" class="headerlink" title="三、正则表达式位置匹配攻略"></a>三、正则表达式位置匹配攻略</h2><p>正则表达式是匹配模式，要么匹配字符，要么匹配位置。请记住这句话。</p>
+<h3 id="1-什么是位置"><a href="#1-什么是位置" class="headerlink" title="1.什么是位置"></a>1.什么是位置</h3><p>位置(锚)是相邻字符之间的位置。比如，下图中箭头所指的地方:</p>
+<h3 id="2-如何匹配位置呢"><a href="#2-如何匹配位置呢" class="headerlink" title="2.如何匹配位置呢?"></a>2.如何匹配位置呢?</h3><p>在 ES5 中，共有 6 个锚:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^、$、\b、\B、(?=p)、(?!p)</span><br></pre></td></tr></table></figure>
+<p>####（1） ^ 和 \$</p>
+<h5 id="1-脱字符-匹配开头，在多行匹配中匹配行开头。"><a href="#1-脱字符-匹配开头，在多行匹配中匹配行开头。" class="headerlink" title="[1] ^(脱字符)匹配开头，在多行匹配中匹配行开头。"></a>[1] ^(脱字符)匹配开头，在多行匹配中匹配行开头。</h5><h5 id="2-美元符号-匹配结尾，在多行匹配中匹配行结尾。"><a href="#2-美元符号-匹配结尾，在多行匹配中匹配行结尾。" class="headerlink" title="[2]\$(美元符号)匹配结尾，在多行匹配中匹配行结尾。"></a>[2]\$(美元符号)匹配结尾，在多行匹配中匹配行结尾。</h5><p>比如我们把字符串的开头和结尾用 “#” 替换(位置可以替换成字符的!):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^|$/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">'helloworld'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(str1.replace(reg, <span class="string">'#'</span>));</span><br></pre></td></tr></table></figure>
+<p>多行匹配模式(即有修饰符 m)时，二者是行的概念，这一点需要我们注意:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var result = &quot;I\nlove\njavascript&quot;.replace(/^|$/gm, &apos;#&apos;);  console.log(result);  /*  #I#  #love#  #javascript#  */</span><br></pre></td></tr></table></figure>
+<p>####（2） \b 和 \B</p>
+<p>定义：\b 是单词边界，具体就是 \w 与 \W 之间的位置，也包括 \w 与 ^ 之间的位置，和 \w 与 $ 之间的位置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = <span class="string">"[JS] Lesson_01.mp4"</span>.replace(<span class="regexp">/\b/g</span>, <span class="string">'#'</span>);<span class="built_in">console</span>.log(result);<span class="comment">// =&gt; "[#JS#] #Lesson_01#.#mp4#"</span></span><br></pre></td></tr></table></figure>
         
         </div>
         <footer class="article-footer">
@@ -262,7 +296,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html" data-id="cjkou6ojm000wufjenk00tabm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html" data-id="cjlbn3cyl000z6nm7hukkzp0h" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -330,7 +364,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/unfinsh_posts/regular-expression.html#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -357,9 +391,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/22/position-sticky/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/position-sticky.jpeg)" alt="白话聊聊position sticky" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/22/position-sticky/" class="title">白话聊聊position sticky</a></p>
+                            <p class="item-date"><time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -437,25 +490,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/06/10/promise-1/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/do-you-promise.png)" alt="白话分析promise（一） 概念及使用" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/06/10/promise-1/" class="title">白话分析promise（一） 概念及使用</a></p>
-                            <p class="item-date"><time datetime="2018-06-09T16:00:00.000Z" itemprop="datePublished">2018-06-10</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -465,9 +499,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -478,7 +512,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 
