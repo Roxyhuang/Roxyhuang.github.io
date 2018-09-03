@@ -69,7 +69,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -88,10 +88,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -116,7 +116,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -136,16 +136,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                12
-                <span>Entradas</span>
+                14
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>Etiqueta</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -169,7 +169,7 @@
 
             
             <section id="main">
-    <article id="post-position-sticky" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-hash-backListener" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -177,7 +177,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/08/22/position-sticky/">白话聊聊position sticky</a>
+            <a class="article-title" href="/2018/09/03/hash-backListener/">监听浏览器回退</a>
         </h1>
     
 
@@ -186,8 +186,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/08/22/position-sticky/">
-            <time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time>
+        <a href="/2018/09/03/hash-backListener/">
+            <time datetime="2018-09-02T16:00:00.000Z" itemprop="datePublished">2018-09-03</time>
         </a>
     </div>
 
@@ -202,24 +202,63 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>项目中有一个同事遇到了一个吸顶效果的需求，于是帮助他完成的同时顺便分析下position：sticky。</p>
-<h2 id="二、position：sticky是什么"><a href="#二、position：sticky是什么" class="headerlink" title="二、position：sticky是什么"></a>二、position：sticky是什么</h2><p>粘性定位元素（stickily positioned element）：粘性定位可以被认为是相对定位和固定定位的混合。元素在跨越特定阈值前为相对定位，之后为固定定位。</p>
-<p>最白话来说，其实这句话想表达的是： 粘性定位（position：sticky） = 相对定位(position：relative) + 固定定位 (position：fixed)</p>
-<h2 id="三、position：sticky作用以及兼容"><a href="#三、position：sticky作用以及兼容" class="headerlink" title="三、position：sticky作用以及兼容"></a>三、position：sticky作用以及兼容</h2><h3 id="1-作用："><a href="#1-作用：" class="headerlink" title="1. 作用："></a>1. 作用：</h3><p>其作用为了在iOS下实现吸顶效果，原先吸顶效果的基本的开发思路如下：</p>
-<p>利用scroll事件进行监听scrollTop的值，当scrollTop达到一定的值得时候设置吸顶元素的position : fixed;属性。</p>
-<p>但是问题是：安卓支持scroll事件和fixed属性，但是ios8.0的scroll事件不是连续触发的，只会在scroll事件结束后触发一次scroll事件，同时ios下fixed属性的支持一直是个问题。</p>
-<h3 id="2-兼容性探究："><a href="#2-兼容性探究：" class="headerlink" title="2. 兼容性探究："></a>2. 兼容性探究：</h3><h4 id="1-MDN"><a href="#1-MDN" class="headerlink" title="(1) MDN"></a>(1) <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank" rel="noopener">MDN</a></h4><p><img src="/img/sticky-mdn.png" alt=""></p>
-<h4 id="2-caniuse"><a href="#2-caniuse" class="headerlink" title="(2) caniuse"></a>(2) <a href="https://caniuse.com/#search=sticky" target="_blank" rel="noopener">caniuse</a></h4><p><img src="/img/sticky-use.png" alt=""></p>
-<p>####( 3) 因为mdn以及caniuse给到的兼容性并不一致，同时如上面所述主要在iOS使用，因此实际使用仍需要对iOS机型进行实际测试，并考虑polyfill方案</p>
-<p>之后在实际找到设备测试后，会持续更新</p>
-<h4 id="4-polyfill方案"><a href="#4-polyfill方案" class="headerlink" title="(4) polyfill方案:"></a>(4) polyfill方案:</h4><p><a href="[https://github.com/wilddeer/stickyfill">https://github.com/wilddeer/stickyfill</a></p>
-<h2 id="三、position：sticky触发条件"><a href="#三、position：sticky触发条件" class="headerlink" title="三、position：sticky触发条件"></a>三、position：sticky触发条件</h2><p>1、具有sticky属性的元素，其父级高度必须大于sticky元素的高度。</p>
-<p>2、sticky元素的底部，不能和父级底部重叠。（这条不好表述，文后详细说明）</p>
-<p>3、sticky元素的父级不能含有overflow:hidden 和 overflow:auto 属性 （不包括祖先，仅直接包含的父容器）</p>
-<p>4、必须具有top，或 bottom 属性。</p>
-<h2 id="四、移动端吸顶效果实战"><a href="#四、移动端吸顶效果实战" class="headerlink" title="四、移动端吸顶效果实战"></a>四、移动端吸顶效果实战</h2><h3 id="1-position：sticky"><a href="#1-position：sticky" class="headerlink" title="1.position：sticky"></a>1.position：sticky</h3><p>使用position：sticky 一定要记得处理浏览器兼容，并且指定top或bottom</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.sticky &#123;</span><br><span class="line">  position: -webkit-sticky;</span><br><span class="line">  position: sticky;</span><br><span class="line">  top: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-实战"><a href="#2-实战" class="headerlink" title="2.实战"></a>2.实战</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--适配移动端js--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">      (<span class="function"><span class="keyword">function</span> (<span class="params">doc, win</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> docEl = doc.documentElement,</span></span><br><span class="line"><span class="javascript">            resizeEvt = <span class="string">'orientationchange'</span> <span class="keyword">in</span> <span class="built_in">window</span> ? <span class="string">'orientationchange'</span> : <span class="string">'resize'</span>,</span></span><br><span class="line"><span class="javascript">            recalc = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">var</span> clientWidth = docEl.clientWidth;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span> (!clientWidth) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">              docEl.style.fontSize = <span class="number">75</span> * (clientWidth / <span class="number">750</span>) + <span class="string">'px'</span>;</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (doc.addEventListener) &#123;</span></span><br><span class="line"><span class="javascript">          win.addEventListener(resizeEvt, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="javascript">          doc.addEventListener(<span class="string">'DOMContentLoaded'</span>, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">      &#125;)(<span class="built_in">document</span>, <span class="built_in">window</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    * &#123;</span></span><br><span class="line"><span class="undefined">        margin: 0;</span></span><br><span class="line"><span class="undefined">        padding: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .container &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .banner &#123;</span></span><br><span class="line"><span class="undefined">        height: 2rem;</span></span><br><span class="line"><span class="undefined">        background-color: #009EE0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky &#123;</span></span><br><span class="line"><span class="undefined">        position: -webkit-sticky;</span></span><br><span class="line"><span class="undefined">        position: sticky;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .fixed &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        left: 0;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .relative &#123;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky-title &#123;</span></span><br><span class="line"><span class="undefined">        height: 1.4rem;</span></span><br><span class="line"><span class="undefined">        background-color: pink;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    .sticky-content &#123;</span></span><br><span class="line"><span class="undefined">        height: 20.3rem;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"banner"</span>&gt;</span></span><br><span class="line">                Banner部分</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sticky"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-title"</span>&gt;</span>吸顶结构标题。。。<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-content"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 安卓吸顶方案</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> scrollWrapper = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>); <span class="comment">// 假设windows 为滚动容器</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> stickyDom = <span class="built_in">document</span>.getElementById(<span class="string">'sticky'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> u = navigator.userAgent;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isAndroid = u.indexOf(<span class="string">'Android'</span>) &gt; <span class="number">-1</span> || u.indexOf(<span class="string">'Adr'</span>) &gt; <span class="number">-1</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isiOS = !!u.match(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    scrollWrapper.addEventListener(<span class="string">'scroll'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (isAndroid) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> bannerHeight = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'banner'</span>)[<span class="number">0</span>].clientHeight;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (<span class="keyword">this</span>.scrollTop &gt; <span class="number">72</span>) &#123;</span></span><br><span class="line"><span class="javascript">          stickyDom.className = <span class="string">'fixed'</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(isiOS &amp;&amp; (CSS.supports(<span class="string">"position"</span>, <span class="string">"sticky"</span>) || CSS.supports(<span class="string">"position"</span>, <span class="string">"-webkit-sticky"</span>)))&#123;</span></span><br><span class="line"><span class="javascript">        stickyDom.className = <span class="string">'stickay'</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>近来遇到一个需求需要监听浏览器回退事件，恰好目前项目中运用的路由为hash-router，因此对这方面做了一个总结。因此本文更多其实只能算对mdn相关文档的一个汇总笔记。</p>
+<h2 id="二、相关api"><a href="#二、相关api" class="headerlink" title="二、相关api"></a>二、相关api</h2><h3 id="1-window-onpopstate"><a href="#1-window-onpopstate" class="headerlink" title="1.window.onpopstate"></a>1.window.onpopstate</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate</a></p>
+<p> 每当活动的历史记录项发生变化时， popstate 事件都会被传递给window对象。如果当前活动的历史记录项是被 pushState 创建的，或者是由 replaceState 改变的，那么 popstate 事件的状态属性 state 会包含一个当前历史记录状态对象的拷贝。</p>
+<h4 id="1-概述："><a href="#1-概述：" class="headerlink" title="(1) 概述："></a>(1) 概述：</h4><p>根据mdn文档上的解释，我还想来画一下重点：</p>
+<p>[1] window.onpopstate是popstate事件在window对象上的事件处理程序，<strong>每当处于激活状态的历史记录条目发生变化时</strong>,popstate事件就会在对应window对象上触发。</p>
+<p>[2] <strong>调用history.pushState()或者history.replaceState()不会触发popstate事件</strong>. popstate事件<strong>只会在浏览器某些行为下触发</strong>, 比如点击后退、前进按钮(或者在JavaScript中调用history.back()、history.forward()、history.go()方法)。</p>
+<p>[3] 如果当前处于激活状态的历史记录条目是由history.pushState()方法创建,或者由history.replaceState()方法修改过的, 则popstate事件对象的state属性包含了这个历史记录条目的state对象的一个拷贝。</p>
+<p>[4] <strong>当网页加载时,各浏览器对popstate事件是否触发有不同的表现</strong>,Chrome 和 Safari会触发popstate事件, 而Firefox不会。</p>
+<p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onpopstate = funcRef;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onpopstate = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">"location: "</span> + <span class="built_in">document</span>.location + <span class="string">", state: "</span> + <span class="built_in">JSON</span>.stringify(event.state));</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//绑定事件处理函数.</span></span><br><span class="line"> history.pushState(&#123;<span class="attr">page</span>: <span class="number">1</span>&#125;, <span class="string">"title 1"</span>, <span class="string">"?page=1"</span>);    <span class="comment">//添加并激活一个历史记录条目 http://example.com/example.html?page=1,条目索引为1</span></span><br><span class="line"> history.pushState(&#123;<span class="attr">page</span>: <span class="number">2</span>&#125;, <span class="string">"title 2"</span>, <span class="string">"?page=2"</span>);    <span class="comment">//添加并激活一个历史记录条目 http://example.com/example.html?page=2,条目索引为2</span></span><br><span class="line"> history.replaceState(&#123;<span class="attr">page</span>: <span class="number">3</span>&#125;, <span class="string">"title 3"</span>, <span class="string">"?page=3"</span>); <span class="comment">//修改当前激活的历史记录条目 http://ex..?page=2 变为 http://ex..?page=3,条目索引为3</span></span><br><span class="line"> history.back(); <span class="comment">// 弹出 "location: http://example.com/example.html?page=1, state: &#123;"page":1&#125;"</span></span><br><span class="line"> history.back(); <span class="comment">// 弹出 "location: http://example.com/example.html, state: null</span></span><br><span class="line"> history.go(<span class="number">2</span>);  <span class="comment">// 弹出 "location: http://example.com/example.html?page=3, state: &#123;"page":3&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-history-pushState"><a href="#2-history-pushState" class="headerlink" title="2.history.pushState"></a>2.history.pushState</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/History_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/History_API</a></p>
+<h4 id="1-概念：添加历史记录中的条目"><a href="#1-概念：添加历史记录中的条目" class="headerlink" title="(1) 概念：添加历史记录中的条目"></a>(1) 概念：添加历史记录中的条目</h4><h4 id="2-pushState-使用"><a href="#2-pushState-使用" class="headerlink" title="(2) pushState()使用"></a>(2) pushState()使用</h4><p>pushState() 需要三个参数: 一个状态对象, 一个标题 (目前被忽略), 和 (可选的) 一个URL. 让我们来解释下这三个参数详细内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pushState(&#123; <span class="attr">state1</span>: <span class="number">1</span>, <span class="attr">state2</span>: <span class="number">2</span> &#125;, title, URL);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>状态对象： </p>
+<p>  状态对象state是一个JavaScript对象，通过pushState () 创建新的历史记录条目。无论什么时候用户导航到新的状态，popstate事件就会被触发，且该事件的state属性包含该历史记录条目状态对象的副本。</p>
+<p>  状态对象可以是能被序列化的任何东西。原因在于Firefox将状态对象保存在用户的磁盘上，以便在用户重启浏览器时使用，我<strong>们规定了状态对象在序列化表示后有640k的大小限制</strong>。如果你给 pushState() 方法传了一个序列化后大于640k的状态对象，该方法会抛出异常。如果你需要更大的空间，建议使用 sessionStorage 以及 localStorage.</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这一句可以理解为，pushState()后不会立即跳转，此时会对该历史记录条目状态保存一个副本，无	论什么时候用户导航到新的状态，popstate事件就会被触发。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>标题</p>
+<p>  Firefox 目前忽略这个参数，但未来可能会用到。传递一个空字符串在这里是安全的，而在将来这是不安全的。二选一的话，你可以为跳转的state传递一个短标题</p>
+</li>
+<li><p>URL </p>
+<p>   该参数定义了新的历史URL记录。注意，调用 pushState() <strong>后浏览器并不会立即加载这个URL</strong>，但可能会在稍后某些情况下加载这个URL，比如在用户重新打开浏览器时。新URL不必须为绝对路径。如果新URL是相对路径，那么它将被作为相对于当前URL处理。<strong>新URL必须与当前URL同源</strong>，否则 pushState() 会抛出一个异常。该参数是可选的，缺省为当前URL。</p>
+</li>
+</ul>
+<h4 id="3-例子"><a href="#3-例子" class="headerlink" title="(3) 例子"></a>(3) 例子</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stateObj = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span> &#125;;</span><br><span class="line">history.pushState(stateObj, <span class="string">"page 2"</span>, <span class="string">"bar.html"</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 history.pushState() 可以改变referrer，它在用户发送 XMLHttpRequest 请求时在HTTP头部使用，改变state后创建的 XMLHttpRequest 对象的referrer都会被改变。因为referrer是标识创建  XMLHttpRequest 对象时 this 所代表的window对象中document的URL。</p>
+<p>在某种意义上，调用 pushState() 与 设置 window.location = “#foo” 类似，二者都会在当前页面创建并激活新的历史记录。但 pushState() 具有如下几条优点：</p>
+<ul>
+<li><p>新的 URL 可以是与当前URL同源的任意URL 。而设置 window.location 仅当你只修改了哈希值时才保持同一个 document。</p>
+</li>
+<li><p>如果需要，你可以不必改变URL。而设置 window.location = “#foo”;在当前哈希不是 #foo 的情况下， 仅仅是新建了一个新的历史记录项。</p>
+</li>
+<li><p>你可以为新的历史记录项关联任意数据。而基于哈希值的方式，则必须将所有相关数据编码到一个短字符串里。</p>
+</li>
+<li><p>假如 标题 在之后会被浏览器用到，那么这个数据是可以被使用的（哈希则不然）。</p>
+</li>
+</ul>
+<p>注意 pushState() 绝对不会触发 hashchange 事件，即使新的URL与旧的URL仅哈希不同也是如此。    </p>
+<h3 id="3-history-replaceState"><a href="#3-history-replaceState" class="headerlink" title="3.history.replaceState"></a>3.history.replaceState</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/History_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/History_API</a></p>
+<h4 id="1-概念：修改历史记录中的条目"><a href="#1-概念：修改历史记录中的条目" class="headerlink" title="(1) 概念：修改历史记录中的条目"></a>(1) 概念：修改历史记录中的条目</h4><p>history.replaceState() 的使用与 history.pushState() 非常相似，区别在于  replaceState()  是修改了当前的历史记录项而不是新建一个。 注意这并不会阻止其在全局浏览器历史记录中创建一个新的历史记录项。</p>
+<p>replaceState() 的使用场景在于为了响应用户操作，你想要更新状态对象state或者当前历史记录的URL。</p>
+<h4 id="2-replaceState-使用"><a href="#2-replaceState-使用" class="headerlink" title="(2) replaceState()使用"></a>(2) replaceState()使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stateObj = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span> &#125;;</span><br><span class="line">history.replaceState(stateObj, <span class="string">"page 3"</span>, <span class="string">"bar2.html"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>导致地址栏显示<a href="http://mozilla.org/bar2.html,，但是浏览器并不会去加载bar2.html" target="_blank" rel="noopener">http://mozilla.org/bar2.html,，但是浏览器并不会去加载bar2.html</a></strong> 甚至都不需要检查 bar2.html 是否存在。</p>
+<p>假设现在用户重新导向到了 <strong><a href="http://www.microsoft.com" target="_blank" rel="noopener">http://www.microsoft.com</a></strong>，然后点击了回退按钮。这里，地址栏会显示<strong><a href="http://mozilla.org/bar2.html" target="_blank" rel="noopener">http://mozilla.org/bar2.html</a></strong>。假如用户再次点击回退按钮，地址栏会显示<strong><a href="http://mozilla.org/foo.html" target="_blank" rel="noopener">http://mozilla.org/foo.html</a></strong>，完全跳过了bar.html。</p>
+<h3 id="4-HashChangeEvent"><a href="#4-HashChangeEvent" class="headerlink" title="4.HashChangeEvent"></a>4.HashChangeEvent</h3><p>当URL中的片段标识符发生改变时触发（URL中紧跟’#’号的部分，包括‘#’号）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// exit if the browser implements that event</span></span><br><span class="line">  <span class="keyword">if</span> ( <span class="string">"onhashchange"</span> <span class="keyword">in</span> <span class="built_in">window</span>.document.body ) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> location = <span class="built_in">window</span>.location,</span><br><span class="line">    oldURL = location.href,</span><br><span class="line">    oldHash = location.hash;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// check the location hash on a 100ms interval</span></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> newURL = location.href,</span><br><span class="line">      newHash = location.hash;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if the hash has changed and a handler has been bound...</span></span><br><span class="line">    <span class="keyword">if</span> ( newHash != oldHash &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">window</span>.onhashchange === <span class="string">"function"</span> ) &#123;</span><br><span class="line">      <span class="comment">// execute the handler</span></span><br><span class="line">      <span class="built_in">window</span>.onhashchange(&#123;</span><br><span class="line">        type: <span class="string">"hashchange"</span>,</span><br><span class="line">        oldURL: oldURL,</span><br><span class="line">        newURL: newURL</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      oldURL = newURL;</span><br><span class="line">      oldHash = newHash;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="5-history-length"><a href="#5-history-length" class="headerlink" title="5.history.length"></a>5.history.length</h3><p>History.length是一个只读属性，返回当前session中的history个数，包含当前页面在内。举个例子，对于新开一个tab加载的页面当前属性返回值1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">length = history.length; <span class="comment">// 返回当前session中的history个数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = <span class="built_in">window</span>.history.length; <span class="comment">// 返回当前session中的history个数</span></span><br></pre></td></tr></table></figure>
+<p>mdn文档中，对这块的翻译基本以上，实际在使用中有一点是非常需要注意的，就是history.length并不是整个当前会话的历史条目的当前状态(即currentLength)，而实际是当前会话历史条目的存在记录的整体长度（即maxlength）</p>
+<h2 id="三、常用遇到的情况"><a href="#三、常用遇到的情况" class="headerlink" title="三、常用遇到的情况"></a>三、常用遇到的情况</h2><h3 id="1-监听回退"><a href="#1-监听回退" class="headerlink" title="1. 监听回退"></a>1. 监听回退</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> detectBack = &#123;</span><br><span class="line"></span><br><span class="line">  initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//监听hashchange事件</span></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//为当前导航页附加一个tag</span></span><br><span class="line">  <span class="keyword">this</span>.history.replaceState(<span class="string">'hasHash'</span>, <span class="string">''</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (e.state) &#123;</span><br><span class="line">      <span class="comment">//侦测是用户触发的后退操作, dosomething</span></span><br><span class="line">      <span class="comment">//这里刷新当前url</span></span><br><span class="line">      <span class="keyword">this</span>.location.reload();</span><br><span class="line">  	&#125;</span><br><span class="line">   &#125;, <span class="literal">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    detectBack.initialize();</span><br></pre></td></tr></table></figure>
+<h3 id="2-阻止回退"><a href="#2-阻止回退" class="headerlink" title="2. 阻止回退"></a>2. 阻止回退</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pushHash</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">window</span>.history.pushState(<span class="string">'home'</span>,<span class="literal">null</span>,<span class="string">'#/home'</span>); <span class="comment">// 跳转后压入一次历史，并表示home状态</span></span><br><span class="line">   <span class="built_in">window</span>.history.pushState(<span class="literal">null</span>,<span class="literal">null</span>,<span class="string">'#/home'</span>); <span class="comment">// 跳转后压入一次历史，以便回退拦截</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(e.state === <span class="string">'home'</span>) &#123;</span><br><span class="line">		拦截回退</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -230,7 +269,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlc3iykj000b2em7oa3i47x9" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjlm3ctoh0000eam70aqr384h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -298,7 +337,146 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/08/22/position-sticky/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/09/03/hash-backListener/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-position-sticky" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/22/position-sticky/">白话聊聊position sticky</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/22/position-sticky/">
+            <time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>项目中有一个同事遇到了一个吸顶效果的需求，于是帮助他完成的同时顺便分析下position：sticky。</p>
+<h2 id="二、position：sticky是什么"><a href="#二、position：sticky是什么" class="headerlink" title="二、position：sticky是什么"></a>二、position：sticky是什么</h2><p>粘性定位元素（stickily positioned element）：粘性定位可以被认为是相对定位和固定定位的混合。元素在跨越特定阈值前为相对定位，之后为固定定位。</p>
+<p>最白话来说，其实这句话想表达的是： 粘性定位（position：sticky） = 相对定位(position：relative) + 固定定位 (position：fixed)</p>
+<h2 id="三、position：sticky作用以及兼容"><a href="#三、position：sticky作用以及兼容" class="headerlink" title="三、position：sticky作用以及兼容"></a>三、position：sticky作用以及兼容</h2><h3 id="1-作用："><a href="#1-作用：" class="headerlink" title="1. 作用："></a>1. 作用：</h3><p>其作用为了在iOS下实现吸顶效果，原先吸顶效果的基本的开发思路如下：</p>
+<p>利用scroll事件进行监听scrollTop的值，当scrollTop达到一定的值得时候设置吸顶元素的position : fixed;属性。</p>
+<p>但是问题是：安卓支持scroll事件和fixed属性，但是ios8.0的scroll事件不是连续触发的，只会在scroll事件结束后触发一次scroll事件，同时ios下fixed属性的支持一直是个问题。</p>
+<h3 id="2-兼容性探究："><a href="#2-兼容性探究：" class="headerlink" title="2. 兼容性探究："></a>2. 兼容性探究：</h3><h4 id="1-MDN"><a href="#1-MDN" class="headerlink" title="(1) MDN"></a>(1) <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank" rel="noopener">MDN</a></h4><p><img src="/img/sticky-mdn.png" alt=""></p>
+<h4 id="2-caniuse"><a href="#2-caniuse" class="headerlink" title="(2) caniuse"></a>(2) <a href="https://caniuse.com/#search=sticky" target="_blank" rel="noopener">caniuse</a></h4><p><img src="/img/sticky-use.png" alt=""></p>
+<p>####( 3) 因为mdn以及caniuse给到的兼容性并不一致，同时如上面所述主要在iOS使用，因此实际使用仍需要对iOS机型进行实际测试，并考虑polyfill方案</p>
+<p>之后在实际找到设备测试后，会持续更新</p>
+<h4 id="4-polyfill方案"><a href="#4-polyfill方案" class="headerlink" title="(4) polyfill方案:"></a>(4) polyfill方案:</h4><p><a href="[https://github.com/wilddeer/stickyfill">https://github.com/wilddeer/stickyfill</a></p>
+<h2 id="三、position：sticky触发条件"><a href="#三、position：sticky触发条件" class="headerlink" title="三、position：sticky触发条件"></a>三、position：sticky触发条件</h2><p>1、具有sticky属性的元素，其父级高度必须大于sticky元素的高度。</p>
+<p>2、sticky元素的底部，不能和父级底部重叠。（这条不好表述，文后详细说明）</p>
+<p>3、sticky元素的父级不能含有overflow:hidden 和 overflow:auto 属性 （不包括祖先，仅直接包含的父容器）</p>
+<p>4、必须具有top，或 bottom 属性。</p>
+<h2 id="四、移动端吸顶效果实战"><a href="#四、移动端吸顶效果实战" class="headerlink" title="四、移动端吸顶效果实战"></a>四、移动端吸顶效果实战</h2><h3 id="1-position：sticky"><a href="#1-position：sticky" class="headerlink" title="1.position：sticky"></a>1.position：sticky</h3><p>使用position：sticky 一定要记得处理浏览器兼容，并且指定top或bottom</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.sticky</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: -webkit-sticky;</span><br><span class="line">  <span class="attribute">position</span>: sticky;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-实战"><a href="#2-实战" class="headerlink" title="2.实战"></a>2.实战</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--适配移动端js--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">      (<span class="function"><span class="keyword">function</span> (<span class="params">doc, win</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> docEl = doc.documentElement,</span></span><br><span class="line"><span class="javascript">            resizeEvt = <span class="string">'orientationchange'</span> <span class="keyword">in</span> <span class="built_in">window</span> ? <span class="string">'orientationchange'</span> : <span class="string">'resize'</span>,</span></span><br><span class="line"><span class="javascript">            recalc = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">var</span> clientWidth = docEl.clientWidth;</span></span><br><span class="line"><span class="javascript">              <span class="keyword">if</span> (!clientWidth) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">              docEl.style.fontSize = <span class="number">75</span> * (clientWidth / <span class="number">750</span>) + <span class="string">'px'</span>;</span></span><br><span class="line"><span class="undefined">            &#125;;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (doc.addEventListener) &#123;</span></span><br><span class="line"><span class="javascript">          win.addEventListener(resizeEvt, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="javascript">          doc.addEventListener(<span class="string">'DOMContentLoaded'</span>, recalc, <span class="literal">false</span>);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">      &#125;)(<span class="built_in">document</span>, <span class="built_in">window</span>);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    * &#123;</span></span><br><span class="line"><span class="undefined">        margin: 0;</span></span><br><span class="line"><span class="undefined">        padding: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.banner</span> &#123;</span></span><br><span class="line"><span class="undefined">        height: 2rem;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background-color</span>: <span class="selector-id">#009EE0</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.sticky</span> &#123;</span></span><br><span class="line"><span class="undefined">        position: -webkit-sticky;</span></span><br><span class="line"><span class="undefined">        position: sticky;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.fixed</span> &#123;</span></span><br><span class="line"><span class="undefined">        position: fixed;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        top: 0;</span></span><br><span class="line"><span class="undefined">        left: 0;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.relative</span> &#123;</span></span><br><span class="line"><span class="undefined">        background-color: white;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.sticky-title</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">height</span>: 1<span class="selector-class">.4rem</span>;</span></span><br><span class="line"><span class="undefined">        background-color: pink;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="css">    <span class="selector-class">.sticky-content</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">height</span>: 20<span class="selector-class">.3rem</span>;</span></span><br><span class="line"><span class="undefined">        overflow: auto;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"banner"</span>&gt;</span></span><br><span class="line">                Banner部分</span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sticky"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-title"</span>&gt;</span>吸顶结构标题。。。<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"sticky-content"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span>&gt;</span>内容块<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 安卓吸顶方案</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> scrollWrapper = <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>); <span class="comment">// 假设windows 为滚动容器</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> stickyDom = <span class="built_in">document</span>.getElementById(<span class="string">'sticky'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> u = navigator.userAgent;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isAndroid = u.indexOf(<span class="string">'Android'</span>) &gt; <span class="number">-1</span> || u.indexOf(<span class="string">'Adr'</span>) &gt; <span class="number">-1</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> isiOS = !!u.match(<span class="regexp">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    scrollWrapper.addEventListener(<span class="string">'scroll'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (isAndroid) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> bannerHeight = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'banner'</span>)[<span class="number">0</span>].clientHeight;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (<span class="keyword">this</span>.scrollTop &gt; <span class="number">72</span>) &#123;</span></span><br><span class="line"><span class="javascript">          stickyDom.className = <span class="string">'fixed'</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(isiOS &amp;&amp; (CSS.supports(<span class="string">"position"</span>, <span class="string">"sticky"</span>) || CSS.supports(<span class="string">"position"</span>, <span class="string">"-webkit-sticky"</span>)))&#123;</span></span><br><span class="line"><span class="javascript">        stickyDom.className = <span class="string">'stickay'</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlm3caor000adqm7268fzevi" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/08/22/position-sticky/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -368,7 +546,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlc3iyke00052em7q3cqyowx" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlm3caon0006dqm7o1echiam" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -436,7 +614,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -946,7 +1124,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlc3iykh00092em777mary3j" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlm3caos000bdqm7rls63s5l" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1014,7 +1192,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1172,7 +1350,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlc3iykc00032em7g4dovepo" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlm3caol0004dqm75ud1qxnm" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1240,7 +1418,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1457,7 +1635,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlc3iykk000c2em7u150vjjo" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlm3caou000ddqm7xhs2atrr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1525,7 +1703,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1674,7 +1852,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjlc3iykm000e2em7wuq47n42" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjlm3caot000cdqm7rm75o08w" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1742,7 +1920,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1821,7 +1999,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjlc3iyko000h2em7edsayvg5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjlm3caox000hdqm7tn9wcsbb" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1889,7 +2067,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1989,7 +2167,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjlc3iykn000g2em7riot9ll9" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjlm3caow000gdqm79fvxbyx7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2057,7 +2235,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2347,7 +2525,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjlc3iykf00072em7r4s2oeq0" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjlm3caop0009dqm7vofm5yxk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2415,191 +2593,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comentarios</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-study-function" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/03/study-function/">改变学习方法</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/05/03/study-function/">
-            <time datetime="2018-05-02T16:00:00.000Z" itemprop="datePublished">2018-05-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>作者：Neo_Huang</p>
-<h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h2><p>最近想改变一下自己学习编程以及计算机相关知识的学习方法。</p>
-<p>信息大爆炸时代最显著的特征就是：信息越多，有效越少，于是觉得一个科学的学习方法对自己十分重要，故进行如下总结。</p>
-<h2 id="2-自控力以及时间管理"><a href="#2-自控力以及时间管理" class="headerlink" title="2.自控力以及时间管理"></a>2.自控力以及时间管理</h2><h3 id="1-关于学习时间分配"><a href="#1-关于学习时间分配" class="headerlink" title="(1) 关于学习时间分配"></a>(1) 关于学习时间分配</h3><p>[1] 7:45 至 8:45 （路途学习一小时）</p>
-<p>以音频课程与行业新知识为主</p>
-<p>[2] 9:00 至 9:25 （review一天工作任务）</p>
-<p>这个阶段用note，将每日任务以及目标进行划分</p>
-<p>[3] 9:30 至 12:00 （处理工作）</p>
-<p>[4] 1:00 至 1:25 （午休）</p>
-<p>[5] 1:25 至 2:25 （学习一小时，一道算法题，提高算法能力，不管是否能够完成）</p>
-<p>[6] 2:25 至 4:55 （工作时间）</p>
-<p>[7] 5:00 至 6:15 （学习一小时）</p>
-<p>[8] 8:00 至 9:30 （学习一个半小时）</p>
-<p>[9] 10:30 至 11:00 （review一天学习内容） </p>
-<h3 id="2-关于学习时间集中"><a href="#2-关于学习时间集中" class="headerlink" title="(2) 关于学习时间集中"></a>(2) 关于学习时间集中</h3><p>(1) 以1小时为单位25分钟为一个工作时间块</p>
-<p>(2) 分配可打断时间为10分钟，并且有5分钟可以适当休息</p>
-<h3 id="3-关于新闻与知识的权衡"><a href="#3-关于新闻与知识的权衡" class="headerlink" title="(3) 关于新闻与知识的权衡"></a>(3) 关于新闻与知识的权衡</h3><p>(1) 保证每天浏览业界新闻，但不超过1个25分钟</p>
-<p>(2) 若浏览业界新闻中，发现有需要深度学习的知识可排入学习计划中</p>
-<h3 id="4-关于学习目标"><a href="#4-关于学习目标" class="headerlink" title="(4) 关于学习目标"></a>(4) 关于学习目标</h3><p>(1) 每周制定一周学习计划</p>
-<p>(2) 每日9:00 至 9:25阶段制定每日学习目标与计划 （可适当根据周计划来调整）</p>
-<h2 id="3-学习方法"><a href="#3-学习方法" class="headerlink" title="3.学习方法"></a>3.学习方法</h2><p>具体学习阶段，我自己目标将学习分为三个阶段：</p>
-<ul>
-<li>分析知识点，结构阶段</li>
-<li>学习、理解阶段</li>
-<li>复习阶段</li>
-</ul>
-<p>如下根据一些管用的学习技巧，我总结了一下自己准备贯彻的学习方法。</p>
-<h3 id="（1）“第一性原理”思考法-（分析知识点，结构阶段）"><a href="#（1）“第一性原理”思考法-（分析知识点，结构阶段）" class="headerlink" title="（1）“第一性原理”思考法 （分析知识点，结构阶段）"></a>（1）“第一性原理”思考法 （分析知识点，结构阶段）</h3><p>第一原理的思考方式是用物理学的角度看待世界的方法，也就是说一层层剥开事物的表象，看到里面的本质，然后再从本质一层层往上走。</p>
-<p>目前我将其尽量应用到我的学习方法中，具体应用：</p>
-<h4 id="1-学习知识前分析与拆分问题"><a href="#1-学习知识前分析与拆分问题" class="headerlink" title="[1] 学习知识前分析与拆分问题"></a>[1] 学习知识前分析与拆分问题</h4><p>应用： 大体浏览后创建思维导图或大纲</p>
-<h4 id="2-从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限"><a href="#2-从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限" class="headerlink" title="[2] 从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限"></a>[2] 从底层向上解析问题，并尝试理解，但请对问题的底层和上层建立一个上限</h4><p>通过搜索引擎，以及相关资料在一个时间块（即使25分钟内暂定一个上限下限，避免无尽的仅在探索上下限，而无法开展真正学习，当然可适当在学习中调整上下限）</p>
-<h4 id="3-深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了"><a href="#3-深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了" class="headerlink" title="[3] 深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了"></a>[3] 深度理解问题，不要尝试记忆，而要尝试去理解；如果你理解了，就自动记住了</h4><p>在结构完并且安排完自己想要学习的知识后，可以采用费恩曼技巧去学习、理解从而达到记忆问题的效果。</p>
-<h3 id="（2）费恩曼技巧-（学习、理解阶段）"><a href="#（2）费恩曼技巧-（学习、理解阶段）" class="headerlink" title="（2）费恩曼技巧 （学习、理解阶段）"></a>（2）费恩曼技巧 （学习、理解阶段）</h3><p>其实应该本质上来说：是以大妈级的语言来解释一些专业上的问题，用我们日常随处可见的现象来解释专业上的问题。总之：他是用极其具象的东西来回答高度抽象的东西。</p>
-<p>实际应用下来主要四个部分：</p>
-<h4 id="1-确定学习目标（通过：第一性原理）"><a href="#1-确定学习目标（通过：第一性原理）" class="headerlink" title="1.    确定学习目标（通过：第一性原理）"></a>1.    确定学习目标（通过：第一性原理）</h4><h4 id="2-模拟教学学习法"><a href="#2-模拟教学学习法" class="headerlink" title="2.    模拟教学学习法"></a>2.    模拟教学学习法</h4><p>以教促学，我自己将这个阶段再拆解一下</p>
-<p>[1] 说给八十岁的老太太听，说给八岁的小孩子听（简明解释）</p>
-<p>[2] 举例子</p>
-<p>[3] 假设提问</p>
-<h4 id="3-学习中的回顾（为避免与之后复习混淆）"><a href="#3-学习中的回顾（为避免与之后复习混淆）" class="headerlink" title="3.    学习中的回顾（为避免与之后复习混淆）"></a>3.    学习中的回顾（为避免与之后复习混淆）</h4><p>如果你感觉卡壳了, 就回顾一下学习资料,无论何时你感觉卡壳了, 都要回到原始的学习资料并重新学习让你感到卡壳的那部分, 直到你领会得足够顺畅, 不要仅仅是在头脑中假想, 直接把自己要如何向别人讲解 “费曼技巧” 的过程简要地写下来/说出来。</p>
-<h4 id="4-简化归纳"><a href="#4-简化归纳" class="headerlink" title="4.    简化归纳"></a>4.    简化归纳</h4><p>为了让你的讲解通俗易懂，简化语言表达,最终的目的, 是用你自己的语言, 而不是学习资料中的语言来解释概念。完成这个阶段可以理解成基本学会了，可以进入复习阶段了。</p>
-<h3 id="（3）艾宾浩斯记忆法（复习阶段）"><a href="#（3）艾宾浩斯记忆法（复习阶段）" class="headerlink" title="（3）艾宾浩斯记忆法（复习阶段）"></a>（3）艾宾浩斯记忆法（复习阶段）</h3><p>信息输入大脑后，遗忘也就随之开始了。遗忘率随时间的流逝而先快后慢，特别是在刚刚识记的短时间里，遗忘最快，这就是著名的艾宾浩斯遗忘曲线。遵循艾宾浩斯遗忘曲线所揭示的记忆规律，对所学知识及时进行复习，这种记忆方法即为艾宾浩斯记忆法。</p>
-<p>其实应用来说就是针对遗忘曲线进行回顾和自测，目前针对这个我自己将其分为四回顾四自测：</p>
-<p>为避免过度追求学习方法，其实就是进行8轮重复学习，每1轮回顾后进行1次自测，一共8次，历时半个月完成。</p>
-<ol>
-<li>第一个记忆周期：5分钟 （进行一轮回顾）</li>
-<li>第二个记忆周期：30分钟 （进行一轮自测）</li>
-<li>第三个记忆周期：12小时 （进行一轮回顾）</li>
-<li>第四个记忆周期：1天 （进行一轮自测）</li>
-<li>第五个记忆周期：2天 （进行一轮回顾）</li>
-<li>第六个记忆周期：4天 （进行一轮自测）</li>
-<li>第七个记忆周期：7天 （进行一轮回顾）</li>
-<li>第八个记忆周期：15天（进行一轮自测）</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>（1） 严格按学习计划执行。</p>
-<p>（2）将学习时间分成25分钟为1块进行管理，增加集中力。</p>
-<p>（3）每天用25分钟收集业界内的新知识，若无法短时间消化的知点，可以排入未来学习计划中</p>
-<p>（4）每天使用25分钟安排每日学习计划，每周花一个25分钟制定周学习计划</p>
-<p>（5）将学习步骤拆分为如下3种，并根据第一原理、费曼技巧以及艾宾浩斯记忆法执行</p>
-<ul>
-<li>分析知识点，结构阶段</li>
-<li>学习、理解阶段</li>
-<li>复习阶段</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjlc3iykl000d2em7nm37d62k" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2610,7 +2604,7 @@
 
 
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Siguiente  &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -2618,9 +2612,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/03/hash-backListener/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/hash-back.jpeg)" alt="监听浏览器回退" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/03/hash-backListener/" class="title">监听浏览器回退</a></p>
+                            <p class="item-date"><time datetime="2018-09-02T16:00:00.000Z" itemprop="datePublished">2018-09-03</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2698,25 +2711,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/06/22/promise-2/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/do-you-promise.png)" alt="白话分析promise（二） promise规范" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/06/22/promise-2/" class="title">白话分析promise（二） promise规范</a></p>
-                            <p class="item-date"><time datetime="2018-06-21T16:00:00.000Z" itemprop="datePublished">2018-06-22</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2726,9 +2720,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2739,7 +2733,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 

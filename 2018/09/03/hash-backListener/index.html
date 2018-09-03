@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>监听浏览器回退 | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、前言近来遇到一个需求需要监听浏览器回退事件，恰好目前项目中运用的路由为hash-router，因此对这方面做了一个总结。因此本文更多其实只能算对mdn相关文档的一个汇总笔记。 二、相关api1.window.onpopstate参考：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate  每当活动的历史记录项发生变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="监听浏览器回退">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/09/03/hash-backListener/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、前言近来遇到一个需求需要监听浏览器回退事件，恰好目前项目中运用的路由为hash-router，因此对这方面做了一个总结。因此本文更多其实只能算对mdn相关文档的一个汇总笔记。 二、相关api1.window.onpopstate参考：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate  每当活动的历史记录项发生变">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/hash-back.jpeg">
+<meta property="og:updated_time" content="2018-09-03T12:46:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="监听浏览器回退">
+<meta name="twitter:description" content="一、前言近来遇到一个需求需要监听浏览器回退事件，恰好目前项目中运用的路由为hash-router，因此对这方面做了一个总结。因此本文更多其实只能算对mdn相关文档的一个汇总笔记。 二、相关api1.window.onpopstate参考：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate  每当活动的历史记录项发生变">
+<meta name="twitter:image" content="http://www.neohuang.com/img/hash-back.jpeg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                14
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-hash-backListener" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            监听浏览器回退
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/03/hash-backListener/">
+            <time datetime="2018-09-02T16:00:00.000Z" itemprop="datePublished">2018-09-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>近来遇到一个需求需要监听浏览器回退事件，恰好目前项目中运用的路由为hash-router，因此对这方面做了一个总结。因此本文更多其实只能算对mdn相关文档的一个汇总笔记。</p>
+<h2 id="二、相关api"><a href="#二、相关api" class="headerlink" title="二、相关api"></a>二、相关api</h2><h3 id="1-window-onpopstate"><a href="#1-window-onpopstate" class="headerlink" title="1.window.onpopstate"></a>1.window.onpopstate</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onpopstate</a></p>
+<p> 每当活动的历史记录项发生变化时， popstate 事件都会被传递给window对象。如果当前活动的历史记录项是被 pushState 创建的，或者是由 replaceState 改变的，那么 popstate 事件的状态属性 state 会包含一个当前历史记录状态对象的拷贝。</p>
+<h4 id="1-概述："><a href="#1-概述：" class="headerlink" title="(1) 概述："></a>(1) 概述：</h4><p>根据mdn文档上的解释，我还想来画一下重点：</p>
+<p>[1] window.onpopstate是popstate事件在window对象上的事件处理程序，<strong>每当处于激活状态的历史记录条目发生变化时</strong>,popstate事件就会在对应window对象上触发。</p>
+<p>[2] <strong>调用history.pushState()或者history.replaceState()不会触发popstate事件</strong>. popstate事件<strong>只会在浏览器某些行为下触发</strong>, 比如点击后退、前进按钮(或者在JavaScript中调用history.back()、history.forward()、history.go()方法)。</p>
+<p>[3] 如果当前处于激活状态的历史记录条目是由history.pushState()方法创建,或者由history.replaceState()方法修改过的, 则popstate事件对象的state属性包含了这个历史记录条目的state对象的一个拷贝。</p>
+<p>[4] <strong>当网页加载时,各浏览器对popstate事件是否触发有不同的表现</strong>,Chrome 和 Safari会触发popstate事件, 而Firefox不会。</p>
+<p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onpopstate = funcRef;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onpopstate = <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">"location: "</span> + <span class="built_in">document</span>.location + <span class="string">", state: "</span> + <span class="built_in">JSON</span>.stringify(event.state));</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//绑定事件处理函数.</span></span><br><span class="line"> history.pushState(&#123;<span class="attr">page</span>: <span class="number">1</span>&#125;, <span class="string">"title 1"</span>, <span class="string">"?page=1"</span>);    <span class="comment">//添加并激活一个历史记录条目 http://example.com/example.html?page=1,条目索引为1</span></span><br><span class="line"> history.pushState(&#123;<span class="attr">page</span>: <span class="number">2</span>&#125;, <span class="string">"title 2"</span>, <span class="string">"?page=2"</span>);    <span class="comment">//添加并激活一个历史记录条目 http://example.com/example.html?page=2,条目索引为2</span></span><br><span class="line"> history.replaceState(&#123;<span class="attr">page</span>: <span class="number">3</span>&#125;, <span class="string">"title 3"</span>, <span class="string">"?page=3"</span>); <span class="comment">//修改当前激活的历史记录条目 http://ex..?page=2 变为 http://ex..?page=3,条目索引为3</span></span><br><span class="line"> history.back(); <span class="comment">// 弹出 "location: http://example.com/example.html?page=1, state: &#123;"page":1&#125;"</span></span><br><span class="line"> history.back(); <span class="comment">// 弹出 "location: http://example.com/example.html, state: null</span></span><br><span class="line"> history.go(<span class="number">2</span>);  <span class="comment">// 弹出 "location: http://example.com/example.html?page=3, state: &#123;"page":3&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-history-pushState"><a href="#2-history-pushState" class="headerlink" title="2.history.pushState"></a>2.history.pushState</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/History_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/History_API</a></p>
+<h4 id="1-概念：添加历史记录中的条目"><a href="#1-概念：添加历史记录中的条目" class="headerlink" title="(1) 概念：添加历史记录中的条目"></a>(1) 概念：添加历史记录中的条目</h4><h4 id="2-pushState-使用"><a href="#2-pushState-使用" class="headerlink" title="(2) pushState()使用"></a>(2) pushState()使用</h4><p>pushState() 需要三个参数: 一个状态对象, 一个标题 (目前被忽略), 和 (可选的) 一个URL. 让我们来解释下这三个参数详细内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pushState(&#123; <span class="attr">state1</span>: <span class="number">1</span>, <span class="attr">state2</span>: <span class="number">2</span> &#125;, title, URL);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>状态对象： </p>
+<p>  状态对象state是一个JavaScript对象，通过pushState () 创建新的历史记录条目。无论什么时候用户导航到新的状态，popstate事件就会被触发，且该事件的state属性包含该历史记录条目状态对象的副本。</p>
+<p>  状态对象可以是能被序列化的任何东西。原因在于Firefox将状态对象保存在用户的磁盘上，以便在用户重启浏览器时使用，我<strong>们规定了状态对象在序列化表示后有640k的大小限制</strong>。如果你给 pushState() 方法传了一个序列化后大于640k的状态对象，该方法会抛出异常。如果你需要更大的空间，建议使用 sessionStorage 以及 localStorage.</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这一句可以理解为，pushState()后不会立即跳转，此时会对该历史记录条目状态保存一个副本，无	论什么时候用户导航到新的状态，popstate事件就会被触发。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>标题</p>
+<p>  Firefox 目前忽略这个参数，但未来可能会用到。传递一个空字符串在这里是安全的，而在将来这是不安全的。二选一的话，你可以为跳转的state传递一个短标题</p>
+</li>
+<li><p>URL </p>
+<p>   该参数定义了新的历史URL记录。注意，调用 pushState() <strong>后浏览器并不会立即加载这个URL</strong>，但可能会在稍后某些情况下加载这个URL，比如在用户重新打开浏览器时。新URL不必须为绝对路径。如果新URL是相对路径，那么它将被作为相对于当前URL处理。<strong>新URL必须与当前URL同源</strong>，否则 pushState() 会抛出一个异常。该参数是可选的，缺省为当前URL。</p>
+</li>
+</ul>
+<h4 id="3-例子"><a href="#3-例子" class="headerlink" title="(3) 例子"></a>(3) 例子</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stateObj = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span> &#125;;</span><br><span class="line">history.pushState(stateObj, <span class="string">"page 2"</span>, <span class="string">"bar.html"</span>);</span><br></pre></td></tr></table></figure>
+<p>使用 history.pushState() 可以改变referrer，它在用户发送 XMLHttpRequest 请求时在HTTP头部使用，改变state后创建的 XMLHttpRequest 对象的referrer都会被改变。因为referrer是标识创建  XMLHttpRequest 对象时 this 所代表的window对象中document的URL。</p>
+<p>在某种意义上，调用 pushState() 与 设置 window.location = “#foo” 类似，二者都会在当前页面创建并激活新的历史记录。但 pushState() 具有如下几条优点：</p>
+<ul>
+<li><p>新的 URL 可以是与当前URL同源的任意URL 。而设置 window.location 仅当你只修改了哈希值时才保持同一个 document。</p>
+</li>
+<li><p>如果需要，你可以不必改变URL。而设置 window.location = “#foo”;在当前哈希不是 #foo 的情况下， 仅仅是新建了一个新的历史记录项。</p>
+</li>
+<li><p>你可以为新的历史记录项关联任意数据。而基于哈希值的方式，则必须将所有相关数据编码到一个短字符串里。</p>
+</li>
+<li><p>假如 标题 在之后会被浏览器用到，那么这个数据是可以被使用的（哈希则不然）。</p>
+</li>
+</ul>
+<p>注意 pushState() 绝对不会触发 hashchange 事件，即使新的URL与旧的URL仅哈希不同也是如此。    </p>
+<h3 id="3-history-replaceState"><a href="#3-history-replaceState" class="headerlink" title="3.history.replaceState"></a>3.history.replaceState</h3><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/History_API" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/History_API</a></p>
+<h4 id="1-概念：修改历史记录中的条目"><a href="#1-概念：修改历史记录中的条目" class="headerlink" title="(1) 概念：修改历史记录中的条目"></a>(1) 概念：修改历史记录中的条目</h4><p>history.replaceState() 的使用与 history.pushState() 非常相似，区别在于  replaceState()  是修改了当前的历史记录项而不是新建一个。 注意这并不会阻止其在全局浏览器历史记录中创建一个新的历史记录项。</p>
+<p>replaceState() 的使用场景在于为了响应用户操作，你想要更新状态对象state或者当前历史记录的URL。</p>
+<h4 id="2-replaceState-使用"><a href="#2-replaceState-使用" class="headerlink" title="(2) replaceState()使用"></a>(2) replaceState()使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stateObj = &#123; <span class="attr">foo</span>: <span class="string">"bar"</span> &#125;;</span><br><span class="line">history.replaceState(stateObj, <span class="string">"page 3"</span>, <span class="string">"bar2.html"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>导致地址栏显示<a href="http://mozilla.org/bar2.html,，但是浏览器并不会去加载bar2.html" target="_blank" rel="noopener">http://mozilla.org/bar2.html,，但是浏览器并不会去加载bar2.html</a></strong> 甚至都不需要检查 bar2.html 是否存在。</p>
+<p>假设现在用户重新导向到了 <strong><a href="http://www.microsoft.com" target="_blank" rel="noopener">http://www.microsoft.com</a></strong>，然后点击了回退按钮。这里，地址栏会显示<strong><a href="http://mozilla.org/bar2.html" target="_blank" rel="noopener">http://mozilla.org/bar2.html</a></strong>。假如用户再次点击回退按钮，地址栏会显示<strong><a href="http://mozilla.org/foo.html" target="_blank" rel="noopener">http://mozilla.org/foo.html</a></strong>，完全跳过了bar.html。</p>
+<h3 id="4-HashChangeEvent"><a href="#4-HashChangeEvent" class="headerlink" title="4.HashChangeEvent"></a>4.HashChangeEvent</h3><p>当URL中的片段标识符发生改变时触发（URL中紧跟’#’号的部分，包括‘#’号）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// exit if the browser implements that event</span></span><br><span class="line">  <span class="keyword">if</span> ( <span class="string">"onhashchange"</span> <span class="keyword">in</span> <span class="built_in">window</span>.document.body ) &#123; <span class="keyword">return</span>; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> location = <span class="built_in">window</span>.location,</span><br><span class="line">    oldURL = location.href,</span><br><span class="line">    oldHash = location.hash;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// check the location hash on a 100ms interval</span></span><br><span class="line">  setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> newURL = location.href,</span><br><span class="line">      newHash = location.hash;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// if the hash has changed and a handler has been bound...</span></span><br><span class="line">    <span class="keyword">if</span> ( newHash != oldHash &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">window</span>.onhashchange === <span class="string">"function"</span> ) &#123;</span><br><span class="line">      <span class="comment">// execute the handler</span></span><br><span class="line">      <span class="built_in">window</span>.onhashchange(&#123;</span><br><span class="line">        type: <span class="string">"hashchange"</span>,</span><br><span class="line">        oldURL: oldURL,</span><br><span class="line">        newURL: newURL</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      oldURL = newURL;</span><br><span class="line">      oldHash = newHash;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="5-history-length"><a href="#5-history-length" class="headerlink" title="5.history.length"></a>5.history.length</h3><p>History.length是一个只读属性，返回当前session中的history个数，包含当前页面在内。举个例子，对于新开一个tab加载的页面当前属性返回值1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">length = history.length; <span class="comment">// 返回当前session中的history个数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = <span class="built_in">window</span>.history.length; <span class="comment">// 返回当前session中的history个数</span></span><br></pre></td></tr></table></figure>
+<p>mdn文档中，对这块的翻译基本以上，实际在使用中有一点是非常需要注意的，就是history.length并不是整个当前会话的历史条目的当前状态(即currentLength)，而实际是当前会话历史条目的存在记录的整体长度（即maxlength）</p>
+<h2 id="三、常用遇到的情况"><a href="#三、常用遇到的情况" class="headerlink" title="三、常用遇到的情况"></a>三、常用遇到的情况</h2><h3 id="1-监听回退"><a href="#1-监听回退" class="headerlink" title="1. 监听回退"></a>1. 监听回退</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> detectBack = &#123;</span><br><span class="line"></span><br><span class="line">  initialize: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//监听hashchange事件</span></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'hashchange'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//为当前导航页附加一个tag</span></span><br><span class="line">  <span class="keyword">this</span>.history.replaceState(<span class="string">'hasHash'</span>, <span class="string">''</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (e.state) &#123;</span><br><span class="line">      <span class="comment">//侦测是用户触发的后退操作, dosomething</span></span><br><span class="line">      <span class="comment">//这里刷新当前url</span></span><br><span class="line">      <span class="keyword">this</span>.location.reload();</span><br><span class="line">  	&#125;</span><br><span class="line">   &#125;, <span class="literal">false</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    detectBack.initialize();</span><br></pre></td></tr></table></figure>
+<h3 id="2-阻止回退"><a href="#2-阻止回退" class="headerlink" title="2. 阻止回退"></a>2. 阻止回退</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pushHash</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">window</span>.history.pushState(<span class="string">'home'</span>,<span class="literal">null</span>,<span class="string">'#/home'</span>); <span class="comment">// 跳转后压入一次历史，并表示home状态</span></span><br><span class="line">   <span class="built_in">window</span>.history.pushState(<span class="literal">null</span>,<span class="literal">null</span>,<span class="string">'#/home'</span>); <span class="comment">// 跳转后压入一次历史，以便回退拦截</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'popstate'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(e.state === <span class="string">'home'</span>) &#123;</span><br><span class="line">		拦截回退</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjlm3ctoh0000eam70aqr384h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/09/03/hash-backListener/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/08/22/position-sticky/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">白话聊聊position sticky</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/03/hash-backListener/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/hash-back.jpeg)" alt="监听浏览器回退" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/03/hash-backListener/" class="title">监听浏览器回退</a></p>
+                            <p class="item-date"><time datetime="2018-09-02T16:00:00.000Z" itemprop="datePublished">2018-09-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/22/position-sticky/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/position-sticky.jpeg)" alt="白话聊聊position sticky" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/22/position-sticky/" class="title">白话聊聊position sticky</a></p>
+                            <p class="item-date"><time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/11/new-operators/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/new-op.jpg)" alt="白话说说new操作符的背后" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/11/new-operators/" class="title">白话说说new操作符的背后</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/07/08/js-review-datatype/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-datetype.png)" alt="js复习基本概念（数据类型）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/07/08/js-review-datatype/" class="title">js复习基本概念（数据类型）</a></p>
+                            <p class="item-date"><time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished">2018-07-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/06/25/js-review-base-md/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-base.png)" alt="js复习基本概念（语法、严格模式）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/06/25/js-review-base-md/" class="title">js复习基本概念（语法、严格模式）</a></p>
+                            <p class="item-date"><time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
