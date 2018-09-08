@@ -69,7 +69,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -88,10 +88,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Entradas',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -116,7 +116,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
     </div>
 
                 </td>
@@ -136,16 +136,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                14
-                <span>posts</span>
+                15
+                <span>Entradas</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>tag</span>
+                <span>Etiqueta</span>
             </div>
         </div>
         
@@ -169,6 +169,532 @@
 
             
             <section id="main">
+    <article id="post-subscribe" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/28/subscribe/">结合代码白话理解javascript中的观察者模式与发布订阅</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/28/subscribe/">
+            <time datetime="2018-05-27T16:00:00.000Z" itemprop="datePublished">2018-05-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <ul>
+<li><p>参考：<a href="https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%8F%91%E5%B8%83/%E8%AE%A2%E9%98%85</a></p>
+</li>
+<li><p>参考：<a href="https://www.zhihu.com/question/23486749" target="_blank" rel="noopener">https://www.zhihu.com/question/23486749</a> - No zuo must die - 知乎用户的回答 - 知乎</p>
+</li>
+<li><p>参考：<a href="https://juejin.im/post/5a14e9edf265da4312808d86#comment" target="_blank" rel="noopener">https://juejin.im/post/5a14e9edf265da4312808d86#comment</a></p>
+</li>
+</ul>
+<h3 id="1-概念解释："><a href="#1-概念解释：" class="headerlink" title="1 概念解释："></a>1 概念解释：</h3><h4 id="（1）观察者设计模式"><a href="#（1）观察者设计模式" class="headerlink" title="（1）观察者设计模式"></a>（1）观察者设计模式</h4><h5 id="标准解释："><a href="#标准解释：" class="headerlink" title="标准解释："></a>标准解释：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">观察者模式： 是一种设计模式，在软件设计中往往是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们。</span><br></pre></td></tr></table></figure>
+<p>来源：维基百科</p>
+<h5 id="图示："><a href="#图示：" class="headerlink" title="图示："></a>图示：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮  Fire Event  ╭──────────────╮</span><br><span class="line">│             │─────────────&gt;│              │</span><br><span class="line">│   Subject   │              │   Observer   │</span><br><span class="line">│             │&lt;─────────────│              │</span><br><span class="line">╰─────────────╯  Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<h5 id="白话讲解："><a href="#白话讲解：" class="headerlink" title="白话讲解："></a>白话讲解：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">假设你想去xx公司应聘前端工程师，但xx公司hr告知你目前没有岗位空缺，你向留下了联系方式，让其在有岗位空缺时，通知你。当然公司还会通知同样已留下联系方式的其他候选者。</span><br><span class="line"></span><br><span class="line">Observers（观察者）: 候选人</span><br><span class="line"></span><br><span class="line">Subject（被观察者）： xx公司</span><br><span class="line"></span><br><span class="line">Fire Event (事件)： xx公司有了新前端空缺</span><br><span class="line"></span><br><span class="line">Subscribe（订阅）： 候选人将联系方式留给了xx公司</span><br><span class="line"></span><br><span class="line">Notify (通知) ： xx公司向候选人致电</span><br><span class="line"></span><br><span class="line">观察者模式运行流程：</span><br><span class="line"></span><br><span class="line">Observers -&gt; Subscribe -&gt; Subject -&gt; Fire Event -&gt; Notify -&gt; Observers</span><br></pre></td></tr></table></figure>
+<h4 id="（2）发布订阅模式"><a href="#（2）发布订阅模式" class="headerlink" title="（2）发布订阅模式"></a>（2）发布订阅模式</h4><h5 id="标准解释：-1"><a href="#标准解释：-1" class="headerlink" title="标准解释："></a>标准解释：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">发布订阅模式属于广义上的观察者模式，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</span><br></pre></td></tr></table></figure>
+<p>来源：维基百科</p>
+<h5 id="图示：-1"><a href="#图示：-1" class="headerlink" title="图示："></a>图示：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮                 ╭───────────────╮   Fire Event   ╭──────────────╮</span><br><span class="line">│             │  Publish Event  │               │───────────────&gt;│              │</span><br><span class="line">│  Publisher  │────────────────&gt;│ Event Channel │                │  Subscriber  │</span><br><span class="line">│             │                 │               │&lt;───────────────│              │</span><br><span class="line">╰─────────────╯                 ╰───────────────╯    Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<h5 id="白话讲解：-1"><a href="#白话讲解：-1" class="headerlink" title="白话讲解："></a>白话讲解：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- 你想成为一个前端工程师，但目前没有明确目标，你可以联系了猎头让其有前端相关岗位时通知你。</span><br><span class="line"></span><br><span class="line">- 猎头可能与多家公司都有合作，这些公司发布职位会告知猎头</span><br><span class="line"></span><br><span class="line">- 这个过程xx公司，只需要根据自身情况，只需要根据自己实际的岗位情况，告知猎头自己需要什么岗位的候选人，无需知道有哪些具体候选人，候选人在订阅过程中，只是向猎头公司订阅了有前端相关岗位时通知自己</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Publisher（发布者）: xx公司</span><br><span class="line"></span><br><span class="line">Publish Event（发布事件）： 发布职位</span><br><span class="line"></span><br><span class="line">Event Channel (事件通道)： 猎头公司</span><br><span class="line"></span><br><span class="line">Fire Event（事件）： xx公司发布职位后，猎头公司根据职位发送联系相应岗位候选人</span><br><span class="line"></span><br><span class="line">Subscriber（订阅者)： 候选人</span><br><span class="line"></span><br><span class="line">Subscribe（订阅）： 候选人将联系方式留给hr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">运行流程：</span><br><span class="line"></span><br><span class="line">Subscriber -&gt; Subscribe -&gt; Event Channel</span><br><span class="line"></span><br><span class="line">Publisher -&gt; Publish Event -&gt; Event Channel -&gt; Fire Event -&gt; Subscriber</span><br></pre></td></tr></table></figure>
+<h3 id="2-观察者模式和发布订阅模式有什么不同："><a href="#2-观察者模式和发布订阅模式有什么不同：" class="headerlink" title="2 观察者模式和发布订阅模式有什么不同："></a>2 观察者模式和发布订阅模式有什么不同：</h3><p>发布订阅模式属于广义上的观察者模式。发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式。</p>
+<p>区别：</p>
+<ul>
+<li>发布订阅模式多了个事件通道</li>
+</ul>
+<p>在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应</p>
+<ul>
+<li>在发布订阅模式中，发布者和订阅者之间多了一个发布通道；一方面从发布者接收事件，另一方面向订阅者发布事件；订阅者需要从事件通道订阅事件</li>
+</ul>
+<p>以此避免发布者和订阅者之间产生依赖关系。</p>
+<h3 id="3-观察者模式代码实现"><a href="#3-观察者模式代码实现" class="headerlink" title="3. 观察者模式代码实现"></a>3. 观察者模式代码实现</h3><p>使用观察者模式的好处：</p>
+<ul>
+<li>支持简单的广播通信，自动通知所有已经订阅过的对象。</li>
+<li>页面载入后目标对象很容易与观察者存在一种动态关联，增加了灵活性。</li>
+<li>目标对象与观察者之间的抽象耦合关系能够单独扩展以及重用。</li>
+</ul>
+<p>最简单观察者模式在js中的运用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'body 被观察'</span>)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>观察者模式实现数据打包下载功能:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 观察者模式 实现下载任务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 观察者</span></span><br><span class="line"><span class="comment"> * @param id</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DownloadTask</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.id = id;</span><br><span class="line">  <span class="keyword">this</span>.loaded = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">this</span>.url = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadTask.prototype.finish = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.loaded = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">this</span>.url = url;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Task '</span> + <span class="keyword">this</span>.id + <span class="string">' load data from '</span> + url);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被观察者</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DataHub</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks = []; <span class="comment">// 观察者列表</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.addDownloadTask = <span class="function"><span class="keyword">function</span>(<span class="params">downloadTask</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks.push(downloadTask);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.removeDownloadTask = <span class="function"><span class="keyword">function</span>(<span class="params">downloadTask</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.downloadTasks.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (item === downloadTask) &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// this.downloadTasks.remove(downloadTask);</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> downloadTaskCount = <span class="keyword">this</span>.downloadTasks.length;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; downloadTaskCount; i++) &#123;</span><br><span class="line">    <span class="keyword">this</span>.downloadTasks[i].finish(url);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> DataHub();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> task1 = <span class="keyword">new</span> DownloadTask(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">var</span> task2 = <span class="keyword">new</span> DownloadTask(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">d.addDownloadTask(task1);</span><br><span class="line">d.addDownloadTask(task2);</span><br><span class="line"></span><br><span class="line">d.removeDownloadTask(task1);</span><br><span class="line"></span><br><span class="line">d.notify(<span class="string">'http://somedomain.someaddress'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="4-发布订阅代码实现"><a href="#4-发布订阅代码实现" class="headerlink" title="4. 发布订阅代码实现"></a>4. 发布订阅代码实现</h3><ul>
+<li>发布订阅模式属于广义上的观察者模式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发布订阅模式是最常用的一种观察者模式的实现，并且从解耦和重用角度来看，更优于典型的观察者模式</span><br></pre></td></tr></table></figure>
+<ul>
+<li>发布订阅模式多了个事件通道</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在观察者模式中，观察者需要直接订阅目标事件；在目标发出内容改变的事件后，直接接收事件并作出响应</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发布者</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Observer</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.fnList = []; <span class="comment">// 订阅者列表</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Observer.prototype = &#123;</span><br><span class="line">  subscribe: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123; <span class="comment">// 增加订阅者</span></span><br><span class="line">    <span class="keyword">this</span>.fnList.push(fn);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  unsubscribe: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>) </span>&#123; <span class="comment">// 移除订阅者</span></span><br><span class="line">    <span class="keyword">this</span>.fnList = <span class="keyword">this</span>.fnList.filter(<span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (el !== fn)&#123;</span><br><span class="line">        <span class="keyword">return</span> el;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">  notify: <span class="function"><span class="keyword">function</span> (<span class="params">p, thisObj</span>) </span>&#123; <span class="comment">//发布消息函数</span></span><br><span class="line">    <span class="keyword">var</span> scope = thisObj || <span class="built_in">window</span>;</span><br><span class="line">    <span class="keyword">this</span>.fnList.forEach(</span><br><span class="line">        <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">          el.call(scope, o);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.fnList);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> Observer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f1 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Robbin: '</span> + data + <span class="string">', 赶紧干活了！'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f2 = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Randall: '</span> + data + <span class="string">', 找他加点工资去！'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">o.subscribe(f1);</span><br><span class="line">o.subscribe(f2);</span><br><span class="line"></span><br><span class="line">o.notify(<span class="string">"Tom回来了！"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//退订f1</span></span><br><span class="line">o.unsubscribe(f1);</span><br><span class="line"><span class="comment">//再来验证</span></span><br><span class="line">o.notify(<span class="string">"Tom回来了！"</span>);</span><br></pre></td></tr></table></figure>
+<p>发布定远模式实现数据打包下载功能:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发布者</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DataHub</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">DataHub.prototype.notify = <span class="function"><span class="keyword">function</span>(<span class="params">url, callback</span>) </span>&#123;</span><br><span class="line">  callback(url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件通道</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DownloadManager</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  <span class="keyword">this</span>.uId = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadManager.prototype.publish = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, url</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.events[eventType]) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> subscribers = <span class="keyword">this</span>.events[eventType],</span><br><span class="line">    count = subscribers ? subscribers.length : <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (count--) &#123;</span><br><span class="line">    <span class="keyword">var</span> subscriber = subscribers[count];</span><br><span class="line">    subscriber.handler(eventType, subscriber.taskId, url);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DownloadManager.prototype.subscribe = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, handler</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.events[eventType]) &#123;</span><br><span class="line">    <span class="keyword">this</span>.events[eventType] = [];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> taskId = (++<span class="keyword">this</span>.uId).toString();</span><br><span class="line">  <span class="keyword">this</span>.events[eventType].push(&#123;</span><br><span class="line">    taskId: taskId,</span><br><span class="line">    handler: handler</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> taskId;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个数据中心</span></span><br><span class="line"><span class="keyword">var</span> dataHub = <span class="keyword">new</span> DataHub();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个下载事件管理器</span></span><br><span class="line"><span class="keyword">var</span> downloadManager = <span class="keyword">new</span> DownloadManager();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个下载器</span></span><br><span class="line"><span class="keyword">var</span> dataLoader = <span class="function"><span class="keyword">function</span>(<span class="params">eventType, taskId, url</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Task '</span> + taskId + <span class="string">' load data from '</span> + url);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用户来请求数据了</span></span><br><span class="line"><span class="keyword">var</span> downloadTask1 = downloadManager.subscribe(<span class="string">'dataReady'</span>, dataLoader);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据打包完成了</span></span><br><span class="line"></span><br><span class="line">dataHub.notify(<span class="string">'http://somedomain.someaddress'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">  downloadManager.publish(<span class="string">'dataReady'</span>, url);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjln3j2wh000shtm7hyva3nxy" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comentarios</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-js-review-script" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/05/04/js-review-script/">js复习之基础概念以及script</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/05/04/js-review-script/">
+            <time datetime="2018-05-03T16:00:00.000Z" itemprop="datePublished">2018-05-04</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="/img/js-reivew-script.png" alt=""></p>
+<h1 id="一、js复习之前置概念"><a href="#一、js复习之前置概念" class="headerlink" title="一、js复习之前置概念"></a>一、js复习之前置概念</h1><h2 id="1-js历史及以前名词"><a href="#1-js历史及以前名词" class="headerlink" title="1.js历史及以前名词"></a>1.js历史及以前名词</h2><ul>
+<li><p>ECMA(European Computer Manufactures Associatio)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">欧洲计算机制造联合会</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TC39（Technical Committee #39）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECMA指派负责“标准化一种通用、跨平台、供应商中立的脚本语言的语法和语意”的39号技术委员会</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECMA-262</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基于以javascript1.1为蓝本的新脚本语言标准</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECMAScript</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由ECMA-262标准定义的脚本语言（通常都被人们用来表达相同的含义）</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-js实现"><a href="#2-js实现" class="headerlink" title="2.js实现"></a>2.js实现</h2><p>虽然JavasScript和ECMAScript都用来表达相同含义，但一个完整的浏览器端js应实现3个不同的部分</p>
+<ul>
+<li>核心（ECMAScript）</li>
+<li>文档对象模型（DOM）</li>
+<li>浏览器对象模型 （BOM）</li>
+</ul>
+<h3 id="1-ECMAScript"><a href="#1-ECMAScript" class="headerlink" title="(1) ECMAScript"></a>(1) ECMAScript</h3><h4 id="1-ECMAScript环境"><a href="#1-ECMAScript环境" class="headerlink" title="[1] ECMAScript环境"></a>[1] ECMAScript环境</h4><ul>
+<li>Web浏览器只是ECMAScript实现可能的宿主环境之一，宿主环境不仅提供基本的ECMA实现，同时也提供该语言的扩展，以便语言和环境对接交互。</li>
+<li>其他宿主环境包括Node和Adobe Flash</li>
+<li>ECMAScript就是对实现该标准规定的各方面内容的语言环境 。JavaScript实现了ECMAScript， Adobe ActionScript也实现了ECMAScript。 </li>
+</ul>
+<h4 id="2-ECMAScript的实现"><a href="#2-ECMAScript的实现" class="headerlink" title="[2] ECMAScript的实现"></a>[2] ECMAScript的实现</h4><p>根据EMCA-262对ECMAScript兼容的定义，想要成为ECMAScript的实现，则该实现必须做到：</p>
+<p>（1）支持ECMA262描述的所有类型、值、对象、属性、函数以及程序句法、语义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">包括：语法、类型、语句、关键字、保留字、操作符、对象</span><br></pre></td></tr></table></figure>
+<p>（2）全面支持Unicode字符标准</p>
+<h4 id="3-ECMAScript兼容"><a href="#3-ECMAScript兼容" class="headerlink" title="[3] ECMAScript兼容"></a>[3] ECMAScript兼容</h4><p>此外，兼容实现还可以进行下列扩展。</p>
+<p>（1）添加ECMA-262没有描述的“更多类型、值、对象、属性和函数”。ECMA-262所说的这些新增特性，主要是指标该标准没有规定的新对象和对象的新属性</p>
+<p>（2）支持ECMA-262定义的“程序和正则表达式语法”。（也就是说，可以修改和扩展正则表达式语法）</p>
+<h4 id="4-ECMAScript的版本"><a href="#4-ECMAScript的版本" class="headerlink" title="[4] ECMAScript的版本"></a>[4] ECMAScript的版本</h4><h5 id="1-ECMAScript-262"><a href="#1-ECMAScript-262" class="headerlink" title="(1) ECMAScript 262"></a>(1) ECMAScript 262</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1997年，基于javascript 1.1</span><br></pre></td></tr></table></figure>
+<h5 id="2-ECMAScript-2"><a href="#2-ECMAScript-2" class="headerlink" title="(2) ECMAScript 2"></a>(2) ECMAScript 2</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1998年，基于javascript 1.1和</span><br></pre></td></tr></table></figure>
+<h5 id="3-ECMAScript-3"><a href="#3-ECMAScript-3" class="headerlink" title="(3) ECMAScript 3"></a>(3) ECMAScript 3</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1999年</span><br></pre></td></tr></table></figure>
+<h5 id="4-ECMAScript-4-（未完成）"><a href="#4-ECMAScript-4-（未完成）" class="headerlink" title="(4) ECMAScript 4 （未完成）"></a>(4) ECMAScript 4 （未完成）</h5><h5 id="5-ECMAScript-5-1-或仅-ES5-目前主流浏览器大多支持这个标准"><a href="#5-ECMAScript-5-1-或仅-ES5-目前主流浏览器大多支持这个标准" class="headerlink" title="(5) ECMAScript 5.1 (或仅 ES5)  (目前主流浏览器大多支持这个标准)"></a>(5) ECMAScript 5.1 (或仅 ES5)  (目前主流浏览器大多支持这个标准)</h5><h5 id="7-ECMAScript-6-es2015"><a href="#7-ECMAScript-6-es2015" class="headerlink" title="(7) ECMAScript 6 es2015"></a>(7) ECMAScript 6 es2015</h5><p>新增特性</p>
+<ul>
+<li>let const</li>
+<li>Symbol</li>
+<li>Set Map</li>
+<li>Iterator for…of</li>
+<li>class</li>
+<li>箭头函数</li>
+<li>extend</li>
+<li>promise</li>
+<li>decorator</li>
+<li>Module</li>
+</ul>
+<h5 id="8-ECMAScript-7-有种说法是es6-1-es2016"><a href="#8-ECMAScript-7-有种说法是es6-1-es2016" class="headerlink" title="(8) ECMAScript 7(有种说法是es6.1) es2016"></a>(8) ECMAScript 7(有种说法是es6.1) es2016</h5><ul>
+<li>Array.prototype.includes</li>
+<li>Exponentiation Operator<br>只新增了数组实例的includes方法和指数运算符</li>
+</ul>
+<h5 id="9-ECMAScript-8-es2017"><a href="#9-ECMAScript-8-es2017" class="headerlink" title="(9) ECMAScript 8 es2017"></a>(9) ECMAScript 8 es2017</h5><ul>
+<li>Object.values()</li>
+<li>Object.entries()</li>
+<li>padStart()</li>
+<li>padEnd()</li>
+<li>Object.getOwnPropertyDescriptors()</li>
+<li>函数参数列表结尾允许逗号</li>
+<li>Async/Await</li>
+</ul>
+<p>文档说(es8 es2017 实验阶段)</p>
+<ul>
+<li>property initializers</li>
+</ul>
+<h5 id="9-ECMAScript-9-es2018"><a href="#9-ECMAScript-9-es2018" class="headerlink" title="(9) ECMAScript 9 es2018"></a>(9) ECMAScript 9 es2018</h5><ul>
+<li><p>可观察性(Observables)，响应式架构的关键 (Dojo 2 的 可观察特性)</p>
+</li>
+<li><p>全局性，一种用来一致地引用全局对象的标准 (Dojo 2 中的全局特性)</p>
+</li>
+<li><p>trimStart/trimEnd, 类似于 padStart/padEnd (估计是批量空格填充什么的，回看特性2，译者注)</p>
+</li>
+<li><p>import, 一种 ES 模块标准中没有的动态 import 机制</p>
+</li>
+<li><p>类和属性装饰器 (已经在 TypeScript 中实现)</p>
+</li>
+<li><p>异步迭代 (Asynchronous iteration)</p>
+</li>
+<li><p>单指令多数据 (SIMD，Single Instruction Multiple Data), 它能够使得渲染和使用像 WebGL, Canvas 之类的动画加速</p>
+</li>
+</ul>
+<h4 id="5-浏览器对ECMAScript支持情况"><a href="#5-浏览器对ECMAScript支持情况" class="headerlink" title="[5] 浏览器对ECMAScript支持情况"></a>[5] 浏览器对ECMAScript支持情况</h4><ul>
+<li>ECMAScript 3</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chrome 1+ Firefox 3.0x Sarfari3.x Opera7.2+ ie7 Netscap 6</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ECMAScript 5</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IE8部分支持 IE9支持 Firefox4.0+</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ECMAScript 6</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">支持情况可查询：http://kangax.github.io/compat-table/es6/</span><br></pre></td></tr></table></figure>
+<h4 id="6-ECMAScript更新流程"><a href="#6-ECMAScript更新流程" class="headerlink" title="[6] ECMAScript更新流程"></a>[6] ECMAScript更新流程</h4><p>任何人都可以向标准委员会（又称 TC39 委员会）提案，要求修改语言标准。</p>
+<p>一种新的语法从提案到变成正式标准，需要经历五个阶段。每个阶段的变动都需要由 TC39 委员会批准。</p>
+<ul>
+<li>Stage 0 - Strawman（展示阶段）</li>
+<li>Stage 1 - Proposal（征求意见阶段）</li>
+<li>Stage 2 - Draft（草案阶段）</li>
+<li>Stage 3 - Candidate（候选人阶段）</li>
+<li>Stage 4 - Finished（定案阶段）</li>
+</ul>
+<p>一个提案只要能进入 Stage 2，就差不多肯定会包括在以后的正式标准里面。ECMAScript 当前的所有提案，可以在 TC39 的官方网站Github.com/tc39/ecma262查看。</p>
+<h3 id="2-DOM文档对象模型"><a href="#2-DOM文档对象模型" class="headerlink" title="(2) DOM文档对象模型"></a>(2) DOM文档对象模型</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="[1] 概念"></a>[1] 概念</h4><p>文档对象模型是针对XML但经过扩展用于HTML的应用程序编程接口。数结构</p>
+<h4 id="2-DOM级别"><a href="#2-DOM级别" class="headerlink" title="[2] DOM级别"></a>[2] DOM级别</h4><p>(0) DOM 0</p>
+<p>当阅读与DOM有关的材料时，可能会遇到参考0级DOM的情况。需要注意的是并没有标准被称为0级DOM，它仅是DOM历史上一个参考点（0级DOM被认为是在Internet Explorer 4.0 与Netscape Navigator4.0支持的最早的DHTML）。</p>
+<p>(1) DOM 1</p>
+<p>映射文档结构为目标</p>
+<p>DOM 1由两个模块组成：DOM核心（DOM Core）和 DOM HTML</p>
+<ul>
+<li><p>DOM Core: DOM核心规定的是如何映射基于XML的文档结构，以便简化对文档中任意部分的访问和操作。</p>
+</li>
+<li><p>DOM HTML: DOM核心的基础上加以扩展，添加了针对HTML的对象和方法。</p>
+</li>
+</ul>
+<p>(2) DOM 2</p>
+<ul>
+<li>DOM Views (DOM视图)：定义了跟踪不同文档（例如：应用CSS之前和之后的文档）视图的接口；</li>
+<li>DOM Events(DOM事件)：定义了事件和事件处理的接口</li>
+<li>DOM Style (DOM样式)：定义了基于CSS为元素应用样式的接口；</li>
+<li>DOM Traversal and Range (DOM遍历和范围)：定义了遍历和操作文档树的接口。</li>
+</ul>
+<p>(3) DOM 3</p>
+<ul>
+<li>引入了以统一方式加载和保存文档的方法——在DOM加载和保存（DOM Load and Save）模块中定义；</li>
+<li>新增了验证文档的方法——在DOM验证（DOM Validation）模块定义。</li>
+<li>DOM3级也对DOM核心进行了扩展，开始支持XML1.0规范，涉及XML Infoset、Xpath和 XML Base。</li>
+</ul>
+<p>(4) 其他DOM标准</p>
+<p>除了DOM核心和DOM HTML接口之外，另外几种语言还发布只针对自己的DOM标准。下面列出的语言都是基于XML的，每种语言的DOM标准都添加了与特定语言相关的新方法和新接口</p>
+<p>W3C:</p>
+<ul>
+<li>SVG (Scalable Vector Graphic, 可伸缩矢量图) 1.0</li>
+<li>MathML (Mathematical Markup Language，数学标记语言) 1.0</li>
+<li>SMIL (Synchronized Multimedia Integration Language, 同步多媒体集成语言)。</li>
+</ul>
+<p>Mozillas:</p>
+<ul>
+<li>XUL: (XML User Interface Language, XML用户界面语言)。</li>
+</ul>
+<h4 id="3-DOM支持"><a href="#3-DOM支持" class="headerlink" title="[3] DOM支持"></a>[3] DOM支持</h4><ul>
+<li><p>Chrome 1+</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dom: 1级 2级</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Firefox</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dom: 1级 2级 3级</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ie2 ～ ie4.x</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOM: -</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ie5</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOM: 1级 （最小限度）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ie5.5 ~ ie8</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOM: 1级 （几乎全部）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ie9+</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOM: 1级 2级 3级</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-BOM浏览器对象模型"><a href="#3-BOM浏览器对象模型" class="headerlink" title="(3) BOM浏览器对象模型"></a>(3) BOM浏览器对象模型</h3><p>BOM(Browser Object Model)浏览器对象模型：</p>
+<ul>
+<li>HTML5之前没有标准，HTML5把很多BOM功能写入正式规范</li>
+<li>从根上BOM只处理浏览器窗口和框架</li>
+<li><p>但是习惯上对浏览器的的Javascript扩展算作BOM的一部分，包括</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; 弹出新浏览器窗口的功能</span><br><span class="line"></span><br><span class="line">&gt; 移动、缩放和关闭浏览器窗口的功能</span><br><span class="line"></span><br><span class="line">&gt; 提供浏览器详细信息的navigator对象</span><br><span class="line"></span><br><span class="line">&gt; 提供浏览器所加载页面的详细信息的location对象</span><br><span class="line"></span><br><span class="line">&gt; 提供用户显示器分辨率详细信息的screen对象</span><br><span class="line"></span><br><span class="line">&gt; 对cookies的支持</span><br><span class="line"></span><br><span class="line">&gt; 像XMLHttpRequest 和 IE的 ActiveXObject这样的自定义对象</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-script"><a href="#2-script" class="headerlink" title="2.script"></a>2.script</h2><h3 id="1-script六个属性"><a href="#1-script六个属性" class="headerlink" title="(1) script六个属性"></a>(1) script六个属性</h3><h4 id="async（可选）"><a href="#async（可选）" class="headerlink" title="async（可选）"></a>async（可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">立即下载，但不妨碍页面中的其他操作,比如下载其他资源或等待加载其他脚本 只对外部脚本文件有效。</span><br></pre></td></tr></table></figure>
+<h4 id="charset（可选）"><a href="#charset（可选）" class="headerlink" title="charset（可选）"></a>charset（可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">指定src属性的代码字符集，通常会被大多数浏览器忽略，可以用来解决乱码问题。</span><br></pre></td></tr></table></figure>
+<h4 id="defer-（可选）"><a href="#defer-（可选）" class="headerlink" title="defer （可选）"></a>defer （可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示脚本可以延迟到文档完全被解析显示之后再执行。只对外部脚本有效</span><br></pre></td></tr></table></figure>
+<h4 id="language-（已弃用）"><a href="#language-（已弃用）" class="headerlink" title="language （已弃用）"></a>language （已弃用）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示编写代码使用的脚本语言（如：Javascript、Javascript1.2或VBScript），已废弃。</span><br></pre></td></tr></table></figure>
+<h4 id="src-（可选）"><a href="#src-（可选）" class="headerlink" title="src （可选）"></a>src （可选）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表示包含要执行代码的外部文件。</span><br></pre></td></tr></table></figure>
+<h4 id="type-（可选）（不是必须默认值text-javascirpt）"><a href="#type-（可选）（不是必须默认值text-javascirpt）" class="headerlink" title="type （可选）（不是必须默认值text/javascirpt）"></a>type （可选）（不是必须默认值text/javascirpt）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 可以看作language的替代属性；表示编写代码使用的脚本语言的内容类型（也称为MIME类型）。</span><br><span class="line">&gt; text/javascirpt text/ecmascirpt都已经不被推荐使用。</span><br><span class="line"></span><br><span class="line">&gt; 实际上服务端传递javascirpt文件时使用的MIME类型通常是application/x-javascirpt，但是type设置该值可能会导致被忽略。</span><br><span class="line"></span><br><span class="line">&gt; 另外，在非ie下可以设置： application/javascript和application/ecmascript（不推荐）</span><br></pre></td></tr></table></figure>
+<h3 id="2-使用标签的一些注意事项"><a href="#2-使用标签的一些注意事项" class="headerlink" title="(2) 使用标签的一些注意事项"></a>(2) 使用标签的一些注意事项</h3><h4 id="1-script闭标签"><a href="#1-script闭标签" class="headerlink" title="[1] script闭标签"></a>[1] script闭标签</h4><ul>
+<li>不要在代码任何地方出现script闭标签</li>
+<li><p>不要出现以下形式，某些浏览器（尤其是ie）的正确解析</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;example.js&quot; /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-标签位置"><a href="#2-标签位置" class="headerlink" title="[2] 标签位置"></a>[2] 标签位置</h4><ul>
+<li>body尾部</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这样在解析包含的javascirpt代码之前，页面内容将完全呈现在浏览器中。从而减少页面空白时间。</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--这里放内容--&gt;</span><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"example1.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span> <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"example2.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>需要在DOM加载解析之前执行的脚本</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这样意味着必须等到全部javascirpt下载、解析、执行完成以后，才能开始呈现页面内容（浏览器在遇到body标签菜开始呈现内容），会增加页面空白时间</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span>   <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example HTML Page<span class="tag">&lt;/<span class="name">title</span>&gt;</span>   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"example1.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"example2.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-延迟脚本（defer）"><a href="#3-延迟脚本（defer）" class="headerlink" title="(3) 延迟脚本（defer）"></a>(3) 延迟脚本（defer）</h3><p>html 4.01 script标签定义了defer属性。</p>
+<ul>
+<li>相当于告知浏览器立即下载，但延迟执行</li>
+<li>脚本会被延迟到整个页面都解析完毕后再运行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Example HTML Page&lt;/title&gt;&lt;script type=&quot;text/javascript&quot; defer=&quot;defer&quot; src=&quot;example1.js&quot;&gt;&lt;/script&gt; &lt;script type=&quot;text/javascript&quot; defer=&quot;defer&quot; src=&quot;example2.js&quot;&gt;&lt;/script&gt;  &lt;/head&gt;  &lt;body&gt;</span><br><span class="line">  &lt;!-- 内容 --&gt; &lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>本例子中，虽然我们把script元素放在了文档的head元素中，但其中包含的脚本将延迟到浏览器解析html的闭标签后再执行。</p>
+<ul>
+<li><p>HTML5规范要求它们出现的执行顺序因此：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">example1.js会先于example2,并两者都会先于DOMContentLoaded事件</span><br><span class="line"></span><br><span class="line">但实际中，延迟脚本并不一定按顺序执行，也不一定在DOMContentLoaded事件前执行，因此最好只包含一个延迟脚本</span><br><span class="line"></span><br><span class="line">HTML5会忽略内部脚本使用defer,ie4-ie7支持内部脚本defer,但请尽量拥抱标准。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-异步脚本（async）"><a href="#4-异步脚本（async）" class="headerlink" title="(4) 异步脚本（async）"></a>(4) 异步脚本（async）</h3><p>async的属性目的是不让页面等待脚本文件之前下载和执行，从而异步加载页面其他内容，建议异步脚本不要在加载期间修改DOM。</p>
+<ul>
+<li>与defer不同，标记为async的脚本不保证它们的先后顺序执行，因此两者互不依赖非常重要。</li>
+<li>异步脚本一定会在页面的load事件前执行，但可能会在DOMContentLoaded事件触发之前或之后执行</li>
+<li>支持异步浏览器firefox 3.6 chrome safari5。</li>
+</ul>
+<h3 id="5-嵌入脚本和外部脚本"><a href="#5-嵌入脚本和外部脚本" class="headerlink" title="(5) 嵌入脚本和外部脚本"></a>(5) 嵌入脚本和外部脚本</h3><p>一般建议使用外部脚本</p>
+<p>优点如下：</p>
+<ul>
+<li>可维护性强</li>
+<li>可缓存</li>
+<li>适应未来</li>
+</ul>
+<h3 id="6-文档模式"><a href="#6-文档模式" class="headerlink" title="(6) 文档模式"></a>(6) 文档模式</h3><h4 id="1-混杂模式"><a href="#1-混杂模式" class="headerlink" title="(1)混杂模式"></a>(1)混杂模式</h4><ul>
+<li>没有放入&lt;!doctype html&gt; （没有文档类型声明，则所有浏览器都会默认开启混杂模式）</li>
+</ul>
+<p>让IE行为与IE5相同</p>
+<h4 id="2-标准模式"><a href="#2-标准模式" class="headerlink" title="(2)标准模式"></a>(2)标准模式</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML 4.01 严格型    --&gt;</span><span class="meta">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt;</span><span class="comment">&lt;!-- XHTML 1.0 严格型    --&gt;</span><span class="meta">&lt;!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;</span><span class="comment">&lt;!-- HTML 5 --&gt;</span><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使浏览器行为更接近标准行为</p>
+<h4 id="3-准标准模式"><a href="#3-准标准模式" class="headerlink" title="(3)准标准模式"></a>(3)准标准模式</h4><ul>
+<li>准表示模式，则可以通过使用过渡型（Transitional）或框架集型（Frameset）文档类型来触发</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML 4.01  过渡型   --&gt;</span><span class="meta">&lt;!DOCTYPE HTML PUBLIC"-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>8   <span class="comment">&lt;!-- HTML 4.01 框架集型     --&gt;</span><span class="meta">&lt;!DOCTYPE HTML PUBLIC 9 "-//W3C//DTD HTML 4.01 Frameset//EN""http://www.w3.org/TR/html4/frameset.dtd"&gt;</span>  <span class="comment">&lt;!-- XHTML 1.0  过渡型    --&gt;</span><span class="meta">&lt;!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span><span class="comment">&lt;!-- XHTML 1.0  框架集型    --&gt;</span><span class="meta">&lt;!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;</span></span><br></pre></td></tr></table></figure>
+<p>准标准模式与标准模式非常接近，它们差异几乎可以忽略不计。</p>
+<h3 id="7-noscript元素"><a href="#7-noscript元素" class="headerlink" title="(7) noscript元素"></a>(7) noscript元素</h3><p>noscirpt标签只有在下列情况会被显示出来：</p>
+<ul>
+<li>浏览器不支持脚本</li>
+<li>浏览器支持脚本，但脚本被禁用</li>
+</ul>
+<p>作用：</p>
+<ul>
+<li>在不支持javascirpt的浏览器中显示替代的内容</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjln3j2w8000chtm7h81mjb2d" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comentarios</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-study-function" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -275,7 +801,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjlm3caov000edqm71v0c7gyb" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjln3j2wg000qhtm7ji8ng9px" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -343,7 +869,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comentarios</a>
     
 -->
         </footer>
@@ -442,7 +968,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjlm3caov000fdqm7eabtrbpx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjln3j2wi000uhtm7qsmiojqr" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -510,7 +1036,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-plan/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/05/03/study-plan/#comments" class="article-comment-link">Comentarios</a>
     
 -->
         </footer>
@@ -573,7 +1099,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjlm3caoj0002dqm79slpflnj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjln3j2w30008htm7vq69fuuu" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -641,216 +1167,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/04/13/hexo/#comments" class="article-comment-link">Comments</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-muti-npm" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/14/muti-npm/">前端项目共享node_modules</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/14/muti-npm/">
-            <time datetime="2018-03-14T15:39:33.000Z" itemprop="datePublished">2018-03-14</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <blockquote>
-<p>作者：Neo_Huang </p>
-</blockquote>
-<blockquote>
-<p>日期： 2018年2月8日</p>
-</blockquote>
-<blockquote>
-<p>github地址：<a href="https://github.com/Roxyhuang" target="_blank" rel="noopener">https://github.com/Roxyhuang</a></p>
-</blockquote>
-<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>在npm、yarn等包管理工具的帮助下，前端工程化模块化的进程日益加快，项目的依赖包也日益增大，特别是若项目采用webpack来构建用到许多webpack的插件以及一些Browsersync之类的插件，项目中的node_module就会变的十分庞大。</p>
-<p>因此团队开发者每次重新初始化项目进行npm install会十分缓慢，并且若占用大量空间，更进一步来说项目中往往很多前端团队会用到一台构建服务器，对前端项目的代码获取、打包、构建、部署进行管理（例如我自己所在的团队就在使用jenkins对前端项目的打包、构建、部署进行自动化托管）。npm这样的项目级依赖管理的特性就会造成大量的时间以及资源的消耗。</p>
-<p>此本篇文章就在这样的背景下诞生了。纯粹是笔者在项目中积累的一些经验，若有不足望指出。</p>
-<h3 id="2-问题的总结"><a href="#2-问题的总结" class="headerlink" title="2. 问题的总结"></a>2. 问题的总结</h3><p>接前言，若不对项目做任何优化以及设置正常一般前端项目的依赖应该是这样的：</p>
-<p>如图：</p>
-<p>可以看到图中 A 与 B项目在devDependencies层面其实只有wepback和gulp的差异，但是其项目中的node_modules剩余的依赖都会被重复获取。</p>
-<p>这样的情况，总结如下来会带来如下问题：</p>
-<ul>
-<li>项目devDependencies以及dependencies过多造成项目初始化过慢。</li>
-<li>各个项目devDependencies大量重复，打包时项目占用空间过大。</li>
-</ul>
-<p>这样的问题在项目数不大时并不会明显体现，并且这些重复很大一部分是因为构建是devDependencies中的依赖所导致的。</p>
-<h3 id="3-现有的一些解决方案以及存在的一些问题"><a href="#3-现有的一些解决方案以及存在的一些问题" class="headerlink" title="3. 现有的一些解决方案以及存在的一些问题"></a>3. 现有的一些解决方案以及存在的一些问题</h3><p>那难道没有方法让几个项目的依赖指向同一路径吗？答案当然是有</p>
-<h4 id="1-解决办法"><a href="#1-解决办法" class="headerlink" title="(1)解决办法"></a>(1)解决办法</h4><p>可以通过配置NODE_PATH，具体来说就是：</p>
-<p>在对应系统的环境变量配置文件中增加环境变量NODE_PATH，例如在macos中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /ect/profile <span class="comment"># 或/etc/bashrc或~/.bashrc此处不赘述配置问价的加载顺序以及原理</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-&gt; <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>: <span class="comment"># 将 /usr/bin 追加到 PATH 变量中</span></span><br><span class="line">-&gt; <span class="built_in">export</span> NODE_PATH=<span class="string">"/usr/lib/node_modules;/usr/local/lib/node_modules"</span> <span class="comment">#指定 NODE_PATH 变量</span></span><br></pre></td></tr></table></figure>
-<p>那 NODE_PATH 就是NODE中用来寻找模块所提供的路径注册环境变量。我们可以使用上面的方法指定NODE_PATH环境变量。并且用;分割多个不同的目录。</p>
-<p>关于 node 的包加载机制我就不在这里赘述了。NODE_PATH中的路径被遍历是发生在<br>从项目的根位置递归搜寻 node_modules 目录，直到文件系统根目录的 node_modules，如果还没有查找到指定模块的话，就会去 NODE_PATH中注册的路径中查找。</p>
-<h4 id="2-存在问题"><a href="#2-存在问题" class="headerlink" title="(2)存在问题"></a>(2)存在问题</h4><p>经过调整后，依赖的结构目前变为了：</p>
-<p>如图：</p>
-<p>看似不错让多个项目指向的依赖指向了全局的node_modules，但这种方式存在很明显的缺点：</p>
-<h5 id="a-不会生成package-json-无法增量安装"><a href="#a-不会生成package-json-无法增量安装" class="headerlink" title="a. 不会生成package.json,无法增量安装"></a>a. 不会生成package.json,无法增量安装</h5><p>在使用 –global 参数的时候 –save 或 –save-dev参数是无效的。<br>此时 package.json 中的 dependencies, devDependencies 将无法享受到npm增量更新带来的便利，不使用 dependencies, devDependencies 字段对整个依赖库的管理是非常不利的。</p>
-<h5 id="b-若项目模块出现版本差异，很难维护以及解决"><a href="#b-若项目模块出现版本差异，很难维护以及解决" class="headerlink" title="b.若项目模块出现版本差异，很难维护以及解决"></a>b.若项目模块出现版本差异，很难维护以及解决</h5><p>差异性的解决方法<br>如果 项目A 使用了，express的3.x版本，项目B 使用了 express的4.x版本，那这种情况该怎么办呢？</p>
-<p>如图：</p>
-<p>可以将 NODE_PATH 指定的位置中存放 webpack的3.x版本，项目B需要webpack 目录中放置 2.x 版本呢？</p>
-<p>可以利用node_module依赖包加载的机制，将webpack的3.x版本放在项目A自己的node_modules中</p>
-<p>，这样确实可以解决了模块版本差异性问题，并不能做到根据让项目按技术框架去划分并且因为若项目数量多，依然无法做到统一管理，当然这种灵活使用node_module依赖包加载的机制仍十分有借鉴意义，也启发了我们可以使用一个更灵活的方式去解决问题。</p>
-<h3 id="4-进一步增强以及改进的方案"><a href="#4-进一步增强以及改进的方案" class="headerlink" title="4.进一步增强以及改进的方案"></a>4.进一步增强以及改进的方案</h3><p>总而言之上述两种方式，在实际使用中都存在一定的问题。</p>
-<p><strong>目前笔者的理想方案应该能够达到下列几个目的：</strong></p>
-<ul>
-<li><p>可以将项目构建技术栈的项目统一在一起，共享依赖</p>
-</li>
-<li><p>可以实现对公共模块的维护和管理，并实现增量安装</p>
-</li>
-<li><p>对原来npm install流程改动不会太大</p>
-</li>
-</ul>
-<p><strong>因此笔者我经过了一系列的实践，采用了这种结构去维护模块，以下是主要思路：</strong></p>
-<ul>
-<li><p>由于node的包加载机制是从项目的根位置递归搜寻 node_modules 目录，因此我们只需要向当前项目的上层的node_modules安装依赖，既可以使项目正常引入。</p>
-</li>
-<li><p>对于相同构建技术栈的项目，建立一个框架目录，并将相同技术栈项目放在该目录中，在此目录下的node_modules和package.json中管理以及共享依赖包，项目目录如: webpack、gulp</p>
-</li>
-<li><p>在每个项目框架下维护一个自己的package.json以及一个框架级的node_modules，为了更好的区分哪些是我们框架需要的依赖包，并仍可以在项目中直接操作，故我们在项目级增加一个devDependenciesGlobal字段以从项目层面更好的维护公共框架的依赖</p>
-</li>
-<li><p>使用nodejs、shell脚本，结合npm script中的preinstall hook npm install的流程进行一些补充</p>
-</li>
-<li><p>在框架目录中建立带有md5的package.json来维护、管理公共的依赖</p>
-</li>
-<li><p>检查框架目录下是否存在package.json，若不存在视为需要初始化</p>
-</li>
-<li><p>若被视为初始化，会生成一个含有devDependenciesGlobal指纹的package.json，并在这个package.json的devDependencies写入，devDependenciesGlobal中所有描述的依赖</p>
-</li>
-<li><p>若已存在，跳过此步骤对项目自己的devdependencies以及devDependencies进行安装</p>
-</li>
-<li><p>若md5改变，则进行npm install，此时npm install会对借助npm本身的机制，对包进行分析，进行增量安装或更新</p>
-</li>
-</ul>
-<p>故按这种结构来管理，假设团队项目中有2套技术框架 A: webpack B: gulp</p>
-<p>调整下的依赖关系图：</p>
-<p>如图:</p>
-<p>示例webpack项目的github地址：<a href="https://github.com/Roxyhuang/npm-module-share" target="_blank" rel="noopener">https://github.com/Roxyhuang/npm-module-share</a></p>
-<p>下面是本人的一些具体实践的核心代码以及，希望能够对大家有所启发：</p>
-<p>####(1)按技术框架划分项目目录，并增加devDependenciesGlobal</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"dependencies"</span>: &#123;</span><br><span class="line">  <span class="string">"react"</span>: <span class="string">"^16.2.0"</span>,</span><br><span class="line">  <span class="string">"react-dom"</span>: <span class="string">"^16.2.0"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">  <span class="string">"babel-cli"</span>: <span class="string">"6.26.0"</span>,</span><br><span class="line">  <span class="string">"babel-plugin-transform-decorators-legacy"</span>: <span class="string">"1.3.4"</span>,</span><br><span class="line">  <span class="string">"babel-plugin-transform-runtime"</span>: <span class="string">"6.23.0"</span>,</span><br><span class="line">  <span class="string">"babel-polyfill"</span>: <span class="string">"6.23.0"</span>,</span><br><span class="line">  <span class="string">"babel-preset-env"</span>: <span class="string">"1.6.0"</span>,</span><br><span class="line">  <span class="string">"babel-preset-react"</span>: <span class="string">"6.24.1"</span>,</span><br><span class="line">  <span class="string">"babel-preset-stage-0"</span>: <span class="string">"6.24.1"</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">"devDependenciesGlobal"</span>: &#123;</span><br><span class="line">  <span class="string">"babel-core"</span>: <span class="string">"6.26.0"</span>,</span><br><span class="line">  <span class="string">"babel-loader"</span>: <span class="string">"7.1.2"</span>,</span><br><span class="line">  <span class="string">"chalk"</span>: <span class="string">"2.1.0"</span>,</span><br><span class="line">  <span class="string">"css-loader"</span>: <span class="string">"0.28.4"</span>,</span><br><span class="line">  <span class="string">"connect-history-api-fallback"</span>: <span class="string">"1.3.0"</span>,</span><br><span class="line">  <span class="string">"express"</span>: <span class="string">"4.16.1"</span>,</span><br><span class="line">  <span class="string">"webpack"</span>: <span class="string">"3.6.0"</span>,</span><br><span class="line">  <span class="string">"style-loader"</span>: <span class="string">"0.18.2"</span>,</span><br><span class="line">  <span class="string">"less"</span>: <span class="string">"2.7.3"</span>,</span><br><span class="line">  <span class="string">"rimraf"</span>: <span class="string">"2.6.1"</span>,</span><br><span class="line">  <span class="string">"html-webpack-plugin"</span>: <span class="string">"2.30.1"</span>,</span><br><span class="line">  <span class="string">"less-loader"</span>: <span class="string">"4.0.5"</span>,</span><br><span class="line">  <span class="string">"webpack-dev-middleware"</span>: <span class="string">"1.12.0"</span>,</span><br><span class="line">  <span class="string">"webpack-hot-middleware"</span>: <span class="string">"2.19.1"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>####(2)利用npm script的hook机制，增加preinstall脚本</p>
-<p>接下来为了更好和本身npm依赖管理机制结合的更好，可以利用npm script的hook，在script中增加preinstall</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"preinstall"</span>: <span class="string">"node build/script/preinstall.js"</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>下面是具体的node.js代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> exec = <span class="built_in">require</span>(<span class="string">'child_process'</span>).exec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> preList = <span class="built_in">require</span>(<span class="string">'../../package.json'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> execPath = path.resolve(<span class="string">'../'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> preListObj = preList.devDependenciesGlobal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> preListObjArray = <span class="built_in">Object</span>.keys(preListObj);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isFirst = !fs.existsSync(<span class="string">`<span class="subst">$&#123;execPath&#125;</span>/package.json`</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> currentMd5 = md5(<span class="built_in">JSON</span>.stringify(preListObj));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> script = <span class="string">`cd <span class="subst">$&#123;execPath&#125;</span> &amp;&amp; npm i`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> isUpdate = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`The md5 for this project: <span class="subst">$&#123;currentMd5&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> md5 = <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> md5sum = crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line">  md5sum.update(str);</span><br><span class="line">  str = md5sum.digest(<span class="string">'hex'</span>);</span><br><span class="line">  <span class="keyword">return</span> str;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isFirst)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'init global modules...'</span>);</span><br><span class="line">  fs.writeFileSync(<span class="string">`<span class="subst">$&#123;execPath&#125;</span>/package.json`</span>, <span class="built_in">JSON</span>.stringify(&#123;<span class="string">"md5"</span>: currentMd5,<span class="attr">dependencies</span>: preListObj&#125;));</span><br><span class="line">  isUpdate = <span class="literal">true</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'will check update'</span>);</span><br><span class="line">  <span class="keyword">const</span> lastVersion = <span class="built_in">require</span>(<span class="string">`<span class="subst">$&#123;execPath&#125;</span>/package.json`</span>).md5;</span><br><span class="line">  <span class="keyword">if</span> (lastVersion !== currentMd5) &#123;</span><br><span class="line">    fs.writeFileSync(<span class="string">`<span class="subst">$&#123;execPath&#125;</span>/package.json`</span>, <span class="built_in">JSON</span>.stringify(&#123;<span class="string">"md5"</span>: currentMd5,<span class="attr">dependencies</span>: preListObj&#125;));</span><br><span class="line">    isUpdate = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (isUpdate) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`will install in <span class="subst">$&#123;execPath&#125;</span>`</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'start install public package for neo-antd'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'please wait some minutes.....'</span>);</span><br><span class="line"></span><br><span class="line">  exec(script, <span class="function"><span class="keyword">function</span> (<span class="params">err, stdout, stderr</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(stdout);</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'error:'</span> + stderr);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(stdout);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'package init success'</span>);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`The global install in <span class="subst">$&#123;execPath&#125;</span>`</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'not any update'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'will be run next'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="（3）-通过node-js生成package-json，并维护md5安装框架级依赖"><a href="#（3）-通过node-js生成package-json，并维护md5安装框架级依赖" class="headerlink" title="（3） 通过node.js生成package.json，并维护md5安装框架级依赖"></a>（3） 通过node.js生成package.json，并维护md5安装框架级依赖</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"md5"</span>: <span class="string">"4c4ee67828b3e09f07b17774cb1633c7"</span>,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"babel-core"</span>: <span class="string">"6.26.0"</span>,</span><br><span class="line">    <span class="attr">"babel-loader"</span>: <span class="string">"7.1.2"</span>,</span><br><span class="line">    <span class="attr">"chalk"</span>: <span class="string">"2.1.0"</span>,</span><br><span class="line">    <span class="attr">"css-loader"</span>: <span class="string">"0.28.4"</span>,</span><br><span class="line">    <span class="attr">"connect-history-api-fallback"</span>: <span class="string">"1.3.0"</span>,</span><br><span class="line">    <span class="attr">"express"</span>: <span class="string">"4.16.1"</span>,</span><br><span class="line">    <span class="attr">"webpack"</span>: <span class="string">"3.6.0"</span>,</span><br><span class="line">    <span class="attr">"style-loader"</span>: <span class="string">"0.18.2"</span>,</span><br><span class="line">    <span class="attr">"less"</span>: <span class="string">"2.7.3"</span>,</span><br><span class="line">    <span class="attr">"rimraf"</span>: <span class="string">"2.6.1"</span>,</span><br><span class="line">    <span class="attr">"html-webpack-plugin"</span>: <span class="string">"2.30.1"</span>,</span><br><span class="line">    <span class="attr">"less-loader"</span>: <span class="string">"4.0.5"</span>,</span><br><span class="line">    <span class="attr">"webpack-dev-middleware"</span>: <span class="string">"1.12.0"</span>,</span><br><span class="line">    <span class="attr">"webpack-hot-middleware"</span>: <span class="string">"2.19.1"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="4-初始化项目，并在框架目录生成存有md的package-json"><a href="#4-初始化项目，并在框架目录生成存有md的package-json" class="headerlink" title="(4) 初始化项目，并在框架目录生成存有md的package.json"></a>(4) 初始化项目，并在框架目录生成存有md的package.json</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">&gt; npm-module-share@1.0.0 preinstall /Users/neo/home/webpack/npm-module-share</span><br><span class="line">&gt; node build/script/preinstall.js</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">The md5 <span class="keyword">for</span> this project: 4c4ee67828b3e09f07b17774cb1633c7</span><br><span class="line">init global modules...</span><br><span class="line">will install <span class="keyword">in</span> /Users/neo/home/webpack</span><br><span class="line">start install public package <span class="keyword">for</span> neo-antd</span><br><span class="line">please <span class="built_in">wait</span> some minutes....</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">added 704 packages <span class="keyword">in</span> 7.777s</span><br><span class="line"></span><br><span class="line">package init success</span><br><span class="line">The global install <span class="keyword">in</span> /Users/neo/home/webpack</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt; fsevents@1.1.3 install /Users/neo/home/webpack/npm-module-share/node_modules/fsevents</span><br><span class="line">&gt; node install</span><br><span class="line"></span><br><span class="line">[fsevents] Success: <span class="string">"/Users/neo/home/webpack/npm-module-share/node_modules/fsevents/lib/binding/Release/node-v57-darwin-x64/fse.node"</span> already installed</span><br><span class="line">Pass --update-binary to reinstall or --build-from-source to recompile</span><br><span class="line">npm WARN npm-module-share@1.0.0 No description</span><br><span class="line"></span><br><span class="line">added 341 packages <span class="keyword">in</span> 13.46s</span><br></pre></td></tr></table></figure>
-<h4 id="5-检查md5是否存在变化，判断是否需要进行增量安装"><a href="#5-检查md5是否存在变化，判断是否需要进行增量安装" class="headerlink" title="(5)    检查md5是否存在变化，判断是否需要进行增量安装"></a>(5)    检查md5是否存在变化，判断是否需要进行增量安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="comment"># 若没有任何更新，md5不会有任何变化，也不会再对会直接跳过preinstall的步骤</span></span><br><span class="line"></span><br><span class="line">The md5 <span class="keyword">for</span> this project: 4c4ee67828b3e09f07b17774cb1633c7</span><br><span class="line">will check update</span><br><span class="line">not any update</span><br><span class="line">will be run next</span><br><span class="line">npm WARN npm-module-share@1.0.0 No description</span><br><span class="line"></span><br><span class="line">up to date <span class="keyword">in</span> 1.291s</span><br></pre></td></tr></table></figure>
-<h4 id="6-几点需要注意的地方"><a href="#6-几点需要注意的地方" class="headerlink" title="(6) 几点需要注意的地方"></a>(6) 几点需要注意的地方</h4><h5 id="a-npm-script中直接需要调用的模块，需要放置到该项目的dependencies和devDependencies中"><a href="#a-npm-script中直接需要调用的模块，需要放置到该项目的dependencies和devDependencies中" class="headerlink" title="a. npm script中直接需要调用的模块，需要放置到该项目的dependencies和devDependencies中"></a>a. npm script中直接需要调用的模块，需要放置到该项目的dependencies和devDependencies中</h5><p>关于这点阮一峰前辈的博客中:<a href="http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html</a></p>
-<p>在对pm script的原理中有提到，在此因为篇幅有限不赘述了，简单来说就是npm script当中用到的模块需要存在当前项目的devdependencies或devDependencies中。</p>
-<h5 id="b-经过测试在windows下需要将babel以及babelrc相关的依赖"><a href="#b-经过测试在windows下需要将babel以及babelrc相关的依赖" class="headerlink" title="b. 经过测试在windows下需要将babel以及babelrc相关的依赖"></a>b. 经过测试在windows下需要将babel以及babelrc相关的依赖</h5><p>目前这点笔者暂时还没有找到原因，在mac中并不会报错，但是在windows中会包找不到这些模块。</p>
-<p>希望知道的同行能够与我联系告知我具体原因</p>
-<h5 id="c-若有eslint需要增加-eslintignore"><a href="#c-若有eslint需要增加-eslintignore" class="headerlink" title="c. 若有eslint需要增加 .eslintignore"></a>c. 若有eslint需要增加 .eslintignore</h5><h4 id="d-需要尽量保证一套技术框架下的devDependenciesGlobal尽量一致"><a href="#d-需要尽量保证一套技术框架下的devDependenciesGlobal尽量一致" class="headerlink" title="d. 需要尽量保证一套技术框架下的devDependenciesGlobal尽量一致"></a>d. 需要尽量保证一套技术框架下的devDependenciesGlobal尽量一致</h4><h3 id="结语："><a href="#结语：" class="headerlink" title="结语："></a>结语：</h3><p>经过上述操作，我们便可以将前端项目根据框架进行依赖管理以及划分了，其实如此改进仍并非最完美以及优化，不足之处仍非常之多，如：同一技术框架下，框架依赖包的升级策略并不完善，期待更加优雅的解决方案，使我们前端项目的架构更佳健壮和灵活。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/03/14/muti-npm/" data-id="cjlm3caoo0008dqm7d51ab2q2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/03/14/muti-npm/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/04/13/hexo/#comments" class="article-comment-link">Comentarios</a>
     
 -->
         </footer>
@@ -861,7 +1178,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
 </section>
             
@@ -869,9 +1186,47 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/06/js-review-event-op/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的基本操作" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/06/js-review-event-op/" class="title">js复习事件的基本操作</a></p>
+                            <p class="item-date"><time datetime="2018-09-05T16:00:00.000Z" itemprop="datePublished">2018-09-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/04/muti-npm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/npm.jpg)" alt="前端项目共享node_modules" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/04/muti-npm/" class="title">前端项目共享node_modules</a></p>
+                            <p class="item-date"><time datetime="2018-09-03T16:00:00.000Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -930,44 +1285,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/07/08/js-review-datatype/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-datetype.png)" alt="js复习基本概念（数据类型）" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/07/08/js-review-datatype/" class="title">js复习基本概念（数据类型）</a></p>
-                            <p class="item-date"><time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished">2018-07-08</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/06/25/js-review-base-md/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-base.png)" alt="js复习基本概念（语法、严格模式）" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/06/25/js-review-base-md/" class="title">js复习基本概念（语法、严格模式）</a></p>
-                            <p class="item-date"><time datetime="2018-06-24T16:00:00.000Z" itemprop="datePublished">2018-06-25</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -977,9 +1294,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -990,7 +1307,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Links</h3>
         <div class="widget">
             <ul>
                 
