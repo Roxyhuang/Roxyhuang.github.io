@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>js复习事件的优先级和事件对象 | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、dom0 dom2 dom3事件区分上篇当中有提到html内联事件、属性事件和事件监听回调事件，那他们和dom0 dom2 dom3事件有什么关系呢，这里简述下： DOM Level”是描述DOM对象，方法和行为的规范集合。更高级别的DOM规范建立在之前的级别上。变化发生在两个方面：  dom0事件模型: html事件、属性事件  dom1事件模型: 1级DOM标准中并没有定义事件相关的内容，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js复习事件的优先级和事件对象">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、dom0 dom2 dom3事件区分上篇当中有提到html内联事件、属性事件和事件监听回调事件，那他们和dom0 dom2 dom3事件有什么关系呢，这里简述下： DOM Level”是描述DOM对象，方法和行为的规范集合。更高级别的DOM规范建立在之前的级别上。变化发生在两个方面：  dom0事件模型: html事件、属性事件  dom1事件模型: 1级DOM标准中并没有定义事件相关的内容，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/js-review-event-op.jpg">
+<meta property="og:updated_time" content="2018-09-11T01:50:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js复习事件的优先级和事件对象">
+<meta name="twitter:description" content="一、dom0 dom2 dom3事件区分上篇当中有提到html内联事件、属性事件和事件监听回调事件，那他们和dom0 dom2 dom3事件有什么关系呢，这里简述下： DOM Level”是描述DOM对象，方法和行为的规范集合。更高级别的DOM规范建立在之前的级别上。变化发生在两个方面：  dom0事件模型: html事件、属性事件  dom1事件模型: 1级DOM标准中并没有定义事件相关的内容，">
+<meta name="twitter:image" content="http://www.neohuang.com/img/js-review-event-op.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                16
+                <span>Entradas</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>Etiqueta</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-js-reivew-event-level" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            js复习事件的优先级和事件对象
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/11/js-reivew-event-level/">
+            <time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、dom0-dom2-dom3事件区分"><a href="#一、dom0-dom2-dom3事件区分" class="headerlink" title="一、dom0 dom2 dom3事件区分"></a>一、dom0 dom2 dom3事件区分</h3><p>上篇当中有提到html内联事件、属性事件和事件监听回调事件，那他们和dom0 dom2 dom3事件有什么关系呢，这里简述下：</p>
+<p>DOM Level”是描述DOM对象，方法和行为的规范集合。更高级别的DOM规范建立在之前的级别上。变化发生在两个方面：</p>
+<ul>
+<li><p>dom0事件模型: html事件、属性事件</p>
+</li>
+<li><p>dom1事件模型: 1级DOM标准中并没有定义事件相关的内容，所以没有所谓的1级DOM事件模型。</p>
+</li>
+<li><p>dom2事件模型: 监听器回调事件</p>
+</li>
+<li><p>dom3事件模型: 与绑定事件无关</p>
+</li>
+</ul>
+<h3 id="二、什么是事件优先级"><a href="#二、什么是事件优先级" class="headerlink" title="二、什么是事件优先级"></a>二、什么是事件优先级</h3><h4 id="解释：事件执行的顺序"><a href="#解释：事件执行的顺序" class="headerlink" title="解释：事件执行的顺序"></a>解释：事件执行的顺序</h4><h5 id="1-几个看实例之前需要知道的概念："><a href="#1-几个看实例之前需要知道的概念：" class="headerlink" title="(1) 几个看实例之前需要知道的概念："></a>(1) 几个看实例之前需要知道的概念：</h5><ul>
+<li>html事件会被属性事件覆盖</li>
+</ul>
+<h5 id="2-dom-0-只存在事件冒泡"><a href="#2-dom-0-只存在事件冒泡" class="headerlink" title="(2) dom 0 只存在事件冒泡"></a>(2) dom 0 只存在事件冒泡</h5><h5 id="3-dom2-支持事件冒泡和事件捕获"><a href="#3-dom2-支持事件冒泡和事件捕获" class="headerlink" title="(3) dom2 支持事件冒泡和事件捕获"></a>(3) dom2 支持事件冒泡和事件捕获</h5><ul>
+<li>事件目标阶段，按绑定顺序事件</li>
+<li>冒泡阶段事件执行顺序，属性事件会比监听执行早（哪个时间先绑定哪个先执行）</li>
+</ul>
+<p>分析实例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">id</span>=<span class="string">"body"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent1()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent2()"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent3"</span>&gt;</span>test<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    var body = document.getElementById('body');</span></span><br><span class="line"><span class="undefined">    var container = document.getElementById('container');</span></span><br><span class="line"><span class="undefined">    var test = document.getElementById('test');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.onclick = propsEvent1;</span></span><br><span class="line"><span class="undefined">    container.onclick = propsEvent2;</span></span><br><span class="line"><span class="undefined">    test.onclick = propsEvent3;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.addEventListener('click',listenerEventC1,true);</span></span><br><span class="line"><span class="undefined">    container.addEventListener('click',listenerEventC2,true);</span></span><br><span class="line"><span class="undefined">    test.addEventListener('click',listenerEventC3,true);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.addEventListener('click',listenerEventB1,false);</span></span><br><span class="line"><span class="undefined">    container.addEventListener('click',listenerEventB2,false);</span></span><br><span class="line"><span class="undefined">    test.addEventListener('click',listenerEventB3,false);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent1() &#123;</span></span><br><span class="line"><span class="undefined">        console.log('htmlEvent1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('htmlEvent2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('htmlEvent3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB3  ');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">// 捕获阶段执行开始   </span></span><br><span class="line"><span class="undefined">// listenerEventC1</span></span><br><span class="line"><span class="undefined">// listenerEventC2</span></span><br><span class="line"><span class="undefined">// 捕获事件执行完毕</span></span><br><span class="line"><span class="undefined">// 事件目标，按绑定顺序执行开始</span></span><br><span class="line"><span class="undefined">// propsEvent3</span></span><br><span class="line"><span class="undefined">// listenerEventC3</span></span><br><span class="line"><span class="undefined">// listenerEventB3  </span></span><br><span class="line"><span class="undefined">// 事件目标，按书写顺序执行结束</span></span><br><span class="line"><span class="undefined">// 冒泡阶段开始，容器，根据书写顺序 （实际会是属性事件先执行，再监听起器）</span></span><br><span class="line"><span class="undefined">// propsEvent2</span></span><br><span class="line"><span class="undefined">//	listenerEventB2</span></span><br><span class="line"><span class="undefined">// 冒泡阶段结束，容器，根据书写顺序</span></span><br><span class="line"><span class="undefined">// 冒泡阶段开始，body，根据书写顺序 （实际会是属性事件先执行，再监听起器）</span></span><br><span class="line"><span class="undefined">//	propsEvent1</span></span><br><span class="line"><span class="undefined">//	listenerEventB1</span></span><br><span class="line"><span class="undefined">// 冒泡阶段结束，body，根据书写顺序</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>原则一： 牢记事件绑定是浏览器绑定</li>
+<li>原则二：事件向传播目标对象（捕获阶段），先出发事件监听</li>
+<li>事件在目标阶段，按事件解析或事件被定义的事件执行 （简单理解可理解为js书写顺序）</li>
+<li>事件上按事件解析或事件被定义的事件执行，如果包含html事件上执行，即使属性被覆盖了还是会先执行html事件（即被覆盖的属性事件）</li>
+</ul>
+<h4 id="4-事件传递和cs会影响事件传播有关（比如把外层div层级改动）"><a href="#4-事件传递和cs会影响事件传播有关（比如把外层div层级改动）" class="headerlink" title="(4)事件传递和cs会影响事件传播有关（比如把外层div层级改动）"></a>(4)事件传递和cs会影响事件传播有关（比如把外层div层级改动）</h4><p>不会，事件绑定与css显示不相关</p>
+<p><strong>特例：</strong><br>假设绝对定位，住了遮挡元素 不会触发，（以弹窗插件为例）: 事件绑定只html结构有关</p>
+<p><strong>特例中的特例：</strong></p>
+<p>但是有一个例子可能会有事件穿透</p>
+<p>移动端中的事件穿透：</p>
+<p>touchstart touchend touchmove </p>
+<ul>
+<li><p>touch没有 300ms延迟</p>
+</li>
+<li><p>onclick 300ms延迟</p>
+</li>
+</ul>
+<p>处理方式：</p>
+<p>(1) 延迟消失弹窗</p>
+<p>(2) 叠加层 300毫秒消失</p>
+<h3 id="二、事件对象相关："><a href="#二、事件对象相关：" class="headerlink" title="二、事件对象相关："></a>二、事件对象相关：</h3><p>####（1）定义与兼容写法 </p>
+<p>event：包含事件相关的所有信息</p>
+<p>ie浏览器：绑定在window上</p>
+<p>兼容性写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> e = e || <span class="built_in">window</span>.event</span><br></pre></td></tr></table></figure>
+<p>为了更好的兼容IE浏览器和非ie浏览器。<br>在ie浏览器中,window.event是全局变量,在非ie中，就需要自己传入一个参数来获取event啦，所以就有了var e = e||window.event</p>
+<p>####（2）事件对象常用属性</p>
+<p>参考： <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Event</a></p>
+<ul>
+<li><p>bubbles（只读）: 当前事件是否是冒泡事件 true：是，false：不是</p>
+</li>
+<li><p>cancelable: 代表当前事件是否可以取消默认行为：true： 可取消 （true可以passive优化） false：不可取消</p>
+</li>
+<li><p>currentTarget（只读）： 当前事件正在处理哪个元素</p>
+</li>
+<li><p>defaultPrevented（只读） ： 一个布尔值，表示了是否已经执行过了event.preventDefault()</p>
+</li>
+<li><p>detail： 事件相关的详细信息（数字表示，和事件api对比）</p>
+</li>
+<li><p>eventPhase(只读): 1捕获 2目标 3冒泡</p>
+</li>
+<li><p>target（只读）: 当前的目标元素是什么</p>
+</li>
+<li><p>Event.isTrusted（只读）：  指明事件是否是由浏览器（当用户点击实例后）或者由脚本（使用事件的创建方法，例如event.initEvent）启动。 （大部分都是浏览器事件，当然可以开发人员可以自定义生成）</p>
+</li>
+<li><p>Event.type(只读) : 类事件的类型（不区分大小写）。</p>
+</li>
+<li><p>Event.view ：关联视图，一般是当前window</p>
+</li>
+</ul>
+<h4 id="（3）事件对象常用方法"><a href="#（3）事件对象常用方法" class="headerlink" title="（3）事件对象常用方法"></a>（3）事件对象常用方法</h4><ul>
+<li>event.preventDefault</li>
+</ul>
+<p>取消事件（如果该事件可取消）: canable 为 true ，同时可以用passive优化，取消事件（如果该事件可取消）。</p>
+<p>return fasle</p>
+<ul>
+<li>event.stopPropagation</li>
+</ul>
+<p>阻止事件进一步传播 （bubbles为true 可以调用, false不可），只阻止会往下层传播</p>
+<ul>
+<li>event.stopImmediatePropagation</li>
+</ul>
+<p>阻止事件进一步传播 （bubbles为true 可以调用, false不可），阻止传播之后函数不执行</p>
+<p>阻止事件传播不会阻止事件默认行为，阻止事件默认行为，不会阻止事件传播</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/" data-id="cjlx2746m0006fem7uo0285rn" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/#comments" class="article-comment-link">Comentarios</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/09/06/js-review-event-op/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">js复习事件的基本操作</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Recientes</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/06/js-review-event-op/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的基本操作" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/06/js-review-event-op/" class="title">js复习事件的基本操作</a></p>
+                            <p class="item-date"><time datetime="2018-09-05T16:00:00.000Z" itemprop="datePublished">2018-09-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/04/muti-npm/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/npm.jpg)" alt="前端项目共享node_modules" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/04/muti-npm/" class="title">前端项目共享node_modules</a></p>
+                            <p class="item-date"><time datetime="2018-09-03T16:00:00.000Z" itemprop="datePublished">2018-09-04</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/03/hash-backListener/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/hash-back.jpeg)" alt="监听浏览器回退" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/03/hash-backListener/" class="title">监听浏览器回退</a></p>
+                            <p class="item-date"><time datetime="2018-09-02T16:00:00.000Z" itemprop="datePublished">2018-09-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/22/position-sticky/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/position-sticky.jpeg)" alt="白话聊聊position sticky" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/22/position-sticky/" class="title">白话聊聊position sticky</a></p>
+                            <p class="item-date"><time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished">2018-08-22</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Archivos</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

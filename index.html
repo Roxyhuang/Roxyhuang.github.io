@@ -140,7 +140,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                15
+                16
                 <span>Entradas</span>
             </div>
             <div class="article-info-block">
@@ -169,6 +169,213 @@
 
             
             <section id="main">
+    <article id="post-js-reivew-event-level" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/11/js-reivew-event-level/">js复习事件的优先级和事件对象</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/11/js-reivew-event-level/">
+            <time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、dom0-dom2-dom3事件区分"><a href="#一、dom0-dom2-dom3事件区分" class="headerlink" title="一、dom0 dom2 dom3事件区分"></a>一、dom0 dom2 dom3事件区分</h3><p>上篇当中有提到html内联事件、属性事件和事件监听回调事件，那他们和dom0 dom2 dom3事件有什么关系呢，这里简述下：</p>
+<p>DOM Level”是描述DOM对象，方法和行为的规范集合。更高级别的DOM规范建立在之前的级别上。变化发生在两个方面：</p>
+<ul>
+<li><p>dom0事件模型: html事件、属性事件</p>
+</li>
+<li><p>dom1事件模型: 1级DOM标准中并没有定义事件相关的内容，所以没有所谓的1级DOM事件模型。</p>
+</li>
+<li><p>dom2事件模型: 监听器回调事件</p>
+</li>
+<li><p>dom3事件模型: 与绑定事件无关</p>
+</li>
+</ul>
+<h3 id="二、什么是事件优先级"><a href="#二、什么是事件优先级" class="headerlink" title="二、什么是事件优先级"></a>二、什么是事件优先级</h3><h4 id="解释：事件执行的顺序"><a href="#解释：事件执行的顺序" class="headerlink" title="解释：事件执行的顺序"></a>解释：事件执行的顺序</h4><h5 id="1-几个看实例之前需要知道的概念："><a href="#1-几个看实例之前需要知道的概念：" class="headerlink" title="(1) 几个看实例之前需要知道的概念："></a>(1) 几个看实例之前需要知道的概念：</h5><ul>
+<li>html事件会被属性事件覆盖</li>
+</ul>
+<h5 id="2-dom-0-只存在事件冒泡"><a href="#2-dom-0-只存在事件冒泡" class="headerlink" title="(2) dom 0 只存在事件冒泡"></a>(2) dom 0 只存在事件冒泡</h5><h5 id="3-dom2-支持事件冒泡和事件捕获"><a href="#3-dom2-支持事件冒泡和事件捕获" class="headerlink" title="(3) dom2 支持事件冒泡和事件捕获"></a>(3) dom2 支持事件冒泡和事件捕获</h5><ul>
+<li>事件目标阶段，按绑定顺序事件</li>
+<li>冒泡阶段事件执行顺序，属性事件会比监听执行早（哪个时间先绑定哪个先执行）</li>
+</ul>
+<p>分析实例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">id</span>=<span class="string">"body"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent1()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent2()"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"test"</span> <span class="attr">onclick</span>=<span class="string">"htmlEvent3"</span>&gt;</span>test<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    var body = document.getElementById('body');</span></span><br><span class="line"><span class="undefined">    var container = document.getElementById('container');</span></span><br><span class="line"><span class="undefined">    var test = document.getElementById('test');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.onclick = propsEvent1;</span></span><br><span class="line"><span class="undefined">    container.onclick = propsEvent2;</span></span><br><span class="line"><span class="undefined">    test.onclick = propsEvent3;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.addEventListener('click',listenerEventC1,true);</span></span><br><span class="line"><span class="undefined">    container.addEventListener('click',listenerEventC2,true);</span></span><br><span class="line"><span class="undefined">    test.addEventListener('click',listenerEventC3,true);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    body.addEventListener('click',listenerEventB1,false);</span></span><br><span class="line"><span class="undefined">    container.addEventListener('click',listenerEventB2,false);</span></span><br><span class="line"><span class="undefined">    test.addEventListener('click',listenerEventB3,false);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent1() &#123;</span></span><br><span class="line"><span class="undefined">        console.log('htmlEvent1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('htmlEvent2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function htmlEvent3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('htmlEvent3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function propsEvent3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('propsEvent3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventB3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventB3  ');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC1() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC1');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC2() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC2');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function listenerEventC3() &#123;</span></span><br><span class="line"><span class="undefined">      console.log('listenerEventC3');</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span></span><br><span class="line"><span class="undefined">// 捕获阶段执行开始   </span></span><br><span class="line"><span class="undefined">// listenerEventC1</span></span><br><span class="line"><span class="undefined">// listenerEventC2</span></span><br><span class="line"><span class="undefined">// 捕获事件执行完毕</span></span><br><span class="line"><span class="undefined">// 事件目标，按绑定顺序执行开始</span></span><br><span class="line"><span class="undefined">// propsEvent3</span></span><br><span class="line"><span class="undefined">// listenerEventC3</span></span><br><span class="line"><span class="undefined">// listenerEventB3  </span></span><br><span class="line"><span class="undefined">// 事件目标，按书写顺序执行结束</span></span><br><span class="line"><span class="undefined">// 冒泡阶段开始，容器，根据书写顺序 （实际会是属性事件先执行，再监听起器）</span></span><br><span class="line"><span class="undefined">// propsEvent2</span></span><br><span class="line"><span class="undefined">//	listenerEventB2</span></span><br><span class="line"><span class="undefined">// 冒泡阶段结束，容器，根据书写顺序</span></span><br><span class="line"><span class="undefined">// 冒泡阶段开始，body，根据书写顺序 （实际会是属性事件先执行，再监听起器）</span></span><br><span class="line"><span class="undefined">//	propsEvent1</span></span><br><span class="line"><span class="undefined">//	listenerEventB1</span></span><br><span class="line"><span class="undefined">// 冒泡阶段结束，body，根据书写顺序</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>原则一： 牢记事件绑定是浏览器绑定</li>
+<li>原则二：事件向传播目标对象（捕获阶段），先出发事件监听</li>
+<li>事件在目标阶段，按事件解析或事件被定义的事件执行 （简单理解可理解为js书写顺序）</li>
+<li>事件上按事件解析或事件被定义的事件执行，如果包含html事件上执行，即使属性被覆盖了还是会先执行html事件（即被覆盖的属性事件）</li>
+</ul>
+<h4 id="4-事件传递和cs会影响事件传播有关（比如把外层div层级改动）"><a href="#4-事件传递和cs会影响事件传播有关（比如把外层div层级改动）" class="headerlink" title="(4)事件传递和cs会影响事件传播有关（比如把外层div层级改动）"></a>(4)事件传递和cs会影响事件传播有关（比如把外层div层级改动）</h4><p>不会，事件绑定与css显示不相关</p>
+<p><strong>特例：</strong><br>假设绝对定位，住了遮挡元素 不会触发，（以弹窗插件为例）: 事件绑定只html结构有关</p>
+<p><strong>特例中的特例：</strong></p>
+<p>但是有一个例子可能会有事件穿透</p>
+<p>移动端中的事件穿透：</p>
+<p>touchstart touchend touchmove </p>
+<ul>
+<li><p>touch没有 300ms延迟</p>
+</li>
+<li><p>onclick 300ms延迟</p>
+</li>
+</ul>
+<p>处理方式：</p>
+<p>(1) 延迟消失弹窗</p>
+<p>(2) 叠加层 300毫秒消失</p>
+<h3 id="二、事件对象相关："><a href="#二、事件对象相关：" class="headerlink" title="二、事件对象相关："></a>二、事件对象相关：</h3><p>####（1）定义与兼容写法 </p>
+<p>event：包含事件相关的所有信息</p>
+<p>ie浏览器：绑定在window上</p>
+<p>兼容性写法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> e = e || <span class="built_in">window</span>.event</span><br></pre></td></tr></table></figure>
+<p>为了更好的兼容IE浏览器和非ie浏览器。<br>在ie浏览器中,window.event是全局变量,在非ie中，就需要自己传入一个参数来获取event啦，所以就有了var e = e||window.event</p>
+<p>####（2）事件对象常用属性</p>
+<p>参考： <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/Event</a></p>
+<ul>
+<li><p>bubbles（只读）: 当前事件是否是冒泡事件 true：是，false：不是</p>
+</li>
+<li><p>cancelable: 代表当前事件是否可以取消默认行为：true： 可取消 （true可以passive优化） false：不可取消</p>
+</li>
+<li><p>currentTarget（只读）： 当前事件正在处理哪个元素</p>
+</li>
+<li><p>defaultPrevented（只读） ： 一个布尔值，表示了是否已经执行过了event.preventDefault()</p>
+</li>
+<li><p>detail： 事件相关的详细信息（数字表示，和事件api对比）</p>
+</li>
+<li><p>eventPhase(只读): 1捕获 2目标 3冒泡</p>
+</li>
+<li><p>target（只读）: 当前的目标元素是什么</p>
+</li>
+<li><p>Event.isTrusted（只读）：  指明事件是否是由浏览器（当用户点击实例后）或者由脚本（使用事件的创建方法，例如event.initEvent）启动。 （大部分都是浏览器事件，当然可以开发人员可以自定义生成）</p>
+</li>
+<li><p>Event.type(只读) : 类事件的类型（不区分大小写）。</p>
+</li>
+<li><p>Event.view ：关联视图，一般是当前window</p>
+</li>
+</ul>
+<h4 id="（3）事件对象常用方法"><a href="#（3）事件对象常用方法" class="headerlink" title="（3）事件对象常用方法"></a>（3）事件对象常用方法</h4><ul>
+<li>event.preventDefault</li>
+</ul>
+<p>取消事件（如果该事件可取消）: canable 为 true ，同时可以用passive优化，取消事件（如果该事件可取消）。</p>
+<p>return fasle</p>
+<ul>
+<li>event.stopPropagation</li>
+</ul>
+<p>阻止事件进一步传播 （bubbles为true 可以调用, false不可），只阻止会往下层传播</p>
+<ul>
+<li>event.stopImmediatePropagation</li>
+</ul>
+<p>阻止事件进一步传播 （bubbles为true 可以调用, false不可），阻止传播之后函数不执行</p>
+<p>阻止事件传播不会阻止事件默认行为，阻止事件默认行为，不会阻止事件传播</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/" data-id="cjlx2746m0006fem7uo0285rn" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/#comments" class="article-comment-link">Comentarios</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-js-review-event-op" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -204,13 +411,13 @@
             
             <h2 id="一、什么是事件"><a href="#一、什么是事件" class="headerlink" title="一、什么是事件"></a>一、什么是事件</h2><h3 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h3><p>在js中事件通常是指发生某种于Dom元素、document对象、window对象 有关的预定义或自定义的时刻或契机，这些契机通常是预定义的并且程序上依赖于它们，以关联这些契机发生时候的的功能发生代码。</p>
 <h3 id="2-相关基本概念"><a href="#2-相关基本概念" class="headerlink" title="2. 相关基本概念"></a>2. 相关基本概念</h3><h4 id="1-事件类型"><a href="#1-事件类型" class="headerlink" title="(1)事件类型"></a>(1)事件类型</h4><p>字符串，用来表示事件类型</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">""</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    window.addEventListener('onclick',function () &#123;</span></span><br><span class="line"><span class="undefined">      console.log('我是点击事件');</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">""</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.addEventListener(<span class="string">'onclick'</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'我是点击事件'</span>);</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h4 id="2-事件目标"><a href="#2-事件目标" class="headerlink" title="(2)事件目标"></a>(2)事件目标</h4><p>指事件发生在哪个对象上(dom元素、document对象、window对象)。</p>
 <h4 id="3-事件处理程序"><a href="#3-事件处理程序" class="headerlink" title="(3)事件处理程序"></a>(3)事件处理程序</h4><p>当事件发生时，执行的函数</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"console.log('来点我')"</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    window.addEventListener('onclick',function () &#123;</span></span><br><span class="line"><span class="undefined">      console.log('我是点击事件');</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onclick</span>=<span class="string">"console.log('来点我')"</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.addEventListener(<span class="string">'onclick'</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(<span class="string">'我是点击事件'</span>);</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h4 id="4-事件对象"><a href="#4-事件对象" class="headerlink" title="(4)事件对象"></a>(4)事件对象</h4><p>事件发生时，事件本身包含的信息的对象（event对象）</p>
 <p>如：位置信息，具体操作,事件对象等</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"getEvent(event)"</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function getEvent(e) &#123;</span></span><br><span class="line"><span class="undefined">      console.log(e); // MouseEvent &#123;clientX:27, clientY: 16, toElement: button ...&#125;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"getEvent(event)"</span>&gt;</span>来点我<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(e); <span class="comment">// MouseEvent &#123;clientX:27, clientY: 16, toElement: button ...&#125;</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h4 id="5-事件流"><a href="#5-事件流" class="headerlink" title="(5)事件流"></a>(5)事件流</h4><p>浏览器中事件传播的机制：</p>
 <h5 id="1-事件冒泡："><a href="#1-事件冒泡：" class="headerlink" title="[1]事件冒泡："></a>[1]事件冒泡：</h5><p>从具体节点到不具体节点，接受事件</p>
 <h5 id="2-事件捕获："><a href="#2-事件捕获：" class="headerlink" title="[2]事件捕获："></a>[2]事件捕获：</h5><p>从不具体节点到具体节点，接受事件</p>
@@ -240,7 +447,7 @@
 <h5 id="1-如何触发"><a href="#1-如何触发" class="headerlink" title="[1] 如何触发"></a>[1] 如何触发</h5><p>在dom元素上on + 事件名称 = “需要执行的函数” （需要括号，因为是执行函数）</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"getEvent(event)"</span>&gt;</span>html事件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>例子：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"getEvent(event)"</span>&gt;</span>html事件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function getEvent(e) &#123;</span></span><br><span class="line"><span class="undefined">      console.log(e);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"getEvent(event)"</span>&gt;</span>html事件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">getEvent</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(e);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h5 id="2-Html事件使用注意事项"><a href="#2-Html事件使用注意事项" class="headerlink" title="[2] Html事件使用注意事项"></a>[2] Html事件使用注意事项</h5><ul>
 <li>Html不支持字符 需要转义</li>
 <li>可以访问全局作用域下所有函数</li>
@@ -380,7 +587,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/06/js-review-event-op/" data-id="cjltjdvs00000adjeyjjc5g1l" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/06/js-review-event-op/" data-id="cjlx2746z000efem7iweswlf0" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -584,7 +791,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/04/muti-npm/" data-id="cjln3j2wa000ghtm7z1dflf19" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/04/muti-npm/" data-id="cjlx27473000kfem7zmojtslv" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -762,7 +969,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjln3j2w6000ahtm7akkgvt49" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjlx2746q0008fem7r7dphlky" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -901,7 +1108,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjln3j2wc000khtm70amp5xi2" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlx27475000ofem7mpzk8ccq" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1039,7 +1246,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjln3j2w9000ehtm7btl25ajw" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlx27474000mfem7chrbjcpc" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1617,7 +1824,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjln3j2wb000ihtm7kawg9mk7" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlx27470000gfem7drfctucf" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1767,7 +1974,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 <p>“严格模式”有两种调用方法，适用于不同的场合。</p>
 <h3 id="1-启用（整个脚本启用）"><a href="#1-启用（整个脚本启用）" class="headerlink" title="[1] 启用（整个脚本启用）"></a>[1] 启用（整个脚本启用）</h3><p>将”use strict”放在脚本文件的第一行，则整个脚本都将以”严格模式”运行。如果这行语句不在第一行，则无效，整个脚本以”正常模式”运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。</p>
 <p>(严格地说，只要前面不是产生实际运行结果的语句，”use strict”可以不在第一行，比如直接跟在一个空的分号后面。)</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">　　　"use strict";</span></span><br><span class="line"><span class="undefined">　　　console.log("这是严格模式。");</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">　　　console.log("这是正常模式。");kly, it's almost 2 years ago now. I can admit it now - I run it on my school's network that has about 50 computers.</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="meta">　　　"use strict"</span>;</span></span><br><span class="line"><span class="javascript">　　　<span class="built_in">console</span>.log(<span class="string">"这是严格模式。"</span>);</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">　<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">　　　<span class="built_in">console</span>.log(<span class="string">"这是正常模式。"</span>);kly, it<span class="string">'s almost 2 years ago now. I can admit it now - I run it on my school'</span>s network that has about <span class="number">50</span> computers.</span></span><br><span class="line"><span class="undefined">　</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="2-启用（指定函数启用）"><a href="#2-启用（指定函数启用）" class="headerlink" title="[2] 启用（指定函数启用）"></a>[2] 启用（指定函数启用）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">strict</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="meta">　　　"use strict"</span>;</span><br><span class="line">　　　<span class="keyword">return</span> <span class="string">"这是严格模式。"</span>;</span><br><span class="line">　&#125;</span><br><span class="line"></span><br><span class="line">　<span class="function"><span class="keyword">function</span> <span class="title">notStrict</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">　　　<span class="keyword">return</span> <span class="string">"这是正常模式。"</span>;</span><br><span class="line">　&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="3-脚本文件的变通写法"><a href="#3-脚本文件的变通写法" class="headerlink" title="[3] 脚本文件的变通写法"></a>[3] 脚本文件的变通写法</h3><p>因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">　(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">　　　"use strict"</span>;</span><br><span class="line"></span><br><span class="line">　　　<span class="comment">// some code here</span></span><br><span class="line"></span><br><span class="line">　&#125;)();</span><br></pre></td></tr></table></figure>
@@ -1843,7 +2050,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjln3j2w00006htm7a7bs0qkc" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlx2746y000cfem7dn2ez78f" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2128,7 +2335,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjln3j2wf000ohtm78ope8q4e" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlx27479000sfem7zjf8vy9z" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2345,7 +2552,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjln3j2wd000mhtm7qhcw9ciu" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjlx27477000qfem7hsy6p5pw" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2423,153 +2630,6 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 
 
-    <article id="post-week-question-1" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/06/04/week-question-1/">6月第一周趣问</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/06/04/week-question-1/">
-            <time datetime="2018-06-03T16:00:00.000Z" itemprop="datePublished">2018-06-04</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><img src="/img/github-ms.jpeg" alt=""></p>
-<p>这周开始想不定期更新一个新板块，就是把平时开发或者听到的有趣的面试题汇总起来，这周听到组里一前端同事面试中遇到了几个有趣的问题先行更新下：</p>
-<h3 id="1-div居中，内部文字左对齐"><a href="#1-div居中，内部文字左对齐" class="headerlink" title="1.div居中，内部文字左对齐"></a>1.div居中，内部文字左对齐</h3><p>光看标题无法理解这题目的意思，详细描述一下的该题：</p>
-<p>一个div容器，里面的字体少了居中，多了的话够一行的沾满一行，剩下的靠左，以下是图示：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|  xxx  |</span><br><span class="line">和</span><br><span class="line">|xxxxxxxx|</span><br><span class="line">|xxx         |</span><br></pre></td></tr></table></figure>
-<p>主要思路其实就是2个容器，子容器设置为inline-block，并且内容居左，父容器居中，以下是代码实现：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">     text-align: center;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">.text &#123;</span><br><span class="line">    display: inline-block;</span><br><span class="line">    text-align: left;</span><br><span class="line">    word-<span class="keyword">break</span>: <span class="keyword">break</span>-all;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-普通函数和剪头函数的区别"><a href="#2-普通函数和剪头函数的区别" class="headerlink" title="2.普通函数和剪头函数的区别"></a>2.普通函数和剪头函数的区别</h3><h4 id="1-函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。"><a href="#1-函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。" class="headerlink" title="(1)函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。"></a>(1)函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</h4><p>普通函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">// foo</span></span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">// window</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'id:'</span>, <span class="keyword">this</span>.id); <span class="comment">// 21</span></span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> id = <span class="number">21</span>;</span><br><span class="line"></span><br><span class="line">foo2.call(&#123; <span class="attr">id</span>: <span class="number">42</span> &#125;);</span><br></pre></td></tr></table></figure>
-<p>箭头函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">// foo</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>); <span class="comment">// foo</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'id:'</span>, <span class="keyword">this</span>.id); <span class="comment">// 42</span></span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> id = <span class="number">21</span>;</span><br><span class="line"></span><br><span class="line">foo1.call(&#123; <span class="attr">id</span>: <span class="number">42</span> &#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="2-箭头函数不会创建自己的this-而是默认绑定函数的宿主对象（或者绑定函数的对象）"><a href="#2-箭头函数不会创建自己的this-而是默认绑定函数的宿主对象（或者绑定函数的对象）" class="headerlink" title="(2)箭头函数不会创建自己的this,而是默认绑定函数的宿主对象（或者绑定函数的对象）"></a>(2)箭头函数不会创建自己的this,而是默认绑定函数的宿主对象（或者绑定函数的对象）</h4><p>箭头函数里面根本没有自己的this，而是引用外层的this</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'id:'</span>, <span class="keyword">this</span>.id);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = foo.call(&#123;<span class="attr">id</span>: <span class="number">1</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> t1 = f.call(&#123;<span class="attr">id</span>: <span class="number">2</span>&#125;)()(); <span class="comment">// id: 1</span></span><br><span class="line"><span class="keyword">var</span> t2 = f().call(&#123;<span class="attr">id</span>: <span class="number">3</span>&#125;)(); <span class="comment">// id: 1</span></span><br><span class="line"><span class="keyword">var</span> t3 = f()().call(&#123;<span class="attr">id</span>: <span class="number">4</span>&#125;); <span class="comment">// id: 1</span></span><br></pre></td></tr></table></figure>
-<p>上面代码之中，只有一个this，就是函数foo的this，所以t1、t2、t3都输出同样的结果。因为所有的内层函数都是箭头函数，都没有自己的this，它们的this其实都是最外层foo函数的this。</p>
-<h4 id="3-如果有对象嵌套的情况，则this绑定到最近的一层对象上"><a href="#3-如果有对象嵌套的情况，则this绑定到最近的一层对象上" class="headerlink" title="(3)如果有对象嵌套的情况，则this绑定到最近的一层对象上"></a>(3)如果有对象嵌套的情况，则this绑定到最近的一层对象上</h4><h4 id="4-不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。"><a href="#4-不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。" class="headerlink" title="(4)不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。"></a>(4)不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</h4><h4 id="5-不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用-rest-参数代替。"><a href="#5-不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用-rest-参数代替。" class="headerlink" title="(5)不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。"></a>(5)不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。</h4><h4 id="6-不可以使用yield命令，因此箭头函数不能用作-Generator-函数。"><a href="#6-不可以使用yield命令，因此箭头函数不能用作-Generator-函数。" class="headerlink" title="(6)不可以使用yield命令，因此箭头函数不能用作 Generator 函数。"></a>(6)不可以使用yield命令，因此箭头函数不能用作 Generator 函数。</h4><h4 id="7-除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new-target"><a href="#7-除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new-target" class="headerlink" title="(7)除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target"></a>(7)除了this，以下三个变量在箭头函数之中也是不存在的，指向外层函数的对应变量：arguments、super、new.target</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'args:'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>)</span><br><span class="line"><span class="comment">// args: [2, 4, 6, 8]</span></span><br></pre></td></tr></table></figure>
-<p>上面代码中，箭头函数内部的变量arguments，其实是函数foo的arguments变量。</p>
-<h4 id="8-无法使用bind、call、apply改变指向"><a href="#8-无法使用bind、call、apply改变指向" class="headerlink" title="(8) 无法使用bind、call、apply改变指向"></a>(8) 无法使用bind、call、apply改变指向</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    (<span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">this</span>.x).bind(&#123; <span class="attr">x</span>: <span class="string">'inner'</span> &#125;)()</span><br><span class="line">  ];</span><br><span class="line">&#125;).call(&#123; <span class="attr">x</span>: <span class="string">'outer'</span> &#125;);</span><br><span class="line"><span class="comment">// ['outer']</span></span><br></pre></td></tr></table></figure>
-<h3 id="3-尾递归"><a href="#3-尾递归" class="headerlink" title="3.尾递归"></a>3.尾递归</h3><p>这个我准备写一个单独的文章：</p>
-<p><a href="">白话讲解尾递归</a></p>
-<h3 id="4-react组件多继承"><a href="#4-react组件多继承" class="headerlink" title="4.react组件多继承"></a>4.react组件多继承</h3><h4 id="1-Mixins"><a href="#1-Mixins" class="headerlink" title="(1)Mixins"></a>(1)Mixins</h4><h4 id="2-HOC"><a href="#2-HOC" class="headerlink" title="(2)HOC"></a>(2)HOC</h4><h3 id="5-git-revert"><a href="#5-git-revert" class="headerlink" title="5.git revert"></a>5.git revert</h3><h4 id="（1）revert-详解"><a href="#（1）revert-详解" class="headerlink" title="（1）revert 详解"></a>（1）revert 详解</h4><p>git revert 撤销 某次操作，此次操作之前和之后的commit和history都会保留，并且把这次撤销<br>作为一次最新的提交。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD                <span class="comment"># 撤销前一次 commit</span></span><br><span class="line">git revert HEAD^               <span class="comment"># 	撤销前前一次 commit</span></span><br><span class="line">git revert commit （比如：bca867bcbae6e1942ef89423506777fb337fb651）<span class="comment"># 撤销指定的版本，撤销也会作为一次提交进行保存。</span></span><br></pre></td></tr></table></figure>
-<p>git revert是提交一个新的版本，将需要revert的版本的内容再反向修改回去，<br>版本会递增，不影响之前提交的内容</p>
-<hr>
-<h4 id="（2）git-revert-和-git-reset的区别"><a href="#（2）git-revert-和-git-reset的区别" class="headerlink" title="（2）git revert 和 git reset的区别"></a>（2）git revert 和 git reset的区别</h4><p>[1] git revert是用一次新的commit来回滚之前的commit，git reset是直接删除指定的commit。</p>
-<p>[2] 在回滚这一操作上看，效果差不多。但是在日后继续merge以前的老版本时有区别。因为git revert是用一次逆向的commit“中和”之前的提交，因此日后合并老的branch时，导致这部分改变不会再次出现，但是git reset是之间把某些commit在某个branch上删除，因而和老的branch再次merge时，这些被回滚的commit应该还会被引入。 </p>
-<p>[3] git reset 是把HEAD向后移动了一下，而git revert是HEAD继续前进，只是新的commit的内容和要revert的内容正好相反，能够抵消要被revert的内容。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjln3j2wj000whtm73cq4ngp0" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Comentarios</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Siguiente  &raquo;</a>
     </nav>
@@ -2582,6 +2642,25 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
         <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2659,25 +2738,6 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/08/11/new-operators/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/new-op.jpg)" alt="白话说说new操作符的背后" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/11/new-operators/" class="title">白话说说new操作符的背后</a></p>
-                            <p class="item-date"><time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2689,7 +2749,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
