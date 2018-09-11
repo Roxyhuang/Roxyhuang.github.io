@@ -69,7 +69,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -88,10 +88,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -116,7 +116,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -136,16 +136,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
                 17
-                <span>Entradas</span>
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>Etiqueta</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -169,6 +169,273 @@
 
             
             <section id="main">
+    <article id="post-js-reivew-event-mouse" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/09/11/js-reivew-event-mouse/">js复习鼠标事件笔记</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/11/js-reivew-event-mouse/">
+            <time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、鼠标事件"><a href="#一、鼠标事件" class="headerlink" title="一、鼠标事件"></a>一、鼠标事件</h3><p>dom3事件模型中与鼠标事件相关的事件共12种鼠标事件</p>
+<ul>
+<li>5个点击相关</li>
+<li>5个移动相关</li>
+<li>1个滚动</li>
+<li>1个选择事件</li>
+</ul>
+<p>点击相关事件：</p>
+<ul>
+<li><p>click</p>
+</li>
+<li><p>dblclick</p>
+</li>
+<li><p>contextmeun (次键点击)</p>
+</li>
+<li><p>mousedown</p>
+</li>
+<li><p>mouseup</p>
+</li>
+</ul>
+<p>移动相关</p>
+<ul>
+<li><p>mousemove</p>
+</li>
+<li><p>mouseenter</p>
+</li>
+<li><p>mouseover</p>
+</li>
+<li><p>mouseleave</p>
+</li>
+<li><p>mouseout</p>
+</li>
+</ul>
+<p>滚动</p>
+<ul>
+<li>wheel</li>
+</ul>
+<p>选择</p>
+<ul>
+<li>select</li>
+</ul>
+<p>click 执行顺序</p>
+<p>dblclick 执行顺序</p>
+<h3 id="二、relatedTarget"><a href="#二、relatedTarget" class="headerlink" title="二、relatedTarget"></a>二、relatedTarget</h3><p>参考：<a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget</a></p>
+<p>定义：和事件相关的次要节点，如果存在返回节点，不存在返回null</p>
+<p>target与relatedTarget总是相反的</p>
+<p>与relatedTarget相关的事件，有以下8种：</p>
+<ul>
+<li>focusin</li>
+<li>focusout</li>
+<li>mouseover</li>
+<li>mouseout</li>
+<li>mouseenter</li>
+<li>mouseleave</li>
+<li>dragenter</li>
+<li>dragexit</li>
+</ul>
+<p>###(1) mouseover与mouseenter（mouseout和mouseleave同理）的区别</p>
+<h4 id="1-mouseover："><a href="#1-mouseover：" class="headerlink" title="[1]mouseover："></a>[1]mouseover：</h4><ul>
+<li>特征：从事件节点进入其子节点也会触发事件，会向父节点冒泡</li>
+<li>target: 移入进入节点</li>
+<li>relatedTarget： 移入时离开的节点</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #container &#123;</span></span><br><span class="line"><span class="undefined">            width: 200px;</span></span><br><span class="line"><span class="undefined">            height: 200px;</span></span><br><span class="line"><span class="undefined">            background-color: blue;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #child &#123;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">            background-color: red;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onmouseover</span>=<span class="string">"handleMouseover(event)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"child"</span>&gt;</span>sddddd<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function handleMouseover(e) &#123;</span></span><br><span class="line"><span class="undefined">      console.log(e);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-mouseenter："><a href="#2-mouseenter：" class="headerlink" title="[2]mouseenter："></a>[2]mouseenter：</h4><ul>
+<li>特征：从事件节点进入其子节点也会不会触发事件，不会向父节点冒泡</li>
+<li>target: 移入进入节点</li>
+<li>relatedTarget： 移入时离开的节点</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #container &#123;</span></span><br><span class="line"><span class="undefined">            width: 200px;</span></span><br><span class="line"><span class="undefined">            height: 200px;</span></span><br><span class="line"><span class="undefined">            background-color: blue;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #child &#123;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">            background-color: red;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onmouseenter</span>=<span class="string">"handleMouseEnter(event)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"child"</span>&gt;</span>sddddd<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">    function handleMouseEnter(e) &#123;</span></span><br><span class="line"><span class="undefined">      console.log(e); // 进入事件节点的子阶段不会触发</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-通过mouseover模拟mouseenter："><a href="#3-通过mouseover模拟mouseenter：" class="headerlink" title="[3]通过mouseover模拟mouseenter："></a>[3]通过mouseover模拟mouseenter：</h4><p><strong>(1) 模拟实现核心思路：</strong></p>
+<p>只处理从外层移入的事件</p>
+<p><strong>(2) 拆分步骤：</strong></p>
+<p>mouseOver伴随以下几种情况</p>
+<ul>
+<li><p>外层节点移入事件节点 （relatedTarget: 外层节点）</p>
+</li>
+<li><p>事件节点往子节点移入</p>
+<ul>
+<li>事件节点往子节点移入 （relatedTarget: 事件节点）</li>
+<li>事件节点的子节点往其他子节点移入 （relatedTarget: 事件节点子节点）</li>
+</ul>
+</li>
+</ul>
+<p><strong>(3)因此模拟处理的关键：</strong></p>
+<p><strong>判断次要节点不是 本身也不是其子节点</strong></p>
+<p><strong>(4)是否可以只判断，非自身节点</strong></p>
+<p>不能，若只判断判断次要节点不是本身，绝大多数情况可以解决但是一个前提是需要事件节点与子节点间有空间才可以判断，如果没有空间可能是更上一层的节点</p>
+<p><strong>(5)是否可以通过阻止子节点冒泡来解决</strong></p>
+<p>不能，只能解决子节点之间移动的问题，不能解决子节点往事件节点上的触发</p>
+<p><strong>(6)是否可以通过事件流的方式解决</strong></p>
+<p>不能，通过addEventListener解决： 无效（会产生新的mouseover，有一个完整的事件流）、</p>
+<h4 id="2-鼠标事件对应的事件处理程序"><a href="#2-鼠标事件对应的事件处理程序" class="headerlink" title="(2)鼠标事件对应的事件处理程序"></a>(2)鼠标事件对应的事件处理程序</h4><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent</a></p>
+<h5 id="1-鼠标事件相关属性"><a href="#1-鼠标事件相关属性" class="headerlink" title="[1] 鼠标事件相关属性"></a>[1] 鼠标事件相关属性</h5><p>可以大致分为三类：</p>
+<ul>
+<li><p>位置相关</p>
+<ul>
+<li>screenX <strong>(相对屏幕位置)</strong>：他提供了鼠标相对于屏幕坐标系的水平偏移量</li>
+<li>clientX (相对可是区域位置，浏览器窗口)</li>
+<li>pageX (相对于html文档) （非标准属性）兼容：pageX = clientX + scrollLeft + clientLeft</li>
+<li>offesetX： 鼠标在的位置与触发元素相距的距离，以content为参考点（ie属性非标准，但浏览器打多实现，基本通用）</li>
+<li>movementX : 与mousemove搭配，两个连续的mousemove相隔的距离 （ie不支持，现代浏览器支持）</li>
+</ul>
+</li>
+<li><p>键盘相关</p>
+<ul>
+<li>cotrrolKey:<br>点鼠标时，有没有按住cotrrol</li>
+<li>shiftKey：<br>  点击点鼠标时，有没有按住shift        </li>
+<li>altKey：<br>  点击点鼠标时，有没有按住alt</li>
+<li>metaKey： （win键 command键）</li>
+<li>button：-1（没有按键）鼠标移动  0 （主键） 1 （辅助键） 2 （次键） </li>
+<li>buttons： 同时按下两个键，数字可能会变，3位2进制值  1 左 2 右 4 中<br>举例： 左中：5</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-位置相关以及键盘相关注意事项"><a href="#2-位置相关以及键盘相关注意事项" class="headerlink" title="[2]位置相关以及键盘相关注意事项"></a>[2]位置相关以及键盘相关注意事项</h5><p>(1)强调 click只是主键点击</p>
+<p>(2)其他键可以通过 mousedown mouseup</p>
+<p>(3)preventDefalt可以注销contextmenu         </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .context &#123;</span></span><br><span class="line"><span class="undefined">            background-color: pink;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"context"</span> <span class="attr">oncontextmenu</span>=<span class="string">"handleOnContextmenu(event)"</span>&gt;</span></span><br><span class="line">    21321</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">  function handleOnContextmenu(e) &#123;</span></span><br><span class="line"><span class="undefined">    e.preventDefault(); //阻止默认右键菜单</span></span><br><span class="line"><span class="undefined">    console.log('弹出自定义菜单');</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>滚轮事件：</p>
+<p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/Events/wheel" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/Events/wheel</a></p>
+</li>
+</ul>
+<p> 当滚动鼠标滚轮或操作其它类似输入设备时会触发滚轮事件。滚轮事件替换了已被弃用的非标准mousewheel事件。</p>
+<p>（1）mousewheel事件</p>
+<ul>
+<li>可以冒泡冒泡到document </li>
+<li>wheeldelta: 是一个整值120的倍数 上滚120倍数 下滚是-120倍数 是滚动调的方向,一般只关心正数还是负数</li>
+<li>mousewheel，documentmouse<br>存在detail wheelDelta 1的倍数 新版正3 -3，和标准相反</li>
+<li>标准版本weel事件（html5）：大部分浏览器都支持<br>deltaX: 变量增量 X  浏览器数值不同<br>deltaY：变量增量 Y 浏览器数值不同<br>deltaZ: 变量增量 Z 浏览器数值不同</li>
+</ul>
+<h5 id="4-滚动鼠标事件注意点："><a href="#4-滚动鼠标事件注意点：" class="headerlink" title="[4]滚动鼠标事件注意点："></a>[4]滚动鼠标事件注意点：</h5><ul>
+<li>要根据实际客户需求调研，客户版本（mdn文档）</li>
+<li>wheeldelta 不一定是整数倍，线性滚轮鼠标不一定正数，mac触控板也模拟鼠标滚轮，就有可能是3的倍数（可能会触发几十次，并且可能有动画过度，wheelDealte可能还会继续改变）</li>
+<li>不要相信wheeldelta的值</li>
+<li>极限情况：wheeldelta（通常是抛物线曲线）会出现震动情况（一般是动画过程中旋转设备，切换屏幕）</li>
+<li>鼠标滚动事件和页面滚动事件无关 （触摸设备手指滑，pc拖拽滚动条也不会触发滚动事件，mac放大不会触发，mac和安卓 2手指手势会触发）<br>只能通过滚轮或触控板触发</li>
+<li>滚动到页面顶部和底部后也会继续触发</li>
+</ul>
+<h4 id="（3）防抖函数与节流函数"><a href="#（3）防抖函数与节流函数" class="headerlink" title="（3）防抖函数与节流函数"></a>（3）防抖函数与节流函数</h4><p>只叙述概念，之后文章具体分析源码与原理</p>
+<p>根本原理是通过时间戳控制</p>
+<h5 id="1-防抖函数"><a href="#1-防抖函数" class="headerlink" title="[1] 防抖函数"></a>[1] 防抖函数</h5><p>同一个时间处理，当超过设定时间后才触发，</p>
+<p><strong>核心实现思路</strong>：2个事件发生间隔小于某个时间点，推迟执行</p>
+<h5 id="2-节流函数"><a href="#2-节流函数" class="headerlink" title="[2] 节流函数"></a>[2] 节流函数</h5><p>同一个事件处理，设定时间内只触发一次 </p>
+<p><strong>核心实现思路</strong>：2个事件发生间隔大于某个时间点，就执行</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-mouse/" data-id="cjlxeq2r50006mrm77leu3i40" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-mouse/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-js-reivew-event-level" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -298,7 +565,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/" data-id="cjlxeoyto0009knm7flj3mw6t" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/" data-id="cjlxeq2rm000cmrm7x67l2x0z" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -366,274 +633,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/#comments" class="article-comment-link">Comentarios</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-js-reivew-event-mouse" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/09/11/js-reivew-event-mouse/">js复习鼠标事件笔记</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/09/11/js-reivew-event-mouse/">
-            <time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <h3 id="一、鼠标事件"><a href="#一、鼠标事件" class="headerlink" title="一、鼠标事件"></a>一、鼠标事件</h3><p>dom3事件模型中与鼠标事件相关的事件共12种鼠标事件</p>
-<ul>
-<li>5个点击相关</li>
-<li>5个移动相关</li>
-<li>1个滚动</li>
-<li>1个选择事件</li>
-</ul>
-<p>点击相关事件：</p>
-<ul>
-<li><p>click</p>
-</li>
-<li><p>dblclick</p>
-</li>
-<li><p>contextmeun (次键点击)</p>
-</li>
-<li><p>mousedown</p>
-</li>
-<li><p>mouseup</p>
-</li>
-</ul>
-<p>移动相关</p>
-<ul>
-<li><p>mousemove</p>
-</li>
-<li><p>mouseenter</p>
-</li>
-<li><p>mouseover</p>
-</li>
-<li><p>mouseleave</p>
-</li>
-<li><p>mouseout</p>
-</li>
-</ul>
-<p>滚动</p>
-<ul>
-<li>wheel</li>
-</ul>
-<p>选择</p>
-<ul>
-<li>select</li>
-</ul>
-<p>click 执行顺序</p>
-<p>dblclick 执行顺序</p>
-<h3 id="二、relatedTarget"><a href="#二、relatedTarget" class="headerlink" title="二、relatedTarget"></a>二、relatedTarget</h3><p>参考：<a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/relatedTarget</a></p>
-<p>定义：和事件相关的次要节点，如果存在返回节点，不存在返回null</p>
-<p>target与relatedTarget总是相反的</p>
-<p>与relatedTarget相关的事件，有以下8种：</p>
-<ul>
-<li>focusin</li>
-<li>focusout</li>
-<li>mouseover</li>
-<li>mouseout</li>
-<li>mouseenter</li>
-<li>mouseleave</li>
-<li>dragenter</li>
-<li>dragexit</li>
-</ul>
-<p>###(1) mouseover与mouseenter（mouseout和mouseleave同理）的区别</p>
-<h4 id="1-mouseover："><a href="#1-mouseover：" class="headerlink" title="[1]mouseover："></a>[1]mouseover：</h4><ul>
-<li>特征：从事件节点进入其子节点也会触发事件，会向父节点冒泡</li>
-<li>target: 移入进入节点</li>
-<li>relatedTarget： 移入时离开的节点</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #container &#123;</span></span><br><span class="line"><span class="undefined">            width: 200px;</span></span><br><span class="line"><span class="undefined">            height: 200px;</span></span><br><span class="line"><span class="undefined">            background-color: blue;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #child &#123;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">            background-color: red;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onmouseover</span>=<span class="string">"handleMouseover(event)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"child"</span>&gt;</span>sddddd<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">handleMouseover</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(e);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="2-mouseenter："><a href="#2-mouseenter：" class="headerlink" title="[2]mouseenter："></a>[2]mouseenter：</h4><ul>
-<li>特征：从事件节点进入其子节点也会不会触发事件，不会向父节点冒泡</li>
-<li>target: 移入进入节点</li>
-<li>relatedTarget： 移入时离开的节点</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #container &#123;</span></span><br><span class="line"><span class="undefined">            width: 200px;</span></span><br><span class="line"><span class="undefined">            height: 200px;</span></span><br><span class="line"><span class="undefined">            background-color: blue;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        #child &#123;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">            background-color: red;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span> <span class="attr">onmouseenter</span>=<span class="string">"handleMouseEnter(event)"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"child"</span>&gt;</span>sddddd<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">handleMouseEnter</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.log(e); <span class="comment">// 进入事件节点的子阶段不会触发</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h4 id="3-通过mouseover模拟mouseenter："><a href="#3-通过mouseover模拟mouseenter：" class="headerlink" title="[3]通过mouseover模拟mouseenter："></a>[3]通过mouseover模拟mouseenter：</h4><p><strong>(1) 模拟实现核心思路：</strong></p>
-<p>只处理从外层移入的事件</p>
-<p><strong>(2) 拆分步骤：</strong></p>
-<p>mouseOver伴随以下几种情况</p>
-<ul>
-<li><p>外层节点移入事件节点 （relatedTarget: 外层节点）</p>
-</li>
-<li><p>事件节点往子节点移入</p>
-<ul>
-<li>事件节点往子节点移入 （relatedTarget: 事件节点）</li>
-<li>事件节点的子节点往其他子节点移入 （relatedTarget: 事件节点子节点）</li>
-</ul>
-</li>
-</ul>
-<p><strong>(3)因此模拟处理的关键：</strong></p>
-<p><strong>判断次要节点不是 本身也不是其子节点</strong></p>
-<p><strong>(4)是否可以只判断，非自身节点</strong></p>
-<p>不能，若只判断判断次要节点不是本身，绝大多数情况可以解决但是一个前提是需要事件节点与子节点间有空间才可以判断，如果没有空间可能是更上一层的节点</p>
-<p><strong>(5)是否可以通过阻止子节点冒泡来解决</strong></p>
-<p>不能，只能解决子节点之间移动的问题，不能解决子节点往事件节点上的触发</p>
-<p><strong>(6)是否可以通过事件流的方式解决</strong></p>
-<p>不能，通过addEventListener解决： 无效（会产生新的mouseover，有一个完整的事件流）、</p>
-<h4 id="2-鼠标事件对应的事件处理程序"><a href="#2-鼠标事件对应的事件处理程序" class="headerlink" title="(2)鼠标事件对应的事件处理程序"></a>(2)鼠标事件对应的事件处理程序</h4><p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent</a></p>
-<h5 id="1-鼠标事件相关属性"><a href="#1-鼠标事件相关属性" class="headerlink" title="[1] 鼠标事件相关属性"></a>[1] 鼠标事件相关属性</h5><p>可以大致分为三类：</p>
-<ul>
-<li><p>位置相关</p>
-<ul>
-<li>screenX <strong>(相对屏幕位置)</strong>：他提供了鼠标相对于屏幕坐标系的水平偏移量</li>
-<li>clientX (相对可是区域位置，浏览器窗口)</li>
-<li>pageX (相对于html文档) （非标准属性）兼容：pageX = clientX + scrollLeft + clientLeft</li>
-<li>offesetX： 鼠标在的位置与触发元素相距的距离，以content为参考点（ie属性非标准，但浏览器打多实现，基本通用）</li>
-<li>movementX : 与mousemove搭配，两个连续的mousemove相隔的距离 （ie不支持，现代浏览器支持）</li>
-</ul>
-</li>
-<li><p>键盘相关</p>
-<ul>
-<li>cotrrolKey:<br>点鼠标时，有没有按住cotrrol</li>
-<li>shiftKey：<br>  点击点鼠标时，有没有按住shift        </li>
-<li>altKey：<br>  点击点鼠标时，有没有按住alt</li>
-<li>metaKey： （win键 command键）</li>
-<li>button：-1（没有按键）鼠标移动  0 （主键） 1 （辅助键） 2 （次键） </li>
-<li>buttons： 同时按下两个键，数字可能会变，3位2进制值  1 左 2 右 4 中<br>举例： 左中：5</li>
-</ul>
-</li>
-</ul>
-<h5 id="2-位置相关以及键盘相关注意事项"><a href="#2-位置相关以及键盘相关注意事项" class="headerlink" title="[2]位置相关以及键盘相关注意事项"></a>[2]位置相关以及键盘相关注意事项</h5><p>(1)强调 click只是主键点击</p>
-<p>(2)其他键可以通过 mousedown mouseup</p>
-<p>(3)preventDefalt可以注销contextmenu         </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">          <span class="attr">content</span>=<span class="string">"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .context &#123;</span></span><br><span class="line"><span class="undefined">            background-color: pink;</span></span><br><span class="line"><span class="undefined">            width: 100px;</span></span><br><span class="line"><span class="undefined">            height: 100px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"context"</span> <span class="attr">oncontextmenu</span>=<span class="string">"handleOnContextmenu(event)"</span>&gt;</span></span><br><span class="line">    21321</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="function"><span class="keyword">function</span> <span class="title">handleOnContextmenu</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    e.preventDefault(); <span class="comment">//阻止默认右键菜单</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">'弹出自定义菜单'</span>);</span></span><br><span class="line"><span class="undefined">  &#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>滚轮事件：</p>
-<p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/Events/wheel" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/Events/wheel</a></p>
-</li>
-</ul>
-<p> 当滚动鼠标滚轮或操作其它类似输入设备时会触发滚轮事件。滚轮事件替换了已被弃用的非标准mousewheel事件。</p>
-<p>（1）mousewheel事件</p>
-<ul>
-<li>可以冒泡冒泡到document </li>
-<li>wheeldelta: 是一个整值120的倍数 上滚120倍数 下滚是-120倍数 是滚动调的方向,一般只关心正数还是负数</li>
-<li>mousewheel，documentmouse<br>存在detail wheelDelta 1的倍数 新版正3 -3，和标准相反</li>
-<li>标准版本weel事件（html5）：大部分浏览器都支持<br>deltaX: 变量增量 X  浏览器数值不同<br>deltaY：变量增量 Y 浏览器数值不同<br>deltaZ: 变量增量 Z 浏览器数值不同</li>
-</ul>
-<h5 id="4-滚动鼠标事件注意点："><a href="#4-滚动鼠标事件注意点：" class="headerlink" title="[4]滚动鼠标事件注意点："></a>[4]滚动鼠标事件注意点：</h5><ul>
-<li>要根据实际客户需求调研，客户版本（mdn文档）</li>
-<li>wheeldelta 不一定是整数倍，线性滚轮鼠标不一定正数，mac触控板也模拟鼠标滚轮，就有可能是3的倍数（可能会触发几十次，并且可能有动画过度，wheelDealte可能还会继续改变）</li>
-<li>不要相信wheeldelta的值</li>
-<li>极限情况：wheeldelta（通常是抛物线曲线）会出现震动情况（一般是动画过程中旋转设备，切换屏幕）</li>
-<li>鼠标滚动事件和页面滚动事件无关 （触摸设备手指滑，pc拖拽滚动条也不会触发滚动事件，mac放大不会触发，mac和安卓 2手指手势会触发）<br>只能通过滚轮或触控板触发</li>
-<li>滚动到页面顶部和底部后也会继续触发</li>
-</ul>
-<h4 id="（3）防抖函数与节流函数"><a href="#（3）防抖函数与节流函数" class="headerlink" title="（3）防抖函数与节流函数"></a>（3）防抖函数与节流函数</h4><p>只叙述概念，之后文章具体分析源码与原理</p>
-<p>根本原理是通过时间戳控制</p>
-<h5 id="1-防抖函数"><a href="#1-防抖函数" class="headerlink" title="[1] 防抖函数"></a>[1] 防抖函数</h5><p>同一个时间处理，当超过设定时间后才触发，</p>
-<p><strong>核心实现思路</strong>：2个事件发生间隔小于某个时间点，推迟执行</p>
-<h5 id="2-节流函数"><a href="#2-节流函数" class="headerlink" title="[2] 节流函数"></a>[2] 节流函数</h5><p>同一个事件处理，设定时间内只触发一次 </p>
-<p><strong>核心实现思路</strong>：2个事件发生间隔大于某个时间点，就执行</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/09/11/js-reivew-event-mouse/" data-id="cjlxeoyti0005knm77xavv6dg" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-mouse/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/09/11/js-reivew-event-level/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -854,7 +854,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/06/js-review-event-op/" data-id="cjlxeoytu000eknm71hd49tf5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/06/js-review-event-op/" data-id="cjlxeq2rr000gmrm7tle2eaa4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -922,7 +922,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/09/06/js-review-event-op/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/09/06/js-review-event-op/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1058,7 +1058,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/04/muti-npm/" data-id="cjlxeoytw000hknm780t1q6oh" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/04/muti-npm/" data-id="cjlxeq2s0000mmrm7rifj82i6" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1126,7 +1126,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/09/04/muti-npm/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/09/04/muti-npm/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1236,7 +1236,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjlxeoytd0003knm7f92epibu" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/03/hash-backListener/" data-id="cjlxeq2rb0008mrm73avvbly6" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1304,7 +1304,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/09/03/hash-backListener/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/09/03/hash-backListener/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1375,7 +1375,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlxeoytw000iknm7g9ltje6p" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/22/position-sticky/" data-id="cjlxeq2s6000qmrm7s9yidhc5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1443,7 +1443,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/08/22/position-sticky/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/08/22/position-sticky/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1513,7 +1513,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlxeoytv000gknm7zqhe0v2s" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjlxeq2s3000omrm7v5pl79nn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1581,7 +1581,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2091,7 +2091,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlxeoytt000dknm7wi19s496" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjlxeq2rt000imrm7cop1czrp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2159,7 +2159,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2317,7 +2317,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlxeoytr000bknm79qumckm8" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjlxeq2rp000emrm7lpi5u046" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2385,7 +2385,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2602,7 +2602,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlxeoyu0000lknm70bwx978e" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjlxeq2sc000umrm79u08eyyr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -2670,7 +2670,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2681,7 +2681,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
 
 
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Siguiente  &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -2689,28 +2689,9 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
-                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
-                        </div>
-                    </li>
                 
                     <li>
                         
@@ -2727,6 +2708,25 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2018/09/11/js-reivew-event-mouse/" class="title">js复习鼠标事件笔记</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
                             <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
                         </div>
                     </li>
@@ -2797,7 +2797,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
             <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
@@ -2810,7 +2810,7 @@ mozSystemGroup: 只能在 XBL 或者是 Firefox&apos; chrome 使用，这是个 
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 
