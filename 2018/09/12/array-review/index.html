@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hexo博客一些常用的命令 | Neo</title>
+    <title>js数组方法分类复习 | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
+    <meta name="description" content="年纪大了，每过一段时间都记不住数组的基本方法，所以经常要自己做一个review（这篇先占位之后好好再复习） 一、数组(1) 检测数组 value instanceof Array  Array.isArray   (2) 转换方法 toString  toLocalString  toValue   (3) 栈方法 push (改变原数组) pop （改变原数组）  (4) 队列方法 unshif">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo博客一些常用的命令">
-<meta property="og:url" content="http://www.neohuang.com/child/2018/04/13/hexo/index.html">
+<meta property="og:title" content="js数组方法分类复习">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/09/12/array-review/index.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
+<meta property="og:description" content="年纪大了，每过一段时间都记不住数组的基本方法，所以经常要自己做一个review（这篇先占位之后好好再复习） 一、数组(1) 检测数组 value instanceof Array  Array.isArray   (2) 转换方法 toString  toLocalString  toValue   (3) 栈方法 push (改变原数组) pop （改变原数组）  (4) 队列方法 unshif">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.neohuang.com/img/hexo.jpeg">
-<meta property="og:updated_time" content="2018-05-03T06:45:00.000Z">
+<meta property="og:image" content="http://www.neohuang.com/img/array-review.jpeg">
+<meta property="og:updated_time" content="2018-09-12T04:10:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo博客一些常用的命令">
-<meta name="twitter:description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
-<meta name="twitter:image" content="http://www.neohuang.com/img/hexo.jpeg">
+<meta name="twitter:title" content="js数组方法分类复习">
+<meta name="twitter:description" content="年纪大了，每过一段时间都记不住数组的基本方法，所以经常要自己做一个review（这篇先占位之后好好再复习） 一、数组(1) 检测数组 value instanceof Array  Array.isArray   (2) 转换方法 toString  toLocalString  toValue   (3) 栈方法 push (改变原数组) pop （改变原数组）  (4) 队列方法 unshif">
+<meta name="twitter:image" content="http://www.neohuang.com/img/array-review.jpeg">
     
 
     
@@ -174,7 +174,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-array-review" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -182,7 +182,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Hexo博客一些常用的命令
+            js数组方法分类复习
         </h1>
     
 
@@ -191,8 +191,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/04/13/hexo/">
-            <time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time>
+        <a href="/2018/09/12/array-review/">
+            <time datetime="2018-09-11T16:00:00.000Z" itemprop="datePublished">2018-09-12</time>
         </a>
     </div>
 
@@ -207,16 +207,56 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。</p>
-<p><img src="/img/hexo.jpeg" alt=""></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <p>年纪大了，每过一段时间都记不住数组的基本方法，所以经常要自己做一个review（这篇先占位之后好好再复习）</p>
+<h3 id="一、数组"><a href="#一、数组" class="headerlink" title="一、数组"></a>一、数组</h3><h4 id="1-检测数组"><a href="#1-检测数组" class="headerlink" title="(1) 检测数组"></a>(1) 检测数组</h4><ul>
+<li><p>value instanceof Array</p>
+</li>
+<li><p>Array.isArray</p>
+</li>
+</ul>
+<h4 id="2-转换方法"><a href="#2-转换方法" class="headerlink" title="(2) 转换方法"></a>(2) 转换方法</h4><ul>
+<li><p>toString</p>
+</li>
+<li><p>toLocalString</p>
+</li>
+<li><p>toValue</p>
+</li>
+</ul>
+<h4 id="3-栈方法"><a href="#3-栈方法" class="headerlink" title="(3) 栈方法"></a>(3) 栈方法</h4><ul>
+<li>push (改变原数组)</li>
+<li>pop （改变原数组）</li>
+</ul>
+<h4 id="4-队列方法"><a href="#4-队列方法" class="headerlink" title="(4) 队列方法"></a>(4) 队列方法</h4><ul>
+<li>unshift （改变原数组）</li>
+<li>shift （改变原数组）</li>
+</ul>
+<h4 id="5-排序方法"><a href="#5-排序方法" class="headerlink" title="(5) 排序方法"></a>(5) 排序方法</h4><ul>
+<li>sort （改变原数组）</li>
+<li>reverse(改变原数组)</li>
+</ul>
+<h4 id="6-操作方法"><a href="#6-操作方法" class="headerlink" title="(6) 操作方法"></a>(6) 操作方法</h4><ul>
+<li>concat</li>
+<li>slice </li>
+<li>join</li>
+<li>splice (改变原数组)</li>
+</ul>
+<h4 id="7-位置方法"><a href="#7-位置方法" class="headerlink" title="(7) 位置方法"></a>(7) 位置方法</h4><ul>
+<li>indexOf</li>
+<li>lastIndexOf</li>
+</ul>
+<h4 id="8-迭代方法"><a href="#8-迭代方法" class="headerlink" title="(8) 迭代方法"></a>(8) 迭代方法</h4><ul>
+<li>every  （有返回值）</li>
+<li>filter （有返回值）</li>
+<li>forEach （没有返回值）</li>
+<li>map （有返回值）</li>
+<li>some （有返回值）</li>
+</ul>
+<h4 id="9-归并方法"><a href="#9-归并方法" class="headerlink" title="(9) 归并方法"></a>(9) 归并方法</h4><ul>
+<li><p>reduce （有返回值）</p>
+</li>
+<li><p>reduceRight （有返回值）</p>
+</li>
+</ul>
 
         
         </div>
@@ -227,7 +267,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjlympj81000co7m79fupxp6m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/12/array-review/" data-id="cjlympj7r0006o7m7wc8x8dra" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -295,7 +335,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/04/13/hexo/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/09/12/array-review/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -304,15 +344,20 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/03/study-plan/" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/09/12/not-know-js-review-scope/" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">Newer</strong>
             <div class="article-nav-title">
                 
-                    2018年学习大纲
+                    你不知道的js复习笔记 (作用域和闭包)
                 
             </div>
         </a>
     
+    
+        <a href="/2018/09/11/js-reivew-event-level/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">js复习事件的优先级和事件对象</div>
+        </a>
     
 </nav>
 

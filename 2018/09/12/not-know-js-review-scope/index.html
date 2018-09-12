@@ -3,21 +3,21 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Hexo博客一些常用的命令 | Neo</title>
+    <title>你不知道的js复习笔记 (作用域和闭包) | Neo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
+    <meta name="description" content="第一部分 作用域和闭包参考： 《你不知道的javascript—上卷》 第一部分     1.作用域1.作用域概念一套来规定存储、读取变量的规则，解释器根据该规则来存储以及读取变量。 2.编译原理(1) js语言特性：js归类为“动态”或“解释型语言”，但事实上它仍是一门编译语言 衍生知识： 前置知识： 运行期间：当程序在内存中的时候，就是运行时,其余时候都是在磁盘上，都不是运行时 (不一定在全部">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo博客一些常用的命令">
-<meta property="og:url" content="http://www.neohuang.com/child/2018/04/13/hexo/index.html">
+<meta property="og:title" content="你不知道的js复习笔记 (作用域和闭包)">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/09/12/not-know-js-review-scope/index.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
+<meta property="og:description" content="第一部分 作用域和闭包参考： 《你不知道的javascript—上卷》 第一部分     1.作用域1.作用域概念一套来规定存储、读取变量的规则，解释器根据该规则来存储以及读取变量。 2.编译原理(1) js语言特性：js归类为“动态”或“解释型语言”，但事实上它仍是一门编译语言 衍生知识： 前置知识： 运行期间：当程序在内存中的时候，就是运行时,其余时候都是在磁盘上，都不是运行时 (不一定在全部">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.neohuang.com/img/hexo.jpeg">
-<meta property="og:updated_time" content="2018-05-03T06:45:00.000Z">
+<meta property="og:image" content="http://www.neohuang.com/img/js-review-event-op.jpg">
+<meta property="og:updated_time" content="2018-09-12T04:07:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo博客一些常用的命令">
-<meta name="twitter:description" content="从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。  Quick StartCreate a new post1$ hexo new &quot;My New Post&quot; More info: Writing Run server1$ hexo server More info: Server Generate static files1$ he">
-<meta name="twitter:image" content="http://www.neohuang.com/img/hexo.jpeg">
+<meta name="twitter:title" content="你不知道的js复习笔记 (作用域和闭包)">
+<meta name="twitter:description" content="第一部分 作用域和闭包参考： 《你不知道的javascript—上卷》 第一部分     1.作用域1.作用域概念一套来规定存储、读取变量的规则，解释器根据该规则来存储以及读取变量。 2.编译原理(1) js语言特性：js归类为“动态”或“解释型语言”，但事实上它仍是一门编译语言 衍生知识： 前置知识： 运行期间：当程序在内存中的时候，就是运行时,其余时候都是在磁盘上，都不是运行时 (不一定在全部">
+<meta name="twitter:image" content="http://www.neohuang.com/img/js-review-event-op.jpg">
     
 
     
@@ -174,7 +174,7 @@
 </aside>
 
             
-            <section id="main"><article id="post-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-not-know-js-review-scope" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -182,7 +182,7 @@
                 
     
         <h1 class="article-title" itemprop="name">
-            Hexo博客一些常用的命令
+            你不知道的js复习笔记 (作用域和闭包)
         </h1>
     
 
@@ -191,8 +191,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/04/13/hexo/">
-            <time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time>
+        <a href="/2018/09/12/not-know-js-review-scope/">
+            <time datetime="2018-09-11T16:00:00.000Z" itemprop="datePublished">2018-09-12</time>
         </a>
     </div>
 
@@ -207,16 +207,68 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。</p>
-<p><img src="/img/hexo.jpeg" alt=""></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <h2 id="第一部分-作用域和闭包"><a href="#第一部分-作用域和闭包" class="headerlink" title="第一部分 作用域和闭包"></a>第一部分 作用域和闭包</h2><p>参考： 《你不知道的javascript—上卷》 第一部分    </p>
+<h3 id="1-作用域"><a href="#1-作用域" class="headerlink" title="1.作用域"></a>1.作用域</h3><h4 id="1-作用域概念"><a href="#1-作用域概念" class="headerlink" title="1.作用域概念"></a>1.作用域概念</h4><p>一套来规定存储、读取变量的规则，解释器根据该规则来存储以及读取变量。</p>
+<h4 id="2-编译原理"><a href="#2-编译原理" class="headerlink" title="2.编译原理"></a>2.编译原理</h4><h5 id="1-js语言特性："><a href="#1-js语言特性：" class="headerlink" title="(1) js语言特性："></a>(1) js语言特性：</h5><p>js归类为“动态”或“解释型语言”，但事实上它仍是一门编译语言</p>
+<p><strong>衍生知识：</strong></p>
+<p>前置知识：</p>
+<p>运行期间：当程序在内存中的时候，就是运行时,其余时候都是在磁盘上，都不是运行时 (不一定在全部编译后，解释型语言可能会动态编译)</p>
+<p>改变其结构：例如新的函数、对象、甚至代码可以被引进，已有的函数可以被删除或是其他结构上的变化。<br>（等待js元编程章节再探讨）</p>
+<p>(1) 动态语言和静态语言的区别 （容易混淆）：</p>
+<ul>
+<li><p><strong>动态语言：</strong>指运行期间可以改变其结构的语言</p>
+</li>
+<li><p><strong>静态语言：</strong>与动态语言相反，在运行时不能改变其结构 （虽然尽管静态语言可以通过复杂的手段实现动态语言的特性，但是动态语言提供了直接的方法实现语言的动态性。）</p>
+</li>
+</ul>
+<p>(2) 动态类型语言和静态类型语言区别 （容易混淆）：</p>
+<ul>
+<li><p><strong>动态类型语言：</strong>指在运行期间才去做数据类型检查的语言</p>
+</li>
+<li><p><strong>静态类型语言：</strong>与动态类型语言刚好相反，它的数据类型检查发生在在编译阶段。（静态语言通常会使用泛型去实现，实现其动态性    ）</p>
+</li>
+</ul>
+<p>(3) 强类语言和弱类语言区别：</p>
+<ul>
+<li><strong>强类型语言：</strong> 偏向于不容忍隐式类型转换的语言</li>
+<li><strong>弱类型语言:</strong> 偏向于容忍隐式类型转换的语言</li>
+</ul>
+<p>(4) 解释型语言和编译型语言区别：</p>
+<ul>
+<li><strong>解释型类型语言：</strong>  是一种以用解释器来实现的编程语言，在执行期，动态将程式码逐句解释（interpret）为机器码，或是已经预先编译为机器码的的子程式，之后再执行。</li>
+<li><strong>编译型语言：</strong> 是一种以编译器来实现的编程语言，以编译器，先将代码编译为机器码，再加以运行。</li>
+</ul>
+<h5 id="2-编译型语言的编译过程："><a href="#2-编译型语言的编译过程：" class="headerlink" title="(2) 编译型语言的编译过程："></a>(2) 编译型语言的编译过程：</h5><p>[1] 分词/词法分析 （Tokeninzing/Lexing）</p>
+<p>这个过程会将由字符组成的字符串分解成(对编程语言来说)有意义的代码块，这些代 码块被称为词法单元(token)。例如，考虑程序var a = 2;。这段程序通常会被分解成 为下面这些词法单元:var、a、=、2 、;。空格是否会被当作词法单元，取决于空格在 这门语言中是否具有意义。 </p>
+<p><strong>白话解析：这个过程主要是为了将一句句js代码转换成词法单元流(数组)，虽然不是很准确可以简单理解为将String按特定规则转化为Array。</strong></p>
+<p><strong>衍生知识：</strong></p>
+<p>分词(tokenizing)和词法分析(Lexing)之间的区别是非常微妙、晦涩的， 主要差异在于词法单元的识别是通过有状态还是无状态的方式进行的。简 单来说，如果词法单元生成器在判断 a 是一个独立的词法单元还是其他词法 单元的一部分时，调用的是有状态的解析规则，那么这个过程就被称为词法 分析。</p>
+<p>[2] 解析／语法分析 (Parsing)</p>
+<p>这个过程是将词法单元流(数组)转换成一个由元素逐级嵌套所组成的代表了程序语法 结构的树。这个树被称为“抽象语法树”(Abstract Syntax Tree，AST)。<br>var a = 2; 的抽象语法树中可能会有一个叫作 VariableDeclaration 的顶级节点，接下 来是一个叫作 Identifier(它的值是 a)的子节点，以及一个叫作 AssignmentExpression 的子节点。AssignmentExpression 节点有一个叫作 NumericLiteral(它的值是 2)的子 节点。</p>
+<p><strong>白话解析：这个过程主要是将词法单元流转换为AST，虽然不是很准确可以简单理解将string 按特定规则转换为tree，以便代码生成时转换为机器码</strong></p>
+<p>[3] 代码生成</p>
+<p>将 AST 转换为可执行代码的过程称被称为代码生成。这个过程与语言、目标平台等息 息相关。<br>抛开具体细节，简单来说就是有某种方法可以将 var a = 2; 的 AST 转化为一组机器指令，用来创建一个叫作 a 的变量(包括分配内存等)，并将一个值储存在 a 中</p>
+<p><strong>白话解析：这个过程主要是将AST根据平台差异转换为机器码，让计算机进行执行代码</strong></p>
+<h5 id="3-javascript的编译过程-解释型语言-："><a href="#3-javascript的编译过程-解释型语言-：" class="headerlink" title="(3) javascript的编译过程(解释型语言)："></a>(3) javascript的编译过程(解释型语言)：</h5><p>比起只有3步的编译型语言，编译过程复杂的多，和书上一样只做宏观理解来了解决一下差别</p>
+<p>简单总结下来说，由于js是解释型语言，会存在多次在执行前编译代码的情况造成：</p>
+<ul>
+<li>js没有引擎没有大量时间优化，因为编译过程并不在构建前</li>
+<li>大部分情况下js编译代码是在执行前的几微秒，因此js引擎用了JIT等优化来保证性能</li>
+</ul>
+<p><strong>衍生知识：Just-In-Time Compiler(JIT) （挖个坑之后填）</strong></p>
+<p>关于JIT可以参考该文：<a href="https://juejin.im/post/58c12adc128fe1006020dff9" target="_blank" rel="noopener">https://juejin.im/post/58c12adc128fe1006020dff9</a></p>
+<p>Just-In-Time Compiler(JIT)实时编译：动态编译的一种形式，是一种提高程序运行效率的方法。通常，程序有两种运行方式：静态编译与动态解释。静态编译的程序在执行前全部被翻译为机器码，而解释执行的则是一句一句边运行边翻译。</p>
+<p>即时编译器则混合了这二者，一句一句编译源代码，但是会将翻译过的代码缓存起来以降低性能损耗。相对于静态编译代码，即时编译的代码可以处理延迟绑定并增强安全性。</p>
+<p>简单来说就是为了解决解释器的低效问题，后来的浏览器把编译器也引入进来，形成混合模式。</p>
+<p>实现思路基本是：在 JavaScript 引擎中增加一个监视器（也叫分析器）。监视器监控着代码的运行情况，记录代码一共运行了多少次、如何运行的等信息。</p>
+<h4 id="2-什么是作用域"><a href="#2-什么是作用域" class="headerlink" title="2.什么是作用域"></a>2.什么是作用域</h4><ul>
+<li>js引擎</li>
+<li>编译器</li>
+<li>作用域</li>
+</ul>
+<p>将从这三者的角度分析代码</p>
+<p>错误理解：</p>
+<p>正确理解：</p>
 
         
         </div>
@@ -227,7 +279,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjlympj81000co7m79fupxp6m" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://www.neohuang.com/child/2018/09/12/not-know-js-review-scope/" data-id="cjlympj8c000oo7m7creszah3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -295,7 +347,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/04/13/hexo/#comments" class="article-comment-link">Comments</a>
+        <a href="http://www.neohuang.com/child/2018/09/12/not-know-js-review-scope/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -304,15 +356,11 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/05/03/study-plan/" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Newer</strong>
-            <div class="article-nav-title">
-                
-                    2018年学习大纲
-                
-            </div>
-        </a>
     
+        <a href="/2018/09/12/array-review/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">js数组方法分类复习</div>
+        </a>
     
 </nav>
 
