@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>数据结构与算法（绪论以及算法） | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="一、什么是数据结构数据结构是一门研究非数值计算的程序设计问题中操作对象，以及它们之间的关系和操作等相关问题的资料 程序设计 = 数据结构 + 算法 数据结构，研究的是关系，就是数据元素相互之间存在的一种或多种特定关系的集合。 二、数据结构分类1. 逻辑结构数据对象中元素之间的相互关系 2. 物理结构数据的逻辑结构在计算机中的存储形式 三、逻辑结构1.集合结构2.线性结构1对1 3.树型结构1对多">
+<meta property="og:type" content="website">
+<meta property="og:title" content="数据结构与算法（绪论以及算法）">
+<meta property="og:url" content="http://www.neohuang.com/child/unfinsh_posts/dsa-1.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="一、什么是数据结构数据结构是一门研究非数值计算的程序设计问题中操作对象，以及它们之间的关系和操作等相关问题的资料 程序设计 = 数据结构 + 算法 数据结构，研究的是关系，就是数据元素相互之间存在的一种或多种特定关系的集合。 二、数据结构分类1. 逻辑结构数据对象中元素之间的相互关系 2. 物理结构数据的逻辑结构在计算机中的存储形式 三、逻辑结构1.集合结构2.线性结构1对1 3.树型结构1对多">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/dsa.jpg">
+<meta property="og:updated_time" content="2018-09-18T14:13:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构与算法（绪论以及算法）">
+<meta name="twitter:description" content="一、什么是数据结构数据结构是一门研究非数值计算的程序设计问题中操作对象，以及它们之间的关系和操作等相关问题的资料 程序设计 = 数据结构 + 算法 数据结构，研究的是关系，就是数据元素相互之间存在的一种或多种特定关系的集合。 二、数据结构分类1. 逻辑结构数据对象中元素之间的相互关系 2. 物理结构数据的逻辑结构在计算机中的存储形式 三、逻辑结构1.集合结构2.线性结构1对1 3.树型结构1对多">
+<meta name="twitter:image" content="http://www.neohuang.com/img/dsa.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                25
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            数据结构与算法（绪论以及算法）
+        </h1>
+    
+
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、什么是数据结构"><a href="#一、什么是数据结构" class="headerlink" title="一、什么是数据结构"></a>一、什么是数据结构</h3><p>数据结构是一门研究非数值计算的程序设计问题中操作对象，以及它们之间的关系和操作等相关问题的资料</p>
+<p>程序设计 = 数据结构 + 算法</p>
+<p>数据结构，研究的是关系，就是数据元素相互之间存在的一种或多种特定关系的集合。</p>
+<h3 id="二、数据结构分类"><a href="#二、数据结构分类" class="headerlink" title="二、数据结构分类"></a>二、数据结构分类</h3><h4 id="1-逻辑结构"><a href="#1-逻辑结构" class="headerlink" title="1. 逻辑结构"></a>1. 逻辑结构</h4><p>数据对象中元素之间的相互关系</p>
+<h4 id="2-物理结构"><a href="#2-物理结构" class="headerlink" title="2. 物理结构"></a>2. 物理结构</h4><p>数据的逻辑结构在计算机中的存储形式</p>
+<h3 id="三、逻辑结构"><a href="#三、逻辑结构" class="headerlink" title="三、逻辑结构"></a>三、逻辑结构</h3><h4 id="1-集合结构"><a href="#1-集合结构" class="headerlink" title="1.集合结构"></a>1.集合结构</h4><h4 id="2-线性结构"><a href="#2-线性结构" class="headerlink" title="2.线性结构"></a>2.线性结构</h4><p>1对1</p>
+<h4 id="3-树型结构"><a href="#3-树型结构" class="headerlink" title="3.树型结构"></a>3.树型结构</h4><p>1对多</p>
+<h4 id="4-图形结构"><a href="#4-图形结构" class="headerlink" title="4.图形结构"></a>4.图形结构</h4><p>多对多</p>
+<h3 id="四、物理结构"><a href="#四、物理结构" class="headerlink" title="四、物理结构"></a>四、物理结构</h3><h4 id="1-顺序存储结构"><a href="#1-顺序存储结构" class="headerlink" title="1.顺序存储结构"></a>1.顺序存储结构</h4><p>例：队列</p>
+<h4 id="2-链式存储结构"><a href="#2-链式存储结构" class="headerlink" title="2.链式存储结构"></a>2.链式存储结构</h4><p>例：链表</p>
+<p>相比顺序存储结构灵活</p>
+<p>可以链接也可以不连续，有一个指针存一个地址</p>
+<h3 id="五、算法"><a href="#五、算法" class="headerlink" title="五、算法"></a>五、算法</h3><h4 id="1-算法初体验："><a href="#1-算法初体验：" class="headerlink" title="(1)算法初体验："></a>(1)算法初体验：</h4><p>不使用算法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        sum += i ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; sum;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用高斯算法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> n = <span class="number">100</span>;</span><br><span class="line">    <span class="keyword">int</span> sum;</span><br><span class="line">    </span><br><span class="line">    sum = (i + n) * (n / <span class="number">2</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; sum;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-什么是算法"><a href="#2-什么是算法" class="headerlink" title="(2)什么是算法"></a>(2)什么是算法</h4><p>算法是描述解决特定问题求解步骤的描述，在计算机中表现为指令的有限序列，并且每条指令表示一个或多个操作。</p>
+<h4 id="3-算法的特性"><a href="#3-算法的特性" class="headerlink" title="(3)算法的特性"></a>(3)算法的特性</h4><ul>
+<li>输入</li>
+<li>输出</li>
+<li>有穷性</li>
+<li>确定性</li>
+<li>可行性</li>
+</ul>
+<h5 id="1-输入"><a href="#1-输入" class="headerlink" title="[1] 输入"></a>[1] 输入</h5><p>算法具有0个或多个输入</p>
+<h5 id="2-输出"><a href="#2-输出" class="headerlink" title="[2]输出"></a>[2]输出</h5><p>算法至少有一个或多个输出</p>
+<h5 id="3-有穷性"><a href="#3-有穷性" class="headerlink" title="[3]有穷性"></a>[3]有穷性</h5><p>算法在执行有限步骤后，自动结束，并且在可接受时间范围内</p>
+<h5 id="4-确定性"><a href="#4-确定性" class="headerlink" title="[4]确定性"></a>[4]确定性</h5><p>算法的每个一个步骤都具有确定性，没有二意性</p>
+<h5 id="5-可行性"><a href="#5-可行性" class="headerlink" title="[5]可行性"></a>[5]可行性</h5><p>每一步在当前环境都可以实现，每一步能通过执行有限次数完成</p>
+<h4 id="4-算法设计的要求"><a href="#4-算法设计的要求" class="headerlink" title="(4)算法设计的要求"></a>(4)算法设计的要求</h4><h5 id="1-正确性"><a href="#1-正确性" class="headerlink" title="[1] 正确性"></a>[1] 正确性</h5><p>具备基本要求</p>
+<ul>
+<li>算法设计不能有语法错误</li>
+<li>对合法输入产生满足的要求</li>
+<li>对非法输入产生符合规格的说明</li>
+<li>算法对于边界处理，都可以满足要求</li>
+</ul>
+<h5 id="2-可读性"><a href="#2-可读性" class="headerlink" title="[2] 可读性"></a>[2] 可读性</h5><h5 id="3-健壮性"><a href="#3-健壮性" class="headerlink" title="[3] 健壮性"></a>[3] 健壮性</h5><h5 id="4-时间效率高和存储量低"><a href="#4-时间效率高和存储量低" class="headerlink" title="[4] 时间效率高和存储量低"></a>[4] 时间效率高和存储量低</h5>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/unfinsh_posts/dsa-1.html" data-id="cjm8w7vke000jkam7ntzcpi6v" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/unfinsh_posts/dsa-1.html#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/25/not-know-js-review-this/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (this)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/25/not-know-js-review-this/" class="title">你不知道的js复习笔记 (this)</a></p>
+                            <p class="item-date"><time datetime="2018-09-24T16:00:00.000Z" itemprop="datePublished">2018-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/25/not-know-js-review-object/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (对象)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/25/not-know-js-review-object/" class="title">你不知道的js复习笔记 (对象)</a></p>
+                            <p class="item-date"><time datetime="2018-09-24T16:00:00.000Z" itemprop="datePublished">2018-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/19/not-know-js-review-closure/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (作用域闭包)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/19/not-know-js-review-closure/" class="title">你不知道的js复习笔记 (作用域闭包)</a></p>
+                            <p class="item-date"><time datetime="2018-09-18T16:00:00.000Z" itemprop="datePublished">2018-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/13/not-know-js-review-lexical-scope /" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (词法作用域)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/13/not-know-js-review-lexical-scope /" class="title">你不知道的js复习笔记 (词法作用域)</a></p>
+                            <p class="item-date"><time datetime="2018-09-12T16:00:00.000Z" itemprop="datePublished">2018-09-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/13/not-know-js-review-function-hosting/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (提升)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/13/not-know-js-review-function-hosting/" class="title">你不知道的js复习笔记 (提升)</a></p>
+                            <p class="item-date"><time datetime="2018-09-12T16:00:00.000Z" itemprop="datePublished">2018-09-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

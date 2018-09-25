@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>你不知道的js复习笔记 (词法作用域) | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="第一部分 作用域和闭包之词法作用域参考： 《你不知道的javascript—上卷》 第一部分     1.作用域工作模型类型作用域共有两种主要的工作模型：  词法作用域 ：javascript java 动态作用域 ： Bash, Perl的一部分  2.词法作用域理解词法作用域及其名称来历，必须理解上篇复习里的编译器的第一个工作阶段叫作词法化的过程。 (1)概念：简单地说，词法作用域就是定义在词">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的js复习笔记 (词法作用域)">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/09/13/not-know-js-review-lexical-scope /index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="第一部分 作用域和闭包之词法作用域参考： 《你不知道的javascript—上卷》 第一部分     1.作用域工作模型类型作用域共有两种主要的工作模型：  词法作用域 ：javascript java 动态作用域 ： Bash, Perl的一部分  2.词法作用域理解词法作用域及其名称来历，必须理解上篇复习里的编译器的第一个工作阶段叫作词法化的过程。 (1)概念：简单地说，词法作用域就是定义在词">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/not-know-js-review.jpeg">
+<meta property="og:updated_time" content="2018-09-20T03:19:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你不知道的js复习笔记 (词法作用域)">
+<meta name="twitter:description" content="第一部分 作用域和闭包之词法作用域参考： 《你不知道的javascript—上卷》 第一部分     1.作用域工作模型类型作用域共有两种主要的工作模型：  词法作用域 ：javascript java 动态作用域 ： Bash, Perl的一部分  2.词法作用域理解词法作用域及其名称来历，必须理解上篇复习里的编译器的第一个工作阶段叫作词法化的过程。 (1)概念：简单地说，词法作用域就是定义在词">
+<meta name="twitter:image" content="http://www.neohuang.com/img/not-know-js-review.jpeg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                25
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-not-know-js-review-lexical-scope " class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            你不知道的js复习笔记 (词法作用域)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/09/13/not-know-js-review-lexical-scope /">
+            <time datetime="2018-09-12T16:00:00.000Z" itemprop="datePublished">2018-09-13</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="第一部分-作用域和闭包之词法作用域"><a href="#第一部分-作用域和闭包之词法作用域" class="headerlink" title="第一部分 作用域和闭包之词法作用域"></a>第一部分 作用域和闭包之词法作用域</h2><p>参考： 《你不知道的javascript—上卷》 第一部分    </p>
+<h3 id="1-作用域工作模型类型"><a href="#1-作用域工作模型类型" class="headerlink" title="1.作用域工作模型类型"></a>1.作用域工作模型类型</h3><p>作用域共有两种主要的工作模型：</p>
+<ul>
+<li>词法作用域 ：javascript java</li>
+<li>动态作用域 ： Bash, Perl的一部分</li>
+</ul>
+<h3 id="2-词法作用域"><a href="#2-词法作用域" class="headerlink" title="2.词法作用域"></a>2.词法作用域</h3><p>理解词法作用域及其名称来历，必须理解上篇复习里的编译器的第一个工作阶段叫作词法化的过程。</p>
+<h4 id="1-概念："><a href="#1-概念：" class="headerlink" title="(1)概念："></a>(1)概念：</h4><p>简单地说，<strong>词法作用域就是定义在词法阶段的作用域。</strong></p>
+<p>词法作用域是由你在写 代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域不变。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function foo(a) &#123;</span><br><span class="line">	var b = a * 2;	function bar(c) &#123;</span><br><span class="line">	 console.log( a, b, c );	&#125;	bar( b * 3 ); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo( 2 ); // 2, 4, 12</span><br></pre></td></tr></table></figure>
+<p>在这个例子中有三个逐级嵌套的作用域。</p>
+<ul>
+<li>(1) 全局作用域 包含:foo</li>
+<li>(2) foo函数作用域 包含:a bar b </li>
+<li>(3) bar函数作用域：c</li>
+</ul>
+<p>没有任何函数可以部分地同时出现在两个父级函数。</p>
+<h4 id="2-和动态作用域的区别"><a href="#2-和动态作用域的区别" class="headerlink" title="(2) 和动态作用域的区别"></a>(2) 和动态作用域的区别</h4><p>这部分是书中没有提及的部分（我感觉书中没有直观的表现出词法作用域和动态作用域的区别）</p>
+<ul>
+<li><p><strong>词法作用域，函数的作用域在函数定义的时候就决定了。</strong></p>
+</li>
+<li><p><strong>动态作用域，函数的作用域是在函数调用的时候才决定的。</strong></p>
+</li>
+</ul>
+<p>[1] 词法作用域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="number">2</span>;</span><br><span class="line">    foo(); <span class="comment">// 1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
+<p>[2] 动态作用域</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">value=1</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span> () &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$value</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">bar</span></span> () &#123;</span><br><span class="line">    <span class="built_in">local</span> value=2;</span><br><span class="line">    foo; ／／2</span><br><span class="line">&#125;</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+<h4 id="3-查找"><a href="#3-查找" class="headerlink" title="(3) 查找"></a>(3) 查找</h4><p>[1] 查找过程 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function foo(a) &#123;</span><br><span class="line">	var b = a * 2;	function bar(c) &#123;</span><br><span class="line">	 console.log( a, b, c );	&#125;	bar( b * 3 ); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo( 2 ); // 2, 4, 12</span><br></pre></td></tr></table></figure>
+<p>在这个例子中有三个逐级嵌套的作用域。</p>
+<ul>
+<li>(1) 全局作用域 包含:foo</li>
+<li>(2) foo函数作用域 包含:a bar b </li>
+<li>(3) bar函数作用域：c</li>
+</ul>
+<p>以此例为例</p>
+<p>查找a b c 3个变量，过程：</p>
+<ul>
+<li>执行foo函数</li>
+<li>执行bar函数</li>
+<li>查找变量 a bc =&gt; bar函数内找到 变量c,变量c标识符时停止</li>
+<li>查找变量 a foo函数内找到 变量a,b,变量a,b标识符时停止</li>
+</ul>
+<p>js引擎会顺着作用域链向上查找变量，作用域查找会在找到第一个匹配的标识符时停止，在多层的嵌套作用域中可以定义同名的 标识符，这叫作“遮蔽效应”(内部的标识符“遮蔽”了外部的标识符)。抛开遮蔽效应， 作用域查找始终从运行时所处的最内部作用域开始，逐级向外或者说向上进行，直到遇见 第一个匹配的标识符为止。</p>
+<p>[2] 函数的词法作用域只由函数被声明时所处 的位置决定</p>
+<p>[3] 词法作用域查找只会查找一级标识符</p>
+<p>比如 a、b 和 c。如果代码中引用了 foo.bar.baz， 词法作用域查找只会试图查找 foo 标识符，找到这个变量后，对象属性访问规则会分别接 管对 bar 和 baz 属性的访问。</p>
+<h4 id="4-欺骗词法"><a href="#4-欺骗词法" class="headerlink" title="(4) 欺骗词法"></a>(4) 欺骗词法</h4><p>如果词法作用域完全由写代码期间函数所声明的位置来定义，怎样才能在运行时来“修<br>改”(也可以说欺骗)词法作用域呢?</p>
+<p>JavaScript 中有两种机制来实现这个目的。社区普遍认为在代码中使用这两种机制并不是 什么好注意。但是关于它们的争论通常会忽略掉最重要的点:欺骗词法作用域会导致性能 下降。</p>
+<h5 id="1-eval"><a href="#1-eval" class="headerlink" title="[1] eval"></a>[1] eval</h5><p><strong>原理：</strong>JavaScript 中的 eval(..) 函数可以接受一个字符串为参数，并将其中的内容视为好像在书 写时就存在于程序中这个位置的代码。</p>
+<p>在执行 eval(..) 之后的代码时，引擎并不“知道”或“在意”前面的代码是以动态形式插 入进来，并对词法作用域的环境进行修改的。引擎只会如往常地进行词法作用域查找。</p>
+<p>举例：</p>
+<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str, a</span>) </span>{ 
+<span class="built_in">eval</span>( str ); <span class="comment">// 欺骗! </span>
+<span class="built_in">console</span>.log( a, b );
+}
+<span class="keyword">var</span> b = <span class="number">2</span>;
+foo( <span class="string">"var b = 3;"</span>, <span class="number">1</span> ); <span class="comment">// 1, 3</span>
+&lt;!--￼<span class="number">4</span>--&gt;
+
+**注意事项：**
+
+<span class="number">1.</span> setTimeout(..)和 setInterval(..) 也可以模拟类似效果
+
+    他们的第一个参数可以是字符串，字符串的内容可以被解释为一段动态生成的 函数代码。这些功能已经过时且并不被提倡。**不要使用它们!**
+
+<span class="number">2.</span> <span class="keyword">new</span> <span class="built_in">Function</span>(..) 函数也可以模拟类似效果
+
+    最后一个参数可以接受代码字符串，并将其转 化为动态生成的函数(前面的参数是这个新生成的函数的形参)。这种构建函数的语法比 <span class="built_in">eval</span>(..) 略微安全一些，**但也要尽量避免使用**。
+
+在程序中动态生成代码的使用场景非常罕见，因为它所带来的好处无法抵消性能上的损失。
+
+##### [2] with
+
+<span class="keyword">with</span> 通常被当作重复引用同一个对象中的多个属性的快捷方式，可以不需要重复引用对象 本身。
+
+例子：
+
+&lt;!--￼<span class="number">5</span>--&gt;
+
+可以利用这种特性实现：
+
+&lt;!--￼<span class="number">6</span>--&gt;
+
+这个例子中创建了 o1 和 o2 两个对象。其中一个具有 a 属性，另外一个没有。foo(..) 函 数接受一个obj参数，该参数是一个对象引用，并对这个对象引用执行了<span class="keyword">with</span>(obj) {..}。 在 <span class="keyword">with</span> 块内部，我们写的代码看起来只是对变量 a 进行简单的词法引用，实际上就是一个 LHS 引用(查看第 <span class="number">1</span> 章)，并将 <span class="number">2</span> 赋值给它。
+
+**注意事项：**
+
+- <span class="keyword">with</span> 可以将一个没有或有多个属性的对象处理为一个完全隔离的词法作用域
+
+    &lt;!--￼<span class="number">7</span>--&gt;
+
+- o2没有a这个属性，执行到a = <span class="number">2</span> 赋值操作创建了一个全局的变量 a。这里存在一个副作用
+<span class="keyword">with</span> 可以将一个没有或有多个属性的对象处理为一个完全隔离的词法作用域，因此这个对象的属性也会被处理为定义在这个作用域中的词法标识符。
+
+- 尽管 <span class="keyword">with</span> 块可以将一个对象处理为词法作用域，但是这个块内部正常的 <span class="keyword">var</span> 声明并不会被限制在这个块的作用域中，而是被添加到 <span class="keyword">with</span> 所处的函数作 用域中。
+
+&lt;!--￼<span class="number">8</span>--&gt;
+
+&lt;!--￼<span class="number">9</span>--&gt;
+
+##### [3] eval和with区别
+
+<span class="built_in">eval</span>(..) 函数如果接受了含有一个或多个声明的代码，就会修改其所处的词法作用域，而 <span class="keyword">with</span> 声明实际上是根据你传递给它的对象凭空创建了一个全新的词法作用域。
+
+
+##### [4] 性能
+
+JavaScript 引擎会在编译阶段进行数项的性能优化。其中有些优化依赖于能够根据代码的 词法进行静态分析，并预先确定所有变量和函数的定义位置，才能在执行过程中快速找到 标识符。
+
+因此<span class="built_in">eval</span>(..) 和 <span class="keyword">with</span>会带来**性能问题**原因：如果引擎在代码中发现了 <span class="built_in">eval</span>(..) 或 <span class="keyword">with</span>，它只能简单地假设关于标识符位置的判断 都是无效的，因为无法在词法分析阶段明确知道 <span class="built_in">eval</span>(..) 会接收到什么代码，这些代码会 如何对作用域进行修改，也无法知道传递给 <span class="keyword">with</span> 用来创建新词法作用域的对象的内容到底 是什么。
+
+
+最悲观的情况是如果出现了 <span class="built_in">eval</span>(..) 或 <span class="keyword">with</span>，所有的优化可能都是无意义的，因此最简 单的做法就是完全不做任何优化。
+
+### 重点总结
+
+- 词法作用域意味着作用域是由书写代码时函数声明的位置来决定的
+- 编译的词法分析阶段 基本能够知道全部标识符在哪里以及是如何声明的，从而能够预测在执行过程中如何对它 们进行查找。
+- JavaScript 中有两个机制可以“欺骗”词法作用域:<span class="built_in">eval</span>(..) 和 <span class="keyword">with</span>
+- <span class="built_in">eval</span>可以对一段包 含一个或多个声明的“代码”字符串进行演算，并借此来修改已经存在的词法作用域
+- <span class="keyword">with</span>本质上是通过将一个对象的引用当作作用域来处理，将对象的属性当作作 用域中的标识符来处理，从而创建了一个新的词法作用域(同样是在运行时)
+- 这两个机制的副作用是引擎无法在编译时对作用域查找进行优化，因为引擎只能谨慎地认 为这样的优化是无效的。使用这其中任何一个机制都将导致代码运行变慢。不要使用它们。
+
+### 补充知识 动态作用域
+
+#### (1)词法作用域和动态作用域的区别
+
+区别：
+
+**词法作用域是在写代码或者说定义时确定的，而动态作用域是在运行时确定的。**
+
+原因：
+
+**作用域链是基于调用栈的，而不是代码中的作用域嵌套。**
+
+- 词法作用域是一套关于引擎如何寻找变量以及会在何处找到变量的规则。词法作用域最重要的特征是它的定义过程发生在代码的书写阶段。(假设你没有使用 <span class="built_in">eval</span>() 或 <span class="keyword">with</span>)。
+
+- 动态作用域并不关心函数和作用域是如何声明以及在何处声明的，只关心它们从何处调用。换句话说，**作用域链是基于调用栈的，而不是代码中的作用域嵌套。**
+
+&lt;!--￼<span class="number">10</span>--&gt;
+
+为什么会动态作用域会输出<span class="number">3</span> ?因为当 foo() 无法找到 a 的变量引用时，会顺着调用栈在调用 foo() 的地 方查找 a，而不是在嵌套的词法作用域链中向上查找。由于 foo() 是在 bar() 中调用的， 引擎会检查 bar() 的作用域，并在其中找到值为 <span class="number">3</span> 的变量 a。
+
+#### (2)和this相关的
+
+事实上 JavaScript 并不具有动态作用域。它只有词法作用域，简单明了。 但是 <span class="keyword">this</span> 机制某种程度上很像动态作用域。
+
+<span class="keyword">this</span> 关注函数如何调用，这就表明了 <span class="keyword">this</span> 机制和动态作用域之间的关系多么紧密。
+
+### 补充知识 块作用域的替代方案
+
+至少从 ES3 发布以来，JavaScript 中就有了块作用域，而 <span class="keyword">with</span> 和 <span class="keyword">catch</span> 分句就是块作用域的两个小例子。
+
+但随着 ES6 中引入了 <span class="keyword">let</span>，我们的代码终于有了创建完整、不受约束的块作用域的能力。 块作用域在功能上和代码风格上都拥有很多激动人心的新特性。
+
+
+但如果我们想在 ES6 之前的环境中使用块作用域呢?
+
+例子：
+
+&lt;!--￼<span class="number">11</span>--&gt;
+
+es5转换
+
+&lt;!--￼<span class="number">12</span>--&gt;
+
+这么写可读性虽然不佳，可以通过工具转换，你可以使用块作用域来写代码，比如：Traceur
+
+#### (1) 隐式和显式作用域
+
+考虑下面这种 <span class="keyword">let</span> 的使用方法，它被称作 <span class="keyword">let</span> 作用域或 <span class="keyword">let</span> 声明(对比前面的 <span class="keyword">let</span> 定义)。
+
+&lt;!--￼<span class="number">13</span>--&gt;
+
+同隐式地劫持一个已经存在的作用域不同，<span class="keyword">let</span> 声明会创建一个显示的作用域并与其进行 绑定。显式作用域不仅更加突出，在代码重构时也表现得更加健壮。
+
+但这种<span class="keyword">let</span> 声明并不包含在 ES6 中。官方的 Traceur 编译器也不接受这 种形式的代码。
+
+可以使用这种办法来模拟实现：
+
+&lt;!--￼<span class="number">14</span>--&gt;
+
+#### (2) 性能
+
+后简单地看一下 <span class="keyword">try</span>/<span class="keyword">catch</span> 带来的性能问题，并尝试回答“为什么不直接使用 IIFE 来创
+建作用域”这个问题。
+
+- <span class="keyword">try</span>/<span class="keyword">catch</span> 的性能的确很糟糕，但技术层面上没有合理的理由来说明 <span class="keyword">try</span>/<span class="keyword">catch</span> 必 须这么慢，或者会一直慢下去。自从 TC39 支持在 ES6 的转换器中使用 <span class="keyword">try</span>/<span class="keyword">catch</span> 后， Traceur 团队已经要求 Chrome 对 <span class="keyword">try</span>/<span class="keyword">catch</span> 的性能进行改进，他们显然有很充分的动机来 做这件事情。
+- IIFE 和 <span class="keyword">try</span>/<span class="keyword">catch</span> 并不是完全等价的，因为如果将一段代码中的任意一部分拿出来 用函数进行包裹，会改变这段代码的含义，其中的 <span class="keyword">this</span>、<span class="keyword">return</span>、<span class="keyword">break</span> 和 contine 都会 发生变化。IIFE 并不是一个普适的解决方案，它只适合在某些情况下进行手动操作。
+- 你是否想要块作用域?如果你想要，这些工具就可以帮助你。如果不 想要，继续使用 <span class="keyword">var</span> 来写代码就好了!
+
+### 补充知识 this词法
+
+ES6 中有一个主题用非常重要的方式将 <span class="keyword">this</span> 同词法作用域联系起来了
+
+ES6 添加了一个特殊的语法形式用于函数声明，叫作箭头函数。它看起来是下面这样的:
+
+&lt;!--￼<span class="number">15</span>--&gt;
+
+但是箭头函数除了让你在声明函数时少敲几次键盘以外，还有更重要的作用
+
+查看以下代码：
+
+&lt;!--￼<span class="number">16</span>--&gt;
+
+问题在于 cool() 函数丢失了同 <span class="keyword">this</span> 之间的绑定。解决这个问题有好几种办法，但最长用 的就是<span class="keyword">var</span> self = <span class="keyword">this</span>;。
+
+&lt;!--￼<span class="number">17</span>--&gt;
+
+ES6 中的箭头函数引入了一个叫作 <span class="keyword">this</span> 词法的行为,可以代替self：
+
+&lt;!--￼<span class="number">18</span>--&gt;
+
+简单来说，**箭头函数在涉及 <span class="keyword">this</span> 绑定时的行为和普通函数的行为完全不一致**。它放弃了所 有普通 <span class="keyword">this</span> 绑定的规则，取而代之的是用当前的词法作用域覆盖了 <span class="keyword">this</span> 本来的值。
+
+
+解决这个“问题”的另一个更合适的办法是bind方法：
+
+<span class="string">``</span><span class="string">`javascript</span>
+<span class="string">var obj = { </span>
+<span class="string">    count: 0,</span>
+<span class="string">    cool: function coolFn() {</span>
+<span class="string">         if (this.count &lt; 1) {</span>
+<span class="string">            setTimeout( function timer(){ </span>
+<span class="string">                this.count++; // this是安全的 // 因为 bind(..)</span>
+<span class="string">                console.log( "more awesome" ); </span>
+<span class="string">            }.bind( this ), 100 ); // look, bind()!</span>
+<span class="string">        } </span>
+<span class="string">    }</span>
+<span class="string">};</span>
+<span class="string">obj.cool(); // 更酷了。</span>
+</code></pre>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/09/13/not-know-js-review-lexical-scope /" data-id="cjm8w7vko0010kam7zw1ecdwp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/09/13/not-know-js-review-lexical-scope /#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/19/not-know-js-review-closure/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    你不知道的js复习笔记 (作用域闭包)
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/09/13/not-know-js-review-function-hosting/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">你不知道的js复习笔记 (提升)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/25/not-know-js-review-this/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (this)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/25/not-know-js-review-this/" class="title">你不知道的js复习笔记 (this)</a></p>
+                            <p class="item-date"><time datetime="2018-09-24T16:00:00.000Z" itemprop="datePublished">2018-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/25/not-know-js-review-object/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (对象)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/25/not-know-js-review-object/" class="title">你不知道的js复习笔记 (对象)</a></p>
+                            <p class="item-date"><time datetime="2018-09-24T16:00:00.000Z" itemprop="datePublished">2018-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/19/not-know-js-review-closure/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (作用域闭包)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/19/not-know-js-review-closure/" class="title">你不知道的js复习笔记 (作用域闭包)</a></p>
+                            <p class="item-date"><time datetime="2018-09-18T16:00:00.000Z" itemprop="datePublished">2018-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/13/not-know-js-review-lexical-scope /" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (词法作用域)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/13/not-know-js-review-lexical-scope /" class="title">你不知道的js复习笔记 (词法作用域)</a></p>
+                            <p class="item-date"><time datetime="2018-09-12T16:00:00.000Z" itemprop="datePublished">2018-09-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/13/not-know-js-review-function-hosting/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/not-know-js-review.jpeg)" alt="你不知道的js复习笔记 (提升)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/13/not-know-js-review-function-hosting/" class="title">你不知道的js复习笔记 (提升)</a></p>
+                            <p class="item-date"><time datetime="2018-09-12T16:00:00.000Z" itemprop="datePublished">2018-09-13</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
