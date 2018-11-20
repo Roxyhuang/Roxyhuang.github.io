@@ -13,7 +13,7 @@
 <meta property="og:description" content="1.引子HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。 其中面对的问题有可能会是：部署的代码无法生效 这次本人所在团队也遇到了相关问题，这里简述一下：  项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。  在该项目中部署后，进行代码进行一次location.reload，改动即可以生效">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://www.neohuang.com/img/how-browser-caching-works.png">
-<meta property="og:updated_time" content="2018-11-20T10:21:43.000Z">
+<meta property="og:updated_time" content="2018-11-20T15:00:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅聊HTTP缓存 (HTTP Cache)">
 <meta name="twitter:description" content="1.引子HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。 其中面对的问题有可能会是：部署的代码无法生效 这次本人所在团队也遇到了相关问题，这里简述一下：  项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。  在该项目中部署后，进行代码进行一次location.reload，改动即可以生效">
@@ -75,7 +75,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -94,10 +94,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -122,7 +122,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -142,16 +142,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
                 19
-                <span>Entradas</span>
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>Etiqueta</span>
+                <span>Tag</span>
             </div>
         </div>
         
@@ -561,7 +561,7 @@
 <h4 id="1-从另一url跳转"><a href="#1-从另一url跳转" class="headerlink" title="[1] 从另一url跳转"></a>[1] 从另一url跳转</h4><p><img src="/img/cache-15.png" alt=""></p>
 <p>相当于<strong>页面链接跳转</strong></p>
 <h4 id="2-当前url回车"><a href="#2-当前url回车" class="headerlink" title="[2] 当前url回车"></a>[2] 当前url回车</h4><p><img src="/img/cache-19.png" alt=""></p>
-<p>相当于<strong>页面链接跳转</strong></p>
+<p>相当于<strong>刷新</strong></p>
 <p>Firefox 63.0.1 测试结果：</p>
 <h4 id="1-从另一url跳转-1"><a href="#1-从另一url跳转-1" class="headerlink" title="[1] 从另一url跳转"></a>[1] 从另一url跳转</h4><p><img src="/img/cache-16.png" alt=""></p>
 <p>相当于<strong>页面链接跳转</strong></p>
@@ -639,8 +639,8 @@
 </tr>
 <tr>
 <td><strong>地址栏回车</strong></td>
-<td>当前URL回车 - 同刷新 <br> 其他URL回车 - 同页面链接跳转</td>
-<td>当前URL回车 - 同同刷新<br> 其他URL回车 - 页面链接跳转</td>
+<td>当前URL回车 - chrome opera同刷新 <br> 当前URL回车 - ff同刷新 <br> 其他URL回车 - 同页面链接跳转</td>
+<td>当前URL回车 - chrome opera同刷新 <br> 当前URL回车 - ff同刷新 <br> 其他URL回车 - 同页面链接跳转</td>
 </tr>
 <tr>
 <td><strong>强制刷新</strong></td>
@@ -723,7 +723,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/11/20/http-cache/" data-id="cjopg33fh0000uxjxog6q1hu5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://www.neohuang.com/child/2018/11/20/http-cache/" data-id="cjopv949g0004exjd1y42udll" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -791,7 +791,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/11/20/http-cache/#comments" class="article-comment-link">Comentarios</a>
+        <a href="http://www.neohuang.com/child/2018/11/20/http-cache/#comments" class="article-comment-link">Commentaires</a>
     
 -->
         </footer>
@@ -802,7 +802,7 @@
     
     
         <a href="/2018/09/12/array-review/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Más viejo</strong>
+            <strong class="article-nav-caption">Plus ancien</strong>
             <div class="article-nav-title">js数组方法分类复习</div>
         </a>
     
@@ -828,7 +828,7 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
                 
@@ -873,25 +873,6 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/09/11/js-reivew-event-mouse/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习鼠标事件笔记" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-mouse/" class="title">js复习鼠标事件笔记</a></p>
-                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
                             <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
     
     
@@ -904,6 +885,25 @@
                         <div class="item-inner">
                             <p class="item-category"></p>
                             <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-mouse/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习鼠标事件笔记" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-mouse/" class="title">js复习鼠标事件笔记</a></p>
                             <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
                         </div>
                     </li>
@@ -936,7 +936,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
             <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
@@ -949,7 +949,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 
