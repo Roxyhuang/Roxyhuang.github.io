@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>浅聊HTTP缓存 (HTTP Cache) | Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="1.引子HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。 其中面对的问题有可能会是：部署的代码无法生效 这次本人所在团队也遇到了相关问题，这里简述一下：  项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。  在该项目中部署后，进行代码进行一次location.reload，改动即可以生效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅聊HTTP缓存 (HTTP Cache)">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/11/20/http-cache/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="1.引子HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。 其中面对的问题有可能会是：部署的代码无法生效 这次本人所在团队也遇到了相关问题，这里简述一下：  项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。  在该项目中部署后，进行代码进行一次location.reload，改动即可以生效">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/how-browser-caching-works.png">
+<meta property="og:updated_time" content="2018-11-20T10:21:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅聊HTTP缓存 (HTTP Cache)">
+<meta name="twitter:description" content="1.引子HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。 其中面对的问题有可能会是：部署的代码无法生效 这次本人所在团队也遇到了相关问题，这里简述一下：  项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。  在该项目中部署后，进行代码进行一次location.reload，改动即可以生效">
+<meta name="twitter:image" content="http://www.neohuang.com/img/how-browser-caching-works.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Entradas',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SEGUIR</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                19
+                <span>Entradas</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>Etiqueta</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-http-cache" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            浅聊HTTP缓存 (HTTP Cache)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/11/20/http-cache/">
+            <time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished">2018-11-20</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="/img/how-browser-caching-works.png" alt=""></p>
+<h2 id="1-引子"><a href="#1-引子" class="headerlink" title="1.引子"></a>1.引子</h2><p>HTTP缓存一直是一个老生常谈的问题，前端在日常发布、部署工作中，常常要面对。</p>
+<p>其中面对的问题有可能会是：<strong>部署的代码无法生效</strong></p>
+<p>这次本人所在团队也遇到了相关问题，这里简述一下：</p>
+<ul>
+<li><p>项目会在静态资源（如:css,js）使用chunkHash来处理，因此能保证修改后与旧代码文件名字不会重复。以避免无法更新改动。</p>
+</li>
+<li><p>在该项目中部署后，进行代码进行一次<code>location.reload</code>，改动即可以生效。</p>
+</li>
+</ul>
+<p>最后，本人发现是因为该项目部署的服务器上所有静态资源的response headers的设置如下：</p>
+<p><strong>response headers</strong>： </p>
+<ul>
+<li><strong>cache-control</strong>: public, max-age=31536000</li>
+</ul>
+<p>但致命的是，项目的入口: <strong>index.html</strong>也是如此。因此实际是因为所有的.html文件命中(cache hit)了<strong>强缓存</strong>，导致了用户无法直接呈现更新后代码的改动。</p>
+<p>找到了原因，也想到了如下三个解决方案</p>
+<ul>
+<li><p>跳转时增加时间戳例如：</p>
+<p>  具体为什么可以这么做在之后分析查看是否存在缓存步骤时会解析</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">location.href = <span class="string">'https://www.google.com/index.html?t=201811141248001'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改response headers中的cache-control</p>
+<p>  举例：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cache-control: public, max-age=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>使用HTML Meta 标签</p>
+<p>  可以在html代码中增加meta标签：</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Cache-Control"</span> <span class="attr">content</span>=<span class="string">"no-cache, no-store, must-revalidate"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Expires"</span> <span class="attr">content</span>=<span class="string">"0"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  上述代码的作用是告诉浏览器当前页面不被缓存，每次访问都需要去服务器拉取。使用上很简单，但只有部分浏览器可以支持，而且所有缓存代理服务器都不支持，因为代理不解析HTML内容本身。</p>
+<p>  最好还是不要指定HTML标签，通过可能会出现混乱（到底以那端为主，实际response header的优先级更高）。此外，在HTML5中，这些<meta http等="">标签是无效的。只有HTML5规范中列出的HTTP等效值才被允许。</p>
+<p>  可参考：<a href="https://www.w3.org/TR/html4/charset.html#h-5.2.2" target="_blank" rel="noopener">W3 HTML spec chapter 5.2.2</a></p>
+</li>
+</ul>
+<h2 id="2-HTTP缓存基本概念"><a href="#2-HTTP缓存基本概念" class="headerlink" title="2. HTTP缓存基本概念"></a>2. HTTP缓存基本概念</h2><p>既然找到问题了，我觉得那我就顺藤摸瓜的总结一下吧。</p>
+<ul>
+<li><p>HTTP 缓存：重用已获取的资源能够有效的提升网站与应用的性能。Web 缓存能够减少延迟与网络阻塞，进而减少显示某个资源所用的时间。借助 HTTP 缓存，Web 站点变得更具有响应性。</p>
+</li>
+<li><p>HTTP 缓存分为：强缓存和协商缓存    </p>
+</li>
+</ul>
+<h3 id="1-简化流程"><a href="#1-简化流程" class="headerlink" title="(1) 简化流程"></a>(1) 简化流程</h3><p><img src="/img/cache-1.png" alt=""></p>
+<p>其中关键步骤是：</p>
+<ul>
+<li>判断是否存在缓存</li>
+<li>判断缓存是否有效(<strong>即强缓存是否命中</strong>)</li>
+<li>请求服务端，判断服务端资源是否更新（<strong>即协商缓存是否命中</strong>）</li>
+<li>返回资源（若服务端返回的资源，本地保存请求，包括请求头信息）</li>
+</ul>
+<h3 id="2-查看是否存在缓存"><a href="#2-查看是否存在缓存" class="headerlink" title="(2) 查看是否存在缓存"></a>(2) 查看是否存在缓存</h3><p>浏览器怎么判定是否存在本地缓存，这个步骤在此可以理解为浏览器去查找本地是否存在该响应请求的文件存在，查找是否是否有该对应的请求，不同浏览器缓存文件的地址也不尽相同。</p>
+<p>以firefox举例，可以在地址栏输入：<code>about:cache</code></p>
+<p>P.S: <code>chrome://cache</code> 在 chrome66版本后已废弃。</p>
+<p><img src="/img/cache-2.png" alt=""></p>
+<p>如图上所示，这里我们可以看到浏览器关于网络请求缓存的一些信息。我们以本地磁盘中的为例子。</p>
+<p><img src="/img/cache-4.png" alt=""></p>
+<p>如图上所示，在此我们可以查看到一些关于缓存在磁盘内的信息，包括实际本地缓存所在的位置等。</p>
+<p><img src="/img/cache-5.png" alt=""></p>
+<p>如上图，这就是一次响应请求的文件，并且他会记录完整的url包括：query string。</p>
+<p><img src="/img/cache-7.png" alt=""></p>
+<p><img src="/img/cache-6.png" alt=""></p>
+<p>如上两图所见，我们改变了t参数的值，实际我们在url后打时间戳来规避命中缓存，实际就是在此改变了查询URL，让浏览器无法查询到与之前请求相同的本地缓存。</p>
+<p><img src="/img/cache-3.png" alt=""></p>
+<p>最后可以看到，我们的本地缓存文件内，会包含response-head的信息，之后的缓存策略和流程都需要依赖此处的信息。</p>
+<p><strong>总结一下，查看是否存在缓存的过程实际就是查找响应请求文件是否存在</strong>。</p>
+<h3 id="3-强缓存"><a href="#3-强缓存" class="headerlink" title="(3) 强缓存"></a>(3) 强缓存</h3><h4 id="1-强缓存概念"><a href="#1-强缓存概念" class="headerlink" title="[1] 强缓存概念"></a>[1] 强缓存概念</h4><p><strong>强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程。</strong></p>
+<p>实际就是我们整体流程内的，查看是否存在缓存以及，查看缓存是否有效。</p>
+<h4 id="2-如何实现强缓存"><a href="#2-如何实现强缓存" class="headerlink" title="[2] 如何实现强缓存"></a>[2] 如何实现强缓存</h4><ul>
+<li><p>实现强缓存，主要是根据客户端保留的一个服务器端的response header中的两个字段：<code>expires</code>、<code>cache-control</code>。</p>
+</li>
+<li><p><code>cache-control</code>优先级比<code>expires</code><strong>高</strong>。</p>
+</li>
+</ul>
+<p>如图：</p>
+<p><img src="/img/cache-8.png" alt=""></p>
+<p>图中可知两者的区别</p>
+<ul>
+<li><p>HTTP响应报文中expires的时间值，是一个绝对值。</p>
+</li>
+<li><p>HTTP响应报文中Cache-Control为max-age=31536000，是相对值。</p>
+</li>
+</ul>
+<p>在无法确定客户端的时间是否与服务端的时间同步的情况下，Cache-Control相比于expires是更好的选择，所以同时存在时，只有Cache-Control生效。</p>
+<p><strong>Expires</strong></p>
+<ul>
+<li><p>Expires是HTTP/1.0控制网页缓存的字段，其值为服务器返回该请求结果缓存的到期时间，即再次发起该请求时，如果客户端的时间小于Expires的值时，直接使用缓存结果。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expires: Wed, <span class="number">21</span> Oct <span class="number">2015</span> <span class="number">07</span>:<span class="number">28</span>:<span class="number">00</span> GMT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>Cache-Control</strong></p>
+<p>在HTTP/1.1中，Cache-Control是最重要的规则，主要用于控制网页缓存，列几个常见的值：</p>
+<ul>
+<li><p>public：所有内容都将被缓存（客户端和代理服务器都可缓存）</p>
+</li>
+<li><p>private：所有内容只有客户端可以缓存，Cache-Control的默认取值</p>
+</li>
+<li><p>no-cache：客户端缓存内容，但是是否使用缓存则需要经过协商缓存来验证决定</p>
+</li>
+<li><p>no-store：所有内容都不会被缓存，即不使用强制缓存，也不使用协商缓存</p>
+</li>
+<li><p>max-age=xxx (xxx is numeric)：缓存内容将在xxx秒后失效</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control:public, max-age=<span class="number">31536000</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>判断缓存是否过期的流程的流程：</p>
+<p><img src="/img/cache-control.png" alt=""></p>
+<p>缓存失效时间计算公式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expirationTime = responseTime + freshnessLifetime - currentAge</span><br></pre></td></tr></table></figure>
+<p>在上面这个公式里，<code>responseTime</code> 表示浏览器接收到此响应的那个时间点。</p>
+<h4 id="3-如何判断强缓存是否命中"><a href="#3-如何判断强缓存是否命中" class="headerlink" title="[3] 如何判断强缓存是否命中"></a>[3] 如何判断强缓存是否命中</h4><p><img src="/img/cache-9.png" alt=""></p>
+<p>状态码为<strong>灰色</strong>的请求则代表使用了强制缓存，请求对应的<strong>Size值则代表该缓存存放的位置</strong></p>
+<p>至于from memory cache 和 from disk cache相关的之后讲解。</p>
+<h3 id="4-协商缓存"><a href="#4-协商缓存" class="headerlink" title="(4) 协商缓存"></a>(4) 协商缓存</h3><h4 id="1-协商缓存概念"><a href="#1-协商缓存概念" class="headerlink" title="[1] 协商缓存概念"></a>[1] 协商缓存概念</h4><p><strong>协商缓存就是强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程。</strong></p>
+<h4 id="2-如何实现协商缓存"><a href="#2-如何实现协商缓存" class="headerlink" title="[2] 如何实现协商缓存"></a>[2] 如何实现协商缓存</h4><ul>
+<li><p>协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，控制协商缓存的字段分别有：<code>Last-Modified / If-Modified-Since</code> 和 <code>Etag / If-None-Match</code>。</p>
+</li>
+<li><p><code>Etag / If-None-Match</code> 优先级比 <code>Last-Modified / If-Modified-Since</code> 高。</p>
+</li>
+</ul>
+<p><strong>Last-modified:</strong></p>
+<p>Last-Modified是服务器响应请求时，返回该资源文件在服务器最后被修改的时间</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Last-Modified: Wed, <span class="number">21</span> Oct <span class="number">2015</span> <span class="number">07</span>:<span class="number">28</span>:<span class="number">00</span> GMT</span><br></pre></td></tr></table></figure>
+<p><strong>If-Modified-Since:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If-Modified-Since: Wed, <span class="number">21</span> Oct <span class="number">2015</span> <span class="number">07</span>:<span class="number">28</span>:<span class="number">00</span> GMT</span><br></pre></td></tr></table></figure>
+<p><strong>Etag:</strong></p>
+<p>Etag是服务器响应请求时，返回当前资源文件的一个唯一标识(由服务器生成)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ETag: <span class="string">"33a64df551425fcc55e4d42a148795d9f25f89d4"</span></span><br><span class="line">ETag: W/<span class="string">"0815"</span></span><br></pre></td></tr></table></figure>
+<p><strong>If-None-Match:</strong></p>
+<p>If-None-Match是客户端再次发起该请求时，携带上次请求返回的唯一标识Etag值，通过此字段值告诉服务器该资源上次请求返回的唯一标识值。服务器收到该请求后，发现该请求头中含有If-None-Match，则会根据If-None-Match的字段值与该资源在服务器的Etag值做对比，一致则返回304，代表资源无更新，继续使用缓存文件；不一致则重新返回资源文件，状态码为200</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">If-None-Match: <span class="string">"33a64df551425fcc55e4d42a148795d9f25f89d4"</span></span><br></pre></td></tr></table></figure>
+<p>然后我们看一下具体流程：</p>
+<p><img src="/img/etag.png" alt=""></p>
+<h4 id="4-如何判断协商缓存是否命中"><a href="#4-如何判断协商缓存是否命中" class="headerlink" title="[4] 如何判断协商缓存是否命中"></a>[4] 如何判断协商缓存是否命中</h4><p>如果协商缓存命中，请求响应返回的http状态为304并且会显示一个Not Modified的字符串。</p>
+<p><img src="/img/cache-10.png" alt=""></p>
+<p><img src="/img/cache-11.png" alt=""></p>
+<h3 id="5-两者异同"><a href="#5-两者异同" class="headerlink" title="(5) 两者异同"></a>(5) 两者异同</h3><ul>
+<li><p>两者的共同点是：如果命中，都是从客户端缓存中加载资源，而不是从服务器加载资源数据；</p>
+</li>
+<li><p>两者的区别是：强缓存不发请求到服务器，协商缓存会发请求到服务器。</p>
+</li>
+</ul>
+<h2 id="4-相关浏览操操作"><a href="#4-相关浏览操操作" class="headerlink" title="4.相关浏览操操作"></a>4.相关浏览操操作</h2><p>其实浏览器的相关操作，会对开发人员理解浏览器HTTP缓存产生一些影响，因此我们详细来分析一下：</p>
+<p>在Alloy Team的Web缓存机制系列中有总结：</p>
+<p><a href="http://www.alloyteam.com/2012/03/web-cache-2-browser-cache/" target="_blank" rel="noopener">Web缓存机制系列2 – Web浏览器的缓存机制 - Alloy Team</a></p>
+<table>
+<thead>
+<tr>
+<th>浏览器相关操作</th>
+<th>Expires/Cache-Control</th>
+<th>Last-Modified / Etag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>地址栏回车</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>页面链接跳转</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>新开窗口</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>前进、后退</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>刷新</strong></td>
+<td>无效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>强制刷新</strong></td>
+<td>无效</td>
+<td>无效</td>
+</tr>
+</tbody>
+</table>
+<p>这块我想梳理一下，与大家分享以及验证一下：</p>
+<p>测试前提：</p>
+<ul>
+<li>服务端设置相应的response header，</li>
+<li>相应资源都已经加载完毕第一次（如果测试结果相同，测试结果的图片就复用了）：</li>
+</ul>
+<p>测试的浏览器为：</p>
+<ul>
+<li>Chrome 70</li>
+<li>Firefox 63.0.1 </li>
+<li>Opera 56.0</li>
+</ul>
+<p>测试影响的文件：</p>
+<ul>
+<li>index.html (主页面)</li>
+<li>index.js (js资源)</li>
+<li>index.css (样式文件)</li>
+<li>doge.jpeg (图片文件)</li>
+<li>favicon.ico (图标文件)</li>
+<li>temp.html(跳转辅助页面，不设置response header且，不在统计范围内)</li>
+</ul>
+<p>测试使用的response header的设置为：</p>
+<ul>
+<li>Cache-Control: max-age=300 // 缓存5分钟</li>
+<li>ETag: 33a64df551425fcc55e4d42a148795d9f25f89d4 // 服务端固定返回</li>
+<li>Expires: Fri Nov 16 2018 09:33:01 GMT+0800 (CST) // 缓存5分钟</li>
+<li>Last-Modified: Wed, 21 Oct 2018 07:28:00 GMT // 服务端固定返回</li>
+</ul>
+<h3 id="1-页面链接跳转"><a href="#1-页面链接跳转" class="headerlink" title="(1) 页面链接跳转"></a>(1) 页面链接跳转</h3><p>Chrome 70测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-12.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js： 命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未显示(使用抓包工具抓包，未发出请求)</li>
+</ul>
+<p>Firefox 63.0.1 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-13.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：命中<strong>强缓存</strong>(使用抓包工具抓包，未发出请求)</li>
+</ul>
+<p>Opera 56.0 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-14.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<h3 id="2-新开窗口"><a href="#2-新开窗口" class="headerlink" title="(2) 新开窗口"></a>(2) 新开窗口</h3><p>Chrome 70测试（由于默认为google页，采用了隐私模式测试）结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-15.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<p>Firefox 63.0.1 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-16.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：命中<strong>强缓存</strong>(使用抓包工具抓包，未发出请求)</li>
+</ul>
+<p>Opera 56.0(隐私模式) 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-15.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<h3 id="4-前进、后退"><a href="#4-前进、后退" class="headerlink" title="(4) 前进、后退"></a>(4) 前进、后退</h3><p>Chrome 70测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-14.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<p>Firefox 63.0.1 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-16.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：命中<strong>强缓存</strong>(使用抓包工具抓包，未发出请求)</li>
+</ul>
+<p>Opera 56.0 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-15.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>强缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<h3 id="5-刷新"><a href="#5-刷新" class="headerlink" title="(5) 刷新"></a>(5) 刷新</h3><p>刷新这一块是测试的重点（之前正因为）</p>
+<p>Chrome 70测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-17.png" alt=""></p>
+<p>结果：</p>
+<ul>
+<li>index.html：命中<strong>协商缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：<strong>没有命中缓存</strong>，服务端获取资源</li>
+</ul>
+<p>Firefox 63.0.1 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-18.png" alt=""></p>
+<p>结果:</p>
+<ul>
+<li>index.html：命中<strong>协商缓存</strong></li>
+<li>index.js：命中<strong>协商缓存</strong></li>
+<li>index.css：命中<strong>协商缓存</strong></li>
+<li>doge.jpeg：命中<strong>协商缓存</strong></li>
+<li>favicon.ico：命中<strong>协商缓存</strong></li>
+</ul>
+<p>Opera 56.0 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-19.png" alt=""></p>
+<p>结果:</p>
+<ul>
+<li>index.html：命中<strong>协商缓存</strong></li>
+<li>index.js：命中<strong>强缓存</strong></li>
+<li>index.css：命中<strong>强缓存</strong></li>
+<li>doge.jpeg：命中<strong>强缓存</strong></li>
+<li>favicon.ico：未发出请求(使用抓包工具抓包，无请求)</li>
+</ul>
+<h3 id="6-地址栏回车"><a href="#6-地址栏回车" class="headerlink" title="(6) 地址栏回车"></a>(6) 地址栏回车</h3><p>这个部分还得分成从当前tab回车和从另一url</p>
+<ul>
+<li>Chrome 70测试结果：</li>
+</ul>
+<h4 id="1-从另一url跳转"><a href="#1-从另一url跳转" class="headerlink" title="[1] 从另一url跳转"></a>[1] 从另一url跳转</h4><p><img src="/img/cache-15.png" alt=""></p>
+<p>相当于<strong>页面链接跳转</strong></p>
+<h4 id="2-当前url回车"><a href="#2-当前url回车" class="headerlink" title="[2] 当前url回车"></a>[2] 当前url回车</h4><p><img src="/img/cache-19.png" alt=""></p>
+<p>相当于<strong>页面链接跳转</strong></p>
+<p>Firefox 63.0.1 测试结果：</p>
+<h4 id="1-从另一url跳转-1"><a href="#1-从另一url跳转-1" class="headerlink" title="[1] 从另一url跳转"></a>[1] 从另一url跳转</h4><p><img src="/img/cache-16.png" alt=""></p>
+<p>相当于<strong>页面链接跳转</strong></p>
+<h4 id="2-当前url回车-1"><a href="#2-当前url回车-1" class="headerlink" title="[2] 当前url回车"></a>[2] 当前url回车</h4><p><img src="/img/cache-16.png" alt=""></p>
+<p>相当于<strong>页面链接跳转</strong></p>
+<p>Opera 56.0 测试结果：</p>
+<h4 id="1-从另一url跳转-2"><a href="#1-从另一url跳转-2" class="headerlink" title="[1] 从另一url跳转"></a>[1] 从另一url跳转</h4><p><img src="/img/cache-15.png" alt=""></p>
+<p>相当于<strong>页面链接跳转</strong></p>
+<h4 id="2-当前url回车-2"><a href="#2-当前url回车-2" class="headerlink" title="[2] 当前url回车"></a>[2] 当前url回车</h4><p><img src="/img/cache-19.png" alt=""></p>
+<p>相当于<strong>刷新</strong></p>
+<h3 id="6-强制刷新"><a href="#6-强制刷新" class="headerlink" title="(6) 强制刷新"></a>(6) 强制刷新</h3><p>Chrome 70测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-20.png" alt=""></p>
+<p><strong>结果：</strong></p>
+<ul>
+<li>index.html：从服务器端获取资源</li>
+<li>index.js：从服务器端获取资源</li>
+<li>index.css：从服务器端获取资源</li>
+<li>doge.jpeg：从服务器端获取资源</li>
+<li>favicon.ico：从服务器端获取资源</li>
+</ul>
+<p>Firefox 63.0.1 测试结果：</p>
+<p>如图：</p>
+<p><img src="/img/cache-21.png" alt=""></p>
+<p><strong>结果：</strong></p>
+<ul>
+<li>index.html：从服务器端获取资源</li>
+<li>index.js：从服务器端获取资源</li>
+<li>index.css：从服务器端获取资源</li>
+<li>doge.jpeg：从服务器端获取资源</li>
+<li><p>favicon.ico：从服务器端获取资源</p>
+</li>
+<li><p>Opera 56.0 测试结果：</p>
+</li>
+</ul>
+<p>如图：</p>
+<p><img src="/img/cache-20.png" alt=""></p>
+<p><strong>结果：</strong></p>
+<ul>
+<li>index.html：从服务器端获取资源</li>
+<li>index.js：从服务器端获取资源</li>
+<li>index.css：从服务器端获取资源</li>
+<li>doge.jpeg：从服务器端获取资源</li>
+<li>favicon.ico：从服务器端获取资源</li>
+</ul>
+<h3 id="7-最终总结："><a href="#7-最终总结：" class="headerlink" title="(7)最终总结："></a>(7)最终总结：</h3><p>虽然费了那么大力气测试，最终结论只是稍微调整了一下：</p>
+<table>
+<thead>
+<tr>
+<th>浏览器相关操作</th>
+<th>Expires/Cache-Control</th>
+<th>Last-Modified / Etag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>页面链接跳转</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>新开窗口</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>前进、后退</strong></td>
+<td>有效</td>
+<td>有效</td>
+</tr>
+<tr>
+<td><strong>刷新</strong></td>
+<td>chrome opera html无效 ico文件无效，<br> ff有效</td>
+<td>chrome opera ico文件无效，<br> ff有效</td>
+</tr>
+<tr>
+<td><strong>地址栏回车</strong></td>
+<td>当前URL回车 - 同刷新 <br> 其他URL回车 - 同页面链接跳转</td>
+<td>当前URL回车 - 同同刷新<br> 其他URL回车 - 页面链接跳转</td>
+</tr>
+<tr>
+<td><strong>强制刷新</strong></td>
+<td>无效</td>
+<td>无效</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-相关HTTP相关的头字段总结"><a href="#6-相关HTTP相关的头字段总结" class="headerlink" title="6. 相关HTTP相关的头字段总结"></a>6. 相关HTTP相关的头字段总结</h2><p><img src="http://alloyteam.com/wp-content/uploads/2012/03/http-header1.png" alt=""></p>
+<p>图片引用自：<a href="http://www.alloyteam.com/2012/03/web-cache-2-browser-cache/" target="_blank" rel="noopener">Web缓存机制系列2 – Web浏览器的缓存机制</a></p>
+<h2 id="7-完整流程图"><a href="#7-完整流程图" class="headerlink" title="7.完整流程图"></a>7.完整流程图</h2><p>总结了一个相对完成的流程图：</p>
+<p><img src="/img/cache-all-proccess.png" alt=""></p>
+<h2 id="8-本文一些不足之处"><a href="#8-本文一些不足之处" class="headerlink" title="8. 本文一些不足之处"></a>8. 本文一些不足之处</h2><h3 id="1-分布式系统相关"><a href="#1-分布式系统相关" class="headerlink" title="(1) 分布式系统相关"></a>(1) 分布式系统相关</h3><p>这部分没有实际实践过，只是摘选了部分文章的观点：</p>
+<ul>
+<li><p>分布式系统里多台服务器间的文件的Last-Modified必须保持一致，以免负载均衡到不同服务器导致对比结果不一致。</p>
+</li>
+<li><p>分布式系统尽量关闭掉ETag（每台机器生成的ETag都会不一样，淘宝页面中的静态资源response headers中都没有ETag）。</p>
+</li>
+</ul>
+<h3 id="2-缓存的不同来源相关"><a href="#2-缓存的不同来源相关" class="headerlink" title="(2) 缓存的不同来源相关"></a>(2) 缓存的不同来源相关</h3><p>这个部分目前暂时没有找到十分的标准答案或文档，目前我仅将自己梳理过的部分知识记录在案：</p>
+<p>其实webkit缓存机制还有一个叫 pageCache 这里暂不讨论：<a href="https://webkit.org/blog/427/webkit-page-cache-i-the-basics/" target="_blank" rel="noopener">WebKit Page Cache I – The Basics</a></p>
+<p>Chrome使用两个缓存: <code>disk cache</code> 和 <code>memory cache</code></p>
+<p>以下例子都仅针对<strong>Chrome</strong></p>
+<h4 id="1-disk-cache"><a href="#1-disk-cache" class="headerlink" title="[1] disk cache"></a>[1] disk cache</h4><p>从磁盘中获取缓存资源，等待下次访问时不需要重新下载资源，而直接从磁盘中获取。</p>
+<p><img src="/img/disk-memory-2.jpg" alt=""></p>
+<h4 id="2-memory-cache"><a href="#2-memory-cache" class="headerlink" title="[2] memory cache"></a>[2] memory cache</h4><p>从内存中获取资源，等待下次访问时不需要重新下载资源，而直接从内存中获取。Webkit早已支持memoryCache。</p>
+<p><img src="/img/disk-memory.jpg" alt=""></p>
+<h4 id="3-浏览器如何区分使用两者呢？"><a href="#3-浏览器如何区分使用两者呢？" class="headerlink" title="[3]浏览器如何区分使用两者呢？"></a>[3]浏览器如何区分使用两者呢？</h4><p>测试条件与上文其他测试相同：</p>
+<h5 id="a-当前tabs生命周期未结束"><a href="#a-当前tabs生命周期未结束" class="headerlink" title="a. 当前tabs生命周期未结束"></a>a. 当前tabs生命周期未结束</h5><p><img src="/img/open-tabs-cache.png" alt=""></p>
+<h5 id="b-当前tabs生命周期未结束"><a href="#b-当前tabs生命周期未结束" class="headerlink" title="b. 当前tabs生命周期未结束"></a>b. 当前tabs生命周期未结束</h5><p><img src="/img/close-tabs-cache.png" alt=""></p>
+<p>可以得出一个基本<strong>“现象”</strong>：</p>
+<p>memory cache的生命周期于tabs的选项卡大致对应。</p>
+<p><code>The lifetime of an in-memory cache is attached to the lifetime of a render process, which roughly corresponds to a tab.</code></p>
+<p>可以参考：<a href="https://developer.chrome.com/extensions/webRequest" target="_blank" rel="noopener">developer.chrome - webRequest</a></p>
+<h5 id="c-有疑问之处"><a href="#c-有疑问之处" class="headerlink" title="c. 有疑问之处"></a>c. 有疑问之处</h5><p>有见过一种论点：</p>
+<p>目前Webkit资源分成两类:</p>
+<ol>
+<li><p>主资源</p>
+<p> 主资源: 通过<code>MainResourceLoader</code>加载，如HTML页面，或者下载项等</p>
+</li>
+<li><p>派生资源</p>
+<p>派生资源：，通过 <code>SubresourceLoader</code>加载，比如HTML页面中内嵌的图片或者脚本链接</p>
+</li>
+</ol>
+<p>虽然Webkit支持memoryCache，但是也只是针对派生资源，它对应的类为CachedResource，用于保存原始数据（比如CSS，JS等），以及解码过的图片数据。</p>
+<p>此图所示：</p>
+<p><img src="/img/cache-22.png" alt=""></p>
+<p>好像并不适用，完全适用css第一次并没有，从 memory cache 加载，</p>
+<p>但是经过几次，后退重新跳转后（不定次数）：</p>
+<p><img src="/img/cache-23.png" alt=""></p>
+<p>到此，以本人的能力可能暂时，无法作出一个比较好的解答了，希望之后有大佬可以给到一个解答。</p>
+<h2 id="9-供实践的Demo"><a href="#9-供实践的Demo" class="headerlink" title="9. 供实践的Demo"></a>9. 供实践的Demo</h2><p><a href="https://github.com/Roxyhuang/http-cache-demo" target="_blank" rel="noopener">Demo仓库地址</a></p>
+<h2 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h2><ul>
+<li><p>MDN HTTP 缓存:</p>
+<p>  <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ</a></p>
+</li>
+<li><p>Web缓存机制系列2 Web浏览器的缓存机制: </p>
+<p>  <a href="http://www.alloyteam.com/2012/03/web-cache-2-browser-cache/" target="_blank" rel="noopener">http://www.alloyteam.com/2012/03/web-cache-2-browser-cache</a></p>
+</li>
+<li><p>W3 HTML spec chapter 5.2.2: </p>
+<p>  <a href="https://www.w3.org/TR/html4/charset.html#h-5.2.2" target="_blank" rel="noopener">https://www.w3.org/TR/html4/charset.html#h-5.2.2</a></p>
+</li>
+<li><p>Stackoverflow how-to-control-web-page-caching-across-all-browsers: </p>
+<p>  <a href="https://stackoverflow.com/questions/49547/how-to-control-web-page-caching-across-all-browsers" target="_blank" rel="noopener">https://stackoverflow.com/questions/49547/how-to-control-web-page-caching-across-all-browsers</a></p>
+</li>
+<li><p>Stackoverflow how-chrome-browser-determine-memory-cache-and-disk-cache:</p>
+<p>  <a href="https://stackoverflow.com/questions/45497696/how-chrome-browser-determine-memory-cache-and-disk-cache" target="_blank" rel="noopener">https://stackoverflow.com/questions/45497696/how-chrome-browser-determine-memory-cache-and-disk-cache</a></p>
+</li>
+<li><p>developer.chrome.com webRequest：</p>
+<p>  <a href="https://developer.chrome.com/extensions/webRequest" target="_blank" rel="noopener">https://developer.chrome.com/extensions/webRequest</a></p>
+</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/11/20/http-cache/" data-id="cjopg33fh0000uxjxog6q1hu5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/11/20/http-cache/#comments" class="article-comment-link">Comentarios</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/09/12/array-review/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">js数组方法分类复习</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Recientes</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/20/http-cache/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/how-browser-caching-works.png)" alt="浅聊HTTP缓存 (HTTP Cache)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/11/20/http-cache/" class="title">浅聊HTTP缓存 (HTTP Cache)</a></p>
+                            <p class="item-date"><time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished">2018-11-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/12/array-review/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/array-review.jpeg)" alt="js数组方法分类复习" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/12/array-review/" class="title">js数组方法分类复习</a></p>
+                            <p class="item-date"><time datetime="2018-09-11T16:00:00.000Z" itemprop="datePublished">2018-09-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-mouse/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习鼠标事件笔记" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-mouse/" class="title">js复习鼠标事件笔记</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/06/js-review-event-op/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的基本操作" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/06/js-review-event-op/" class="title">js复习事件的基本操作</a></p>
+                            <p class="item-date"><time datetime="2018-09-05T16:00:00.000Z" itemprop="datePublished">2018-09-06</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Archivos</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
