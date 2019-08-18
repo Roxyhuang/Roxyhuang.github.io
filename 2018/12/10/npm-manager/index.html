@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Neo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="浅聊前端依赖管理及优化(上) 一、引子在npm、yarn等包管理工具的帮助下，前端工程化模块化的进程日益加快，项目的依赖包也日益增大，特别是若项目采用webpack来构建用到许多webpack的插件、一些辅助开发如（eslint、postcss、dev-server之类的库）以及一些单元测试(jest、mocha、enzyme)可能需要用到的插件，项目中的node_module就会变的十分庞大。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neo">
+<meta property="og:url" content="http://www.neohuang.com/child/2018/12/10/npm-manager/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="浅聊前端依赖管理及优化(上) 一、引子在npm、yarn等包管理工具的帮助下，前端工程化模块化的进程日益加快，项目的依赖包也日益增大，特别是若项目采用webpack来构建用到许多webpack的插件、一些辅助开发如（eslint、postcss、dev-server之类的库）以及一些单元测试(jest、mocha、enzyme)可能需要用到的插件，项目中的node_module就会变的十分庞大。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.neohuang.com/img/npm.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-big.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-disk.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-1.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-webpack-react.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-2.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-webpack-react-devp.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-webpack-react-devp2.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-3.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-4.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-webpack-vue-devp.jpg">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-5.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-global.png">
+<meta property="og:image" content="http://www.neohuang.com/img/npm-manger-sample-node.png">
+<meta property="og:updated_time" content="2018-12-29T14:15:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neo">
+<meta name="twitter:description" content="浅聊前端依赖管理及优化(上) 一、引子在npm、yarn等包管理工具的帮助下，前端工程化模块化的进程日益加快，项目的依赖包也日益增大，特别是若项目采用webpack来构建用到许多webpack的插件、一些辅助开发如（eslint、postcss、dev-server之类的库）以及一些单元测试(jest、mocha、enzyme)可能需要用到的插件，项目中的node_module就会变的十分庞大。">
+<meta name="twitter:image" content="http://www.neohuang.com/img/npm.jpg">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <!--<span class="site-title">Neo</span>-->
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/doge.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/doge.jpeg" />
+            <h2 id="name">Neo Huang</h2>
+            <h3 id="title">Front End Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                21
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/Roxyhuang" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-npm-manager" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="浅聊前端依赖管理及优化-上"><a href="#浅聊前端依赖管理及优化-上" class="headerlink" title="浅聊前端依赖管理及优化(上)"></a>浅聊前端依赖管理及优化(上)</h2><p><img src="/img/npm.jpg" alt=""></p>
+<h2 id="一、引子"><a href="#一、引子" class="headerlink" title="一、引子"></a>一、引子</h2><p>在npm、yarn等包管理工具的帮助下，前端工程化模块化的进程日益加快，项目的依赖包也日益增大，特别是若项目采用webpack来构建用到许多webpack的插件、一些辅助开发如（eslint、postcss、dev-server之类的库）以及一些单元测试(jest、mocha、enzyme)可能需要用到的插件，项目中的node_module就会变的十分庞大。</p>
+<p>如图：</p>
+<p><img src="/img/npm-manger-big.jpg" alt=""></p>
+<p>如果搭配这种情况是不是很绝望：</p>
+<p><img src="/img/npm-manger-disk.jpg" alt=""></p>
+<p>因此团队开发者每次重新初始化项目进行npm install会十分缓慢，并且若占用大量空间，更进一步来说项目中往往很多前端团队会用到一台构建服务器，对前端项目的代码获取、打包、构建、部署进行管理（例如笔者自己所在的团队就在使用jenkins对前端项目的打包、构建、部署进行自动化托管）。npm这样的项目级依赖管理的特性就会造成大量的时间以及资源的消耗。</p>
+<p>同时笔者也想在文章开始之前表明一个态度，npm本身portable的模块化设计，使每个项目互不干系，也是一种它设计的精华所在，本文仅是针对实际使用中遇到的一些小困扰进行解读，希望提供一个新的思路。</p>
+<p>此本篇文章就在这样的背景下诞生了。纯粹是笔者在项目中积累的一些经验，若有不足望指出。</p>
+<h2 id="二、先来说说示例"><a href="#二、先来说说示例" class="headerlink" title="二、先来说说示例"></a>二、先来说说示例</h2><p>github仓库地址：<a href="https://github.com/Roxyhuang/npm-module-share" target="_blank" rel="noopener">https://github.com/Roxyhuang/npm-module-share</a></p>
+<p>通常现代前端的标准工程往往具备以下功能，为了让这个讨论更贴近实际开发，并且更直观，因此规定示例项目基本具备以下这些能力：</p>
+<p>(1) 提供dev-server</p>
+<p>(2) 提供语法转译（babel）</p>
+<p>(3) 能够解析样式</p>
+<p>(4) js代码风格插件以及样式风格检查</p>
+<p>(5) 单元测试</p>
+<p>(6) 提供样式兼容处理</p>
+<p>当然以上部分只体现的依赖层面。因此可能有些依赖的引入可能出现错误或者不合理。</p>
+<p>并假设目前团队使用了webpack和parcel两套前端构建方案，团队项目中有使用了React和Vue。</p>
+<h2 id="三、问题的总结"><a href="#三、问题的总结" class="headerlink" title="三、问题的总结"></a>三、问题的总结</h2><p>若不对项目做任何优化以及设置正常项目的依赖的结构应该是这样的：</p>
+<p>如图：</p>
+<p><img src="/img/npm-manger-sample-1.png" alt=""></p>
+<p>然后我们再看一下node_modules整体所占的空间：</p>
+<p><img src="/img/npm-manger-webpack-react.jpg" alt=""></p>
+<h3 id="情况一：多个依赖模块完全相同的项目"><a href="#情况一：多个依赖模块完全相同的项目" class="headerlink" title="情况一：多个依赖模块完全相同的项目"></a>情况一：多个依赖模块完全相同的项目</h3><p>这种情况相对很常见，实际就是相同依赖的项目有多个</p>
+<p>如图：</p>
+<p><img src="/img/npm-manger-sample-2.png" alt=""></p>
+<p>可以想象这样模块的容量便是162.2mb x 3,同时文件数也会是1072 x 3。</p>
+<p>由此可见实际我们对容量的消耗是是十分大的,笔者做了非精确统计实际：</p>
+<p><strong>生产中所需的模块容量与文件数</strong>（dependencies）:</p>
+<p><img src="/img/npm-manger-webpack-react-devp.jpg" alt=""></p>
+<p><strong>本地开发和测试所需的模块容量与文件数</strong>（devDependencies）:</p>
+<p><img src="/img/npm-manger-webpack-react-devp2.jpg" alt=""></p>
+<p>实际可以看到<strong>devDependencies</strong>才是我们整体依赖体积与数量如此庞大的“元凶”。</p>
+<p>当然有部分生产中全局所需的库（如：React Vue）可以采用外部化，通过CDN来引入。(即图上CDN模块的复用)</p>
+<h3 id="情况二：仅生产中所需的模块依赖依赖重复-（dependencies）"><a href="#情况二：仅生产中所需的模块依赖依赖重复-（dependencies）" class="headerlink" title="情况二：仅生产中所需的模块依赖依赖重复 （dependencies）"></a>情况二：仅生产中所需的模块依赖依赖重复 （dependencies）</h3><p>如图：</p>
+<p><img src="/img/npm-manger-sample-3.png" alt=""></p>
+<p><strong>生产中所需的模块容量与文件数</strong>（dependencies）:</p>
+<p>仅图中dependencies中红色标注的react-redux,redux版本以及使用了mobx react-mobx更换</p>
+<p><strong>本地开发和测试所需的模块容量与文件数</strong>（devDependencies）:</p>
+<p>无变化</p>
+<p>实际这种情况和<strong>情况一</strong>类似只有dependencies中部分模块的依赖有差异或者版本不同。当然再进一步，这个部分每个项目确实可能出现较大的差异，同时着部分差异可能会引发devDependencies也出现变化（如:React Vue 可能用到webpack Loader eslint plugins等，之后会提及这块）。</p>
+<p>实际依然<strong>devDependencies</strong>才是我们整体依赖体积与数量如此庞大的“元凶”。</p>
+<h3 id="情况三：本地开发和测试所需的包依赖重复且，但不存在版本差异-（devDependencies）"><a href="#情况三：本地开发和测试所需的包依赖重复且，但不存在版本差异-（devDependencies）" class="headerlink" title="情况三：本地开发和测试所需的包依赖重复且，但不存在版本差异 （devDependencies）"></a>情况三：本地开发和测试所需的包依赖重复且，但不存在版本差异 （devDependencies）</h3><p>如图：</p>
+<p><img src="/img/npm-manger-sample-4.png" alt=""></p>
+<p>这种情况我们也囊括了情况二的差异(由于dependencies产生的差异，同时也会影响devDependencies的)</p>
+<p><strong>生产中所需的模块容量与文件数</strong>（dependencies）:</p>
+<p>如图所示，除了情况中出现的react-redux,redux版本有差异，由于出现了webpack + vue的项目，项目中dependencies的依赖需要引入vue或vue-router，除此都是一致的。</p>
+<p><strong>本地开发和测试所需的模块容量与文件数</strong>（devDependencies）:</p>
+<p>由于我们需要引入vue，导致我们devDependencies需要产生一些变化包括移除一些webpack与react相关的插件，eslint与react的插件等，变更为webpack与vue相关的插件，eslint与vue的插件等。</p>
+<p>如图笔者非精确的统计一下这种情况仅devDependencies下的容量与文件数：</p>
+<p><img src="/img/npm-manger-webpack-vue-devp.jpg" alt=""></p>
+<p>还是依然很大，并且实际还是存在大量的依赖重叠（例子中有17个依赖重叠）。</p>
+<h3 id="情况四：多个构件工具，存在本地开发和测试所需的包依赖重复，且存在在版本差异-（devDependencies）"><a href="#情况四：多个构件工具，存在本地开发和测试所需的包依赖重复，且存在在版本差异-（devDependencies）" class="headerlink" title="情况四：多个构件工具，存在本地开发和测试所需的包依赖重复，且存在在版本差异, （devDependencies）"></a>情况四：多个构件工具，存在本地开发和测试所需的包依赖重复，且存在在版本差异, （devDependencies）</h3><p>这种是目前最复杂的情况，存在下列几个情况</p>
+<p>(1) 前端构件方案存在多个, 例子中为webpack 和 parcel</p>
+<p>(2) 生产中所需的模块存在差异，甚至技术栈不同</p>
+<p>(3) 本地开发和测试所需的包依赖重复，但有略微不同，且存在版本不同</p>
+<p>如图：</p>
+<p><img src="/img/npm-manger-sample-5.png" alt=""></p>
+<p>这种情况我们也囊括了情况二的差异,可以看到同一个构件工具下存在本地开发和测试所需的包依赖重叠的情况依然是较多的。</p>
+<p>因此实际如果出现这种情况，我们仍需要考虑以及解决。</p>
+<h3 id="小小的总结一下："><a href="#小小的总结一下：" class="headerlink" title="小小的总结一下："></a>小小的总结一下：</h3><p>结合<strong>情况一</strong>、<strong>情况二</strong>、<strong>情况三</strong>、<strong>情况四</strong>的例子可以得出几点小小的“规律”：</p>
+<p>(1) devDependencies无论从模块所占体积还是文件数量都在整体依赖模块中所占的比较较大</p>
+<p>(2) dependencies下的包，可能会因为项目不同差异较大，同时也会导致devDependencies下模块有差异</p>
+<p>(3) 即使devDependencies可能项目存在差异，但是仍有可能一部分重叠</p>
+<p>(4) 多个模块化方案，可能会导致项目devDependencies差异较大</p>
+<p>我们可以发现其中不管前三种情况的哪一种devDependencies都会有一部分的依赖模块是<strong>重叠的</strong>。那既然存在重复，那我们就有必要考虑“复用”</p>
+<p>同时我们发现多个模块化方案（webpack, parcel）devDependencies下的模块差异会较大，这也是我们之后需要解决的。</p>
+<h3 id="锁定依赖模块的能力："><a href="#锁定依赖模块的能力：" class="headerlink" title="锁定依赖模块的能力："></a>锁定依赖模块的能力：</h3><p>非本文重点，仅简述一下：</p>
+<h4 id="（1）-lock-or-dont’lock"><a href="#（1）-lock-or-dont’lock" class="headerlink" title="（1） lock or dont’lock"></a>（1） lock or dont’lock</h4><p>这个问题社区探讨的老问题，锁不锁都有支持的一方，然而这边笔者不表明态度，但是同时也希望我们之后的依赖管理的优化和“瘦身”能够具备锁定依赖的能力。</p>
+<h4 id="（2）-npm-锁定依赖以及锁定依赖的内部循环的方式"><a href="#（2）-npm-锁定依赖以及锁定依赖的内部循环的方式" class="headerlink" title="（2） npm 锁定依赖以及锁定依赖的内部循环的方式"></a>（2） npm 锁定依赖以及锁定依赖的内部循环的方式</h4><ul>
+<li><p>使用语义版本控制来锁定版本：</p>
+<p>  关于semantic-versioning，这里我们不赘述，有兴趣可以看一下npm文档：</p>
+<p>  <a href="https://docs.npmjs.com/about-semantic-versioning" target="_blank" rel="noopener">https://docs.npmjs.com/about-semantic-versioning</a></p>
+<p>  但是通过semantic-versioning来锁定版本，无法锁定依赖的内部循环（即依赖的依赖）。</p>
+</li>
+<li><p>npm-package-locks来锁定</p>
+<p>  关于npm-package-locks，这里我们不赘述，有兴趣的可以看一下：</p>
+<p>  <a href="https://docs.npmjs.com/files/package-locks" target="_blank" rel="noopener">https://docs.npmjs.com/files/package-locks</a></p>
+</li>
+</ul>
+<p>我们关注的重点是我们需要依赖<strong>package-lock.json</strong>，来协助锁定依赖的版本以及依赖内部循环的版本。</p>
+<h3 id="再总结一下："><a href="#再总结一下：" class="headerlink" title="再总结一下："></a>再总结一下：</h3><p>(1) devDependencies无论从模块所占体积还是文件数量都在整体依赖模块中所占的比较较大</p>
+<p>(2) 项目的dependencies可能会因为项目不同差异较大，同时一部分可以外部化，因此不在本文想要探讨“瘦身管理”的范围内，列出主要是以便更接近现实状况</p>
+<p>(3) 即使devDependencies可能项目存在差异，但是仍有大量的依赖重复与重叠，根据实际包的分析他们是目前依赖“瘦身管理”的主要目标</p>
+<p>(4) 即使dependencies有差异的项目，devDependencies大部分可能相似（如情况三所示），因此我们仍可以提炼出一部分相同的devDependencies进行“瘦身管理”。</p>
+<p>(5) 多个模块化方案，可能会导致项目devDependencie差异较大（如例子中webpack和parcel）可能会有一部分devDependencies可能版本也会不同，不建议两个项目差异极大的node_modules共享。</p>
+<p>(6) 同一个模块可能会存在版本差异，因此我们可能会面对同时面对一个库存在多版本的情况 </p>
+<p>(7) 无论依赖锁定是否必要，但是希望提供的方案能够具备。</p>
+<p>(8) 依赖锁定，需要依靠package-lock.json实现（shrinkwrap.json亦可）</p>
+<h2 id="四、优化方案以及存在的一些问题"><a href="#四、优化方案以及存在的一些问题" class="headerlink" title="四、优化方案以及存在的一些问题"></a>四、优化方案以及存在的一些问题</h2><p>下面的优化方案都依赖了NodeJS模块加载机制，因此先粗略的聊一下，这里不描述完整的过程，感兴趣的朋友可以查询官方文档或可以看一下朴灵大大的深入浅出NodeJS 。</p>
+<h4 id="如何利用NodeJS模块加载机制"><a href="#如何利用NodeJS模块加载机制" class="headerlink" title="如何利用NodeJS模块加载机制"></a>如何利用NodeJS模块加载机制</h4><p>简单来说 - 在NodeJS中引入模块，需要经历如下3个步骤：</p>
+<ul>
+<li>路径分析</li>
+<li>扩展名分析</li>
+<li>编译执行</li>
+</ul>
+<p>我们利用的则是在路径分析中自定义文件模块（第三方npm包）的查找：</p>
+<p>自定义文件模块查找顺序为：</p>
+<ul>
+<li>当前目录下node_modules目录</li>
+<li>父目录下node_modules目录</li>
+<li>向上逐级递归直到根目录下下node_modules目录</li>
+<li>递归至根目录</li>
+</ul>
+<p>有点类似于JS的原型链查找，文件路径越深，模块查找越耗时，同时也是它慢的原因。</p>
+<p>当然这是默认情况下，实际通畅我们可以通过配置NODE_PATH的方式，在递归至根目录后，若依然无法找到，给到一个路径或多个路径找到具体模块。</p>
+<h3 id="1-配置NODE-PATH-方案一"><a href="#1-配置NODE-PATH-方案一" class="headerlink" title="1. 配置NODE_PATH(方案一)"></a>1. 配置NODE_PATH(方案一)</h3><p>方案一实际就是利用了配置NODE_PATH，通常一般会将其配制成<code>npm i -g</code>所在的全局模块目录（实际可以改，本例暂定这个目录）。</p>
+<h4 id="结构变动"><a href="#结构变动" class="headerlink" title="结构变动"></a>结构变动</h4><p><strong>情况一、情况二、情况三</strong>都可以转化成如下结构：</p>
+<p>以<strong>情况三</strong>下为例子 - 如图：</p>
+<p><img src="/img/npm-manger-sample-global.png" alt=""></p>
+<h4 id="具体实现："><a href="#具体实现：" class="headerlink" title="具体实现："></a>具体实现：</h4><p>在对应系统的环境变量配置文件中增加环境变量NODE_PATH，例如在MacOS中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vi /ect/profile  </span><br><span class="line"><span class="comment"># 或/etc/bashrc或~/.bashrc </span></span><br><span class="line"><span class="comment"># 此处不赘述配置问题、加载顺序以及原理</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-&gt; <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>: </span><br><span class="line"><span class="comment"># 将 /usr/bin 追加到 PATH 变量中</span></span><br><span class="line"></span><br><span class="line">-&gt; <span class="built_in">export</span> NODE_PATH=<span class="string">"/usr/lib/node_modules;/usr/local/lib/node_modules"</span></span><br><span class="line"><span class="comment"># 指定 NODE_PATH 变量</span></span><br></pre></td></tr></table></figure>
+<p>那 NODE_PATH 就是NODE中用来寻找模块所提供的路径注册环境变量。我们可以使用上面的方法指定NODE_PATH环境变量。并且用;分割多个不同的目录。</p>
+<p>关于 node 的包加载机制我就不在这里赘述了。NODE_PATH中的路径被遍历是发生，从项目的根位置递归搜寻 node_modules 目录，直到文件系统根目录的 node_modules，如果还没有查找到指定模块的话，就会去 NODE_PATH中注册的路径中查找。</p>
+<h4 id="存在问题："><a href="#存在问题：" class="headerlink" title="存在问题："></a>存在问题：</h4><p>(1) 不会生成<strong>package.json</strong>,因此对依赖管理比较繁琐，实现增量安装比较繁琐</p>
+<ul>
+<li>当然其实可以不需要<code>npm i -g</code>去处理，可以手动自己维护一个目录包括package.json，以及package-lock.json，但如果这么只会形成只是一个线性关系，而非一个树状关系。</li>
+</ul>
+<p>(2) 不支持同一模块同时存在不同版本，因此如果依赖出现版本差异，没有解决方案</p>
+<ul>
+<li>因为形成的是一个线性关系，而非一个树状关系实际项目若存同一依赖版本差异，就会有一个优先级的问题存在。</li>
+</ul>
+<p>(3) 全局安装模块，无法生成<strong>package-lock.json</strong>无法锁定依赖内部循环（依赖模块的依赖）</p>
+<ul>
+<li>默认如果使用<code>npm i -g</code>安装，同样不会生成package-lock.json，因此无法锁定依赖内部循环。</li>
+</ul>
+<h3 id="2-提升node-modules目录-方案二"><a href="#2-提升node-modules目录-方案二" class="headerlink" title="2. 提升node_modules目录(方案二)"></a>2. 提升node_modules目录(方案二)</h3><p>结合之前问题分析的我们得出的结论，因此实际上我们把项目中devDependencies依赖重叠的模块，在<strong>项目的父目录存放</strong>node_modules即可将依赖提升。即可以进行项目间的共享。</p>
+<p><strong>目前笔者的理想方案应该能够达到下列几个目的：</strong></p>
+<ul>
+<li><p>可以将项目构建相似技术栈的项目统一在一起，共享依赖</p>
+</li>
+<li><p>可以实现对公共模块的维护和管理，并实现增量安装</p>
+</li>
+<li><p>对原来npm install流程改动不会太大</p>
+</li>
+</ul>
+<h4 id="2-结构变化后的依赖结构图"><a href="#2-结构变化后的依赖结构图" class="headerlink" title="(2)结构变化后的依赖结构图"></a>(2)结构变化后的依赖结构图</h4><p>实际需要实现只要将项目目录改为以下结构</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">----|---wwwroot／ # 工作目录或部署目录</span><br><span class="line"><span class="code">    |</span></span><br><span class="line"><span class="code">    |---webpack/--|---webpack-react/---|---package.json</span></span><br><span class="line"><span class="code">    |             |                    |---package-lock.json</span></span><br><span class="line"><span class="code">    |             |                    |---node_modules/</span></span><br><span class="line"><span class="code">    |             |                    |---src/</span></span><br><span class="line"><span class="code">    |             |                    |</span></span><br><span class="line"><span class="code">    |             |--- webpack-vue/--- |---package.json</span></span><br><span class="line"><span class="code">    |             |                    |---package-lock.json</span></span><br><span class="line"><span class="code">    |             |                    |---node_modules/</span></span><br><span class="line"><span class="code">    |             |                    |---src/</span></span><br><span class="line"><span class="code">    |             |---node_modules/     |</span></span><br><span class="line"><span class="code">    |             |---package.json     |</span></span><br><span class="line"><span class="code">    |             |---package.json-lock|</span></span><br><span class="line"><span class="code">    |             |                    |</span></span><br><span class="line"><span class="code">    |---parcel/---|--- parcel-react/---|---package.json</span></span><br><span class="line"><span class="code">    |             |                    |---package-lock.json</span></span><br><span class="line"><span class="code">    |             |                    |---node_modules/</span></span><br><span class="line"><span class="code">    |             |                    |---src/</span></span><br><span class="line"><span class="code">    |             |                    |</span></span><br><span class="line"><span class="code">    |             |--- parcel-vue/ --- |---package.json</span></span><br><span class="line"><span class="code">    |             |                    |---package-lock.json</span></span><br><span class="line"><span class="code">    |             |                    |---node_modules/</span></span><br><span class="line"><span class="code">    |             |                    |---src/</span></span><br></pre></td></tr></table></figure>
+<p><strong>情况一、情况二、情况三、情况四</strong>可以转化成如下结构：</p>
+<p>以<strong>情况四</strong>下为例子 - 如图：</p>
+<p><img src="/img/npm-manger-sample-node.png" alt=""></p>
+<p>说说目前笔者探索的两个实践：</p>
+<h4 id="1-手工管理package-json"><a href="#1-手工管理package-json" class="headerlink" title="(1)手工管理package.json"></a>(1)手工管理package.json</h4><p>下一步说起来也十分简单：</p>
+<p>实际只要在，维护一个package.json即可，实际常常只需要devDependencies，然后实际需要安装时只需要进行一次npm install即可，并且会生成package-lock.json。</p>
+<p>即上面说到的这几个位置</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|---webpack/--|---webpack-react/---|---package.json</span><br><span class="line">|             |--- webpack-vue/--- |---package.json</span><br><span class="line"></span><br><span class="line">|---parcel/---|--- parcel-react/---|---package.json</span><br><span class="line">|             |--- parcel-vue/ --- |---package.json</span><br></pre></td></tr></table></figure>
+<p>实际只要在devDependencies按正常package.json中的内容维护即可。</p>
+<h4 id="2-利用-preinstall"><a href="#2-利用-preinstall" class="headerlink" title="(2)利用 preinstall"></a>(2)利用 preinstall</h4><p>“对原来npm install流程改动不会太大”，这一点上面对于手工管理方式实际并并不满足。并且手工进行管理十分繁琐，因此我们是否可以在npm install之前把devDependencies内重叠模块的node_modules进行提升呢？</p>
+<p>答案是：<strong>可以的</strong>,主要利用的是npm script中的preinstall，关于npm script以及preinstall可以通过：<a href="https://docs.npmjs.com/misc/scripts" target="_blank" rel="noopener">https://docs.npmjs.com/misc/scripts</a>来了解。</p>
+<p>npm的preinstall这个hook实际会在安装软件包之前运行。实际我们就可以通过preinstall去执行一些node.js的代码让我们的devDependencies内重叠模块的node_modules提升。</p>
+<p>那具体来看一下步骤：</p>
+<h5 id="a-在项目package-json中增加preinstall"><a href="#a-在项目package-json中增加preinstall" class="headerlink" title="a.在项目package.json中增加preinstall"></a>a.在项目package.json中增加preinstall</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">  <span class="string">"preinstall"</span>: <span class="string">"node build/scripts/preinstall.js"</span>,</span><br><span class="line">  <span class="string">"start"</span>: <span class="string">"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我会在项目的build目录下的scripts执行preinstall.js这个文件内的代码</p>
+<h5 id="b-切换至项目父级目录（即约定的技术栈目录）"><a href="#b-切换至项目父级目录（即约定的技术栈目录）" class="headerlink" title="b.切换至项目父级目录（即约定的技术栈目录）"></a>b.切换至项目父级目录（即约定的技术栈目录）</h5><p>这里我仅进行了一个最简单的示范，其原理是在项目的package.json里增加devDependenciesGlobal<br>项：</p>
+<p>实际可以看一下我提供的实现<a href="https://github.com/Roxyhuang/npm-module-share/blob/master/webpack/webpack-react/build/scripts/preinstall.js" target="_blank" rel="noopener">具体代码</a></p>
+<p>实际最为关键的为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> execPath = path.resolve(<span class="string">'../'</span>);</span><br><span class="line"><span class="keyword">const</span> preListObj = preList.devDependenciesGlobal; <span class="comment">// 项目package.json自己维护的devDependencies那些重叠依赖</span></span><br><span class="line"><span class="keyword">const</span> currentMd5 = md5(<span class="built_in">JSON</span>.stringify(preListObj)); <span class="comment">// 简单举例生成一个md5，实际应用中可以搭配其他机制</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">fs.writeFileSync(<span class="string">`<span class="subst">$&#123;execPath&#125;</span>/package.json`</span>, <span class="built_in">JSON</span>.stringify(&#123;<span class="string">"md5"</span>: currentMd5,<span class="attr">dependencies</span>: preListObj&#125;)); <span class="comment">// 在上级目录创建一个package.json文件并，写入md5以及devDependenciesGlobal的内容</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> script = <span class="string">`cd <span class="subst">$&#123;execPath&#125;</span> &amp;&amp; npm i`</span>;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 切换至父级目录并执行npm install</span></span><br><span class="line"> </span><br><span class="line">exec(script, <span class="function"><span class="keyword">function</span> (<span class="params">err, stdout, stderr</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(stdout);</span><br><span class="line">  <span class="keyword">if</span> (err) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'error:'</span> + stderr);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(stdout);</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'package init success'</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">`The global install in <span class="subst">$&#123;execPath&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="c-实际所占空间的变化："><a href="#c-实际所占空间的变化：" class="headerlink" title="c.实际所占空间的变化："></a>c.实际所占空间的变化：</h5><p>（此处就不贴图片了，大家可以clone实例自己试一下）</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">|---webpack/--|---webpack-react/---|---node_modules/ # 共21.1 MB，369项</span><br><span class="line">|             |--- webpack-vue/--- |---node_modules/ # 共17.8 MB, 336项</span><br><span class="line">|             |---node_modules/ # 共153.3 MB，994项</span><br><span class="line">|             |</span><br><span class="line">|---parcel/---|--- parcel-react/---|---node_modules/ # 89.4 MB,540项</span><br><span class="line">|             |--- parcel-vue/ --- |---node_modules/ # 71.5 MB,491项</span><br><span class="line">|             |---node_modules/ # 共21.1 MB，118项</span><br></pre></td></tr></table></figure>
+<p>实际非常简单，即得执行目录的上级目录，此处为了举例我的例子里会在运行preinstall时根据devDependenciesGlobal生成一个md5，以便下次install时比对，若一致不执行preinstall内的流程。当然这并不是一个最佳实践（之后的各种实践方案在下篇中进一步给出）</p>
+<p>当然实际这部分存在“无限”的可能性，可以根据自己的需求来完善（比如服务端获取devDependenciesGlobal以及md5）。</p>
+<p>这仅仅是一个简单示范，实际可以通过配合一些服务端以及docker进一步提升。</p>
+<h4 id="存在问题：-1"><a href="#存在问题：-1" class="headerlink" title="存在问题："></a>存在问题：</h4><p>(1) windows兼容性</p>
+<p>笔者所在的团队在使用的过程中，有遇到windows的开发环境下的各种问题，比如：</p>
+<ul>
+<li>win10下自定义的preinstall流程中的install执行十分缓慢，或无法执行</li>
+<li>babel或抛出一些错误（这里不具体说明）</li>
+</ul>
+<p>(2) 使用者无法做到无感知</p>
+<p>也是最大的缺点，即使用的时候使用者会有感知，开发项目的时候要求使用一定是主动必须按特定的目录结构来安排自己的workspace。</p>
+<p>(3) 本地npm版本，不一致，也可能对依赖造成的影响较大</p>
+<p>(4) npm script相关的必须在devDependencies引入 （当然也可以通过一些方式避开，比如dev-server不直接使用npm script启动）</p>
+<h2 id="这仅仅是一个开始…待续"><a href="#这仅仅是一个开始…待续" class="headerlink" title="这仅仅是一个开始…待续"></a>这仅仅是一个开始…待续</h2><p>利用node模块加载机制，我们其实已经可以很大程度改进我们的依赖了，但如上所述我们还存在这些问题：</p>
+<p>(1) windows兼容性</p>
+<p>上文有提到过windows下，笔者实际实践发现会出现一些问题，是不是有办法可以统一环境呢？</p>
+<p>(2) 无法做到让使用者到无感知</p>
+<p>(3) 本地npm版本，对依赖造成的影响较大</p>
+<p>(5) 管理公共依赖没有标准化和自动化</p>
+<p>因此下篇笔者可能会主要进一步通过其他方案来配合这个解决方案</p>
+<p>(1) 本文举例的完善版本 （通过shell远程下载公共依赖的package.json，也是笔者目前团队在使用的）</p>
+<p>(2) 通过搭配docker进一步完善方案 （是笔者想进一步增强的）</p>
+<p>(3) 搭配私有npm仓库</p>
+<p>(4) 如何更标准化的管理公共依赖，使其可以自动化标准化</p>
+<p><strong>这里挖个坑下篇会更新这部分内容</strong>。</p>
+<h3 id="结语以及本文不足之处"><a href="#结语以及本文不足之处" class="headerlink" title="结语以及本文不足之处"></a>结语以及本文不足之处</h3><p>经过上述操作，我们便可以将前端项目根据框架进行依赖管理以及划分了，其实如此改进仍并非最完美以及优化，不足之处仍非常之多，期待更加优雅的解决方案，使我们前端项目的架构更佳健壮和灵活。也欢迎大家和我探讨和讨论，谢谢各位大佬能耐心看完。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/12/10/npm-manager/" data-id="cjzh45xw1000dc4jg19jne9d0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/12/10/npm-manager/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/08/18/neo-fe-review-prospect/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Newer</strong>
+            <div class="article-nav-title">
+                
+                    回顾前端系列 - 前瞻
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/11/20/http-cache/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">浅聊HTTP缓存 (HTTP Cache)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/08/18/neo-fe-review-prospect/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/npm.jpg)" alt="回顾前端系列 - 前瞻" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/08/18/neo-fe-review-prospect/" class="title">回顾前端系列 - 前瞻</a></p>
+                            <p class="item-date"><time datetime="2019-08-17T16:00:00.000Z" itemprop="datePublished">2019-08-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/10/npm-manager/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/12/10/npm-manager/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2018-12-10T07:01:03.000Z" itemprop="datePublished">2018-12-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/11/20/http-cache/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/how-browser-caching-works.png)" alt="浅聊HTTP缓存 (HTTP Cache)" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/11/20/http-cache/" class="title">浅聊HTTP缓存 (HTTP Cache)</a></p>
+                            <p class="item-date"><time datetime="2018-11-19T16:00:00.000Z" itemprop="datePublished">2018-11-20</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/12/array-review/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/array-review.jpeg)" alt="js数组方法分类复习" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/12/array-review/" class="title">js数组方法分类复习</a></p>
+                            <p class="item-date"><time datetime="2018-09-11T16:00:00.000Z" itemprop="datePublished">2018-09-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/11/js-reivew-event-level/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的优先级和事件对象" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-level/" class="title">js复习事件的优先级和事件对象</a></p>
+                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://blog.zhaiyifan.cn/">MarkZhai</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://silverd.cn/">SilverdJiang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yownyang.github.io">YownYang</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://zhukejin.com">PrimoZhu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://wjerryzhen11.github.io">JerryXu</a>
+                    </li>
+                
+                    <li>
+                        <a href="http://yocann.cn">CnnyChen</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 Neo<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2131605"></script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

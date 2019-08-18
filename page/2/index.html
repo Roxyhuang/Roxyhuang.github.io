@@ -69,7 +69,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -88,9 +88,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Articles',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Catégories',
+            CATEGORIES: 'Categories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -116,7 +116,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -136,16 +136,16 @@
             <h2 id="name">Neo Huang</h2>
             <h3 id="title">Front End Developer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Shanghai, China</span>
-            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">SUIVRE</a>
+            <a id="follow" target="_blank" href="https://github.com/Roxyhuang">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                19
-                <span>Articles</span>
+                21
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 0
-                <span>Tag</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -169,6 +169,722 @@
 
             
             <section id="main">
+    <article id="post-new-operators" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/11/new-operators/">白话说说new操作符的背后</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/11/new-operators/">
+            <time datetime="2018-08-10T16:00:00.000Z" itemprop="datePublished">2018-08-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>今天群里有一段代码，发现小伙伴想尝试模拟new操作符，想想写一篇相关的博客吧。</p>
+<h3 id="二、作用"><a href="#二、作用" class="headerlink" title="二、作用"></a>二、作用</h3><p>new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。</p>
+<h3 id="三、语法"><a href="#三、语法" class="headerlink" title="三、语法"></a>三、语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">constructor</span>[([arguments])]</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<ul>
+<li>constructor</li>
+<li>arguments</li>
+</ul>
+<h3 id="四、new执行的背后"><a href="#四、new执行的背后" class="headerlink" title="四、new执行的背后"></a>四、new执行的背后</h3><p>举例当new Foo(…) 执行时，会发生以下事情：</p>
+<ol>
+<li>一个继承自 Foo.prototype 的新对象被创建。</li>
+<li>使用指定的参数调用构造函数 Foo ，并将 this 绑定到新创建的对象。new Foo 等同于 new Foo()，也就是没有指定参数列表，Foo 不带任何参数调用的情况。</li>
+<li>由构造函数返回的对象就是 new 表达式的结果。如果构造函数没有显式返回一个对象，则使用步骤1创建的对象。（一般情况下，构造函数不返回值，但是用户可以选择主动返回对象，来覆盖正常的对象创建步骤）</li>
+</ol>
+<h3 id="五、自己模拟new实现"><a href="#五、自己模拟new实现" class="headerlink" title="五、自己模拟new实现"></a>五、自己模拟new实现</h3><p>既然已经知道new操作符背后做了些什么我们可以尝试自己模拟下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = objectFactory(Constructor,...);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">objectFactory</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> Constructor = [].shift.call(<span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   obj.__proto__ = Constructor.prototype;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">var</span> ret = Constructor.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">typeof</span> ret === <span class="string">'object'</span> ? ret : obj;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/08/11/new-operators/" data-id="cjzh45xw0000cc4jgwi1vqpcl" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/08/11/new-operators/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-js-review-datatype" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/07/08/js-review-datatype/">js复习基本概念（数据类型）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/07/08/js-review-datatype/">
+            <time datetime="2018-07-07T16:00:00.000Z" itemprop="datePublished">2018-07-08</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="js-review-datetype.png" alt=""></p>
+<ul>
+<li>参考1: JAVASCRIPT高级程序设计 第三版 p25</li>
+<li>参考2: <a href="https://www.zhihu.com/question/21691758" target="_blank" rel="noopener">知乎 为什么JavaScript里面typeof(null)的值是”object”？</a></li>
+<li>参考3: <a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="noopener">ECMAScript 6 入门 阮一峰 symbol</a></li>
+</ul>
+<h3 id="一、-什么是数据类型"><a href="#一、-什么是数据类型" class="headerlink" title="一、 什么是数据类型"></a>一、 什么是数据类型</h3><p>数据：未经过处理的原始记录，在计算机系统中，数据以二进制信息单元0,1的形式表示。    </p>
+<p>数据类型： 是用来约束数据的解释规约。</p>
+<h3 id="二、基础数据类型、引用数据类型"><a href="#二、基础数据类型、引用数据类型" class="headerlink" title="二、基础数据类型、引用数据类型"></a>二、基础数据类型、引用数据类型</h3><h3 id="1-typeof操作符"><a href="#1-typeof操作符" class="headerlink" title="1. typeof操作符"></a>1. typeof操作符</h3><h4 id="1-typeof的所有返回值都是字符串"><a href="#1-typeof的所有返回值都是字符串" class="headerlink" title="(1) typeof的所有返回值都是字符串"></a>(1) typeof的所有返回值都是字符串</h4><h4 id="2-六种返回值类型"><a href="#2-六种返回值类型" class="headerlink" title="(2) 六种返回值类型"></a>(2) 六种返回值类型</h4><ul>
+<li><p>undefined</p>
+</li>
+<li><p>number</p>
+</li>
+<li><p>string</p>
+</li>
+<li><p>boolean</p>
+</li>
+<li><p>Object</p>
+</li>
+<li><p>Function</p>
+</li>
+</ul>
+<h4 id="3-建议使用（）"><a href="#3-建议使用（）" class="headerlink" title="(3) 建议使用（）"></a>(3) 建议使用（）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(type <span class="keyword">of</span> a);</span><br></pre></td></tr></table></figure>
+<p><strong>原因：</strong>原因操作符优先级，js中有15种优先级，为避免混乱建议使用()包裹。</p>
+<h4 id="4-typrof-null"><a href="#4-typrof-null" class="headerlink" title="(4) typrof null"></a>(4) typrof null</h4><ul>
+<li>返回值为”Obejct”</li>
+</ul>
+<ul>
+<li><p><strong>原因</strong>：</p>
+</li>
+<li><p>（1）从逻辑角度来看，null值表示一个空对象指针，而这正是使用typeof操作符检测null值时会返回“object”的原因。摘自《JAVASCRIPT高级程序设计 第三版 p25》</p>
+</li>
+<li><p>（2）null不是一个空引用, 而是一个原始值, <a href="http://lzw.me/pages/ecmascript/#20" target="_blank" rel="noopener">参考ECMAScript5.1中文版 4.3.11节</a>; 它只是期望此处将引用一个对象, 注意是”期望”, 参考 null - JavaScript.</p>
+</li>
+<li><p>（3）typeof null结果是object, 这是个历史遗留bug, 参考 <a href="https://link.zhihu.com/?target=https%3A//developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" rel="noopener">typeof - JavaScript</a></p>
+</li>
+<li><p>（4）在ECMA6中, 曾经有提案为历史平凡, 将type null的值纠正为null, 但最后提案被拒了. 理由是历史遗留代码太多, 不想得罪人, 不如继续将错就错当和事老, <a href="https://link.zhihu.com/?target=http%3A//wiki.ecmascript.org/doku.php%3Fid%3Dharmony%253atypeof_null" target="_blank" rel="noopener">参考 harmony:typeof_null [ES Wiki]</a></p>
+</li>
+</ul>
+<p>以上内容作者：克荷林<br>链接：<a href="https://www.zhihu.com/question/21691758/answer/98782260" target="_blank" rel="noopener">https://www.zhihu.com/question/21691758/answer/98782260</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h3 id="2-undefined"><a href="#2-undefined" class="headerlink" title="2. undefined"></a>2. undefined</h3><ul>
+<li>undefined类型只有一个值，即特殊的undefined</li>
+<li>在使用var关键字声明变量，但未对其初始化时，这个变量就是undefined</li>
+</ul>
+<h3 id="3-null"><a href="#3-null" class="headerlink" title="3. null"></a>3. null</h3><ul>
+<li>null类型只有一个值，这个特殊值是null,从逻辑角度来看，null表示一个空对象指针，而这也是typeof操作符检测null时会返回“obeject”的原因</li>
+<li>在使用var关键字声明变量，但未对其初始化时，这个变量就是undefined</li>
+</ul>
+<h3 id="4-null-和-undefined"><a href="#4-null-和-undefined" class="headerlink" title="4. null 和 undefined"></a>4. null 和 undefined</h3><h4 id="1-相同点"><a href="#1-相同点" class="headerlink" title="(1)相同点"></a>(1)相同点</h4><p>（1）参与判断 返回false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// if判断为false的情况</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">false</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">null</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">undefined</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">NaN</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="string">''</span>)</span><br><span class="line"><span class="keyword">if</span> (<span class="string">""</span>)</span><br></pre></td></tr></table></figure>
+<p>（2）没有方法</p>
+<p>（3）都是falsy,不加!比较都是false</p>
+<h4 id="2-不同点"><a href="#2-不同点" class="headerlink" title="(2)不同点"></a>(2)不同点</h4><ul>
+<li><p>(1) 语义上不同，null是有值，但值为空，undefined是值未定义</p>
+</li>
+<li><p>(2) typeof</p>
+<p>   <strong>null typeof 是obejct undefined typeof undefined</strong></p>
+</li>
+<li><p>(3) 数字转化 </p>
+<p>  <strong>undefined =&gt;NAN  null =&gt; 0</strong></p>
+</li>
+</ul>
+<ul>
+<li><p>(4) null可以json化</p>
+</li>
+<li><p>*(5）通常情况下，undefined代表未初始化，null已经初始化</p>
+</li>
+<li><p>*(6）在浏览器环境中，undefined是windows的一个属性，只不过属性对应的值是undefined</p>
+</li>
+<li><p>*(7) null不可以作为变量名  undefined可以作为变量名</p>
+<p>  原因：null不能做变量名的原因应该是因为null是字面量</p>
+</li>
+</ul>
+<h4 id="3-为什么不同"><a href="#3-为什么不同" class="headerlink" title="(3)为什么不同"></a>(3)为什么不同</h4><p>JavaScript的最初版本是这样区分的：null是一个表示”无”的对象，转为数值时为0；undefined是一个表示”无”的原始值，转为数值时为NaN。</p>
+<p>原因有如下两个：</p>
+<ul>
+<li><p>null像在Java里一样，被当成一个对象。但是，JavaScript的数据类型分成原始类型（primitive）和合成类型（complex）两大类，Brendan Eich觉得表示”无”的值最好不是对象。</p>
+</li>
+<li><p>null像在Java里一样，被当成一个对象。但是，JavaScript的数据类型分成原始类型（primitive）和合成类型（complex）两大类，Brendan Eich觉得表示”无”的值最好不是对象。</p>
+</li>
+</ul>
+<p>因此，Brendan Eich又设计了一个undefined。</p>
+<p><strong>如果不深究，简单理解可以归纳为历史原因</strong></p>
+<h4 id="4-使用场景"><a href="#4-使用场景" class="headerlink" title="(4)使用场景"></a>(4)使用场景</h4><h5 id="1-null"><a href="#1-null" class="headerlink" title="[1] null"></a>[1] null</h5><p>null表示”没有对象”，即该处不应该有值</p>
+<p>典型用法：</p>
+<ul>
+<li>null表示”没有对象”，即该处不应该有值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>作为对象原型链的终点</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getPrototypeOf(<span class="built_in">Object</span>.prototype)</span><br><span class="line"><span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-undefined-1"><a href="#2-undefined-1" class="headerlink" title="[2] undefined"></a>[2] undefined</h5><ul>
+<li><p>undefined表示”缺少值”，就是此处应该有一个值，但是还没有定义</p>
+</li>
+<li><p>变量被声明了，但没有赋值时，就等于undefined</p>
+</li>
+<li><p>调用函数时，应该提供的参数没有提供，该参数等于undefined</p>
+</li>
+<li><p>对象没有赋值的属性，该属性的值为undefined</p>
+</li>
+<li><p>函数没有返回值时，默认返回undefined</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> i;</span><br><span class="line">i <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params">x</span>)</span>&#123;<span class="built_in">console</span>.log(x)&#125;</span><br><span class="line">f() <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span>  o = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">o.p <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> x = f();</span><br><span class="line">x <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>有些框架会定义</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<p>建立undefined的引用是为了提高性能。</p>
+<h5 id="3-amp-amp"><a href="#3-amp-amp" class="headerlink" title="[3] == &amp;&amp; ==="></a>[3] == &amp;&amp; ===</h5><ul>
+<li>undeined是派生自null的值，因此ECMA-262规定他们的相等性测试要返回true</li>
+<li><strong>原因</strong>：由于  == 会进行转换操作</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == undeinded) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> === undeinded) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-boolean"><a href="#5-boolean" class="headerlink" title="5.boolean"></a>5.boolean</h3><p>名称源自数学家乔治布尔。</p>
+<h4 id="1-特点"><a href="#1-特点" class="headerlink" title="(1) 特点"></a>(1) 特点</h4><h5 id="1-该类型只有2个字面值，true和false"><a href="#1-该类型只有2个字面值，true和false" class="headerlink" title="[1] 该类型只有2个字面值，true和false"></a>[1] 该类型只有2个字面值，true和false</h5><p>这两个值与数字不是一回事，true不一定等于1, false也不一定等于0</p>
+<h5 id="2-所有数据类型都可以转换为-boolean-js提供了Boolean方法转换"><a href="#2-所有数据类型都可以转换为-boolean-js提供了Boolean方法转换" class="headerlink" title="[2] 所有数据类型都可以转换为 boolean , js提供了Boolean方法转换"></a>[2] 所有数据类型都可以转换为 boolean , js提供了Boolean方法转换</h5><p>js中只有6个数据会被转化为fasle（fasly）</p>
+<ul>
+<li><p>null</p>
+</li>
+<li><p>undefined</p>
+</li>
+<li><p>0 </p>
+</li>
+<li><p>-0</p>
+</li>
+<li><p>NaN</p>
+</li>
+<li><p>空字符串</p>
+</li>
+</ul>
+<h3 id="2-转换boolean"><a href="#2-转换boolean" class="headerlink" title="(2) 转换boolean"></a>(2) 转换boolean</h3><ul>
+<li><p>Boolean()</p>
+</li>
+<li><p>!!转换为boolean</p>
+</li>
+</ul>
+<h3 id="5-Number"><a href="#5-Number" class="headerlink" title="5.Number"></a>5.Number</h3><h4 id="1-标准"><a href="#1-标准" class="headerlink" title="(1) 标准"></a>(1) 标准</h4><ul>
+<li><p>ECMAScript使用的是IEEE 754标准（浮点数算术标准）来定义Number类型，ECMAScript中所有的数字，无论是整数还是小数，其类型均为Number。</p>
+</li>
+<li><p>在程序内部，Number类型的实质是一个64位的浮点数，这与Java中double类型的浮点数是一致的。</p>
+</li>
+</ul>
+<h4 id="2-数字表示方式："><a href="#2-数字表示方式：" class="headerlink" title="(2)数字表示方式："></a>(2)数字表示方式：</h4><ul>
+<li>十进制</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intNum = <span class="number">12</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>八进制</li>
+</ul>
+<p>建议不使用（严格模式、ES5下无效，会导致Javascript引擎抛出错误）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> octalNum1 = <span class="number">070</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>十六制</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hexNum = <span class="number">0xA</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-数值范围"><a href="#3-数值范围" class="headerlink" title="(3)数值范围:"></a>(3)数值范围:</h4><h5 id="1-JavaScript所能表示的数值范围为："><a href="#1-JavaScript所能表示的数值范围为：" class="headerlink" title="[1] JavaScript所能表示的数值范围为："></a>[1] JavaScript所能表示的数值范围为：</h5><pre><code>正负1.7976931348623157乘以10的308次方，其最小所能表示的小数为正负5乘以10的负324次方
+</code></pre><h5 id="2-JavaScript能表示并进行精确算术运算的整数范围为："><a href="#2-JavaScript能表示并进行精确算术运算的整数范围为：" class="headerlink" title="[2] JavaScript能表示并进行精确算术运算的整数范围为："></a>[2] JavaScript能表示并进行精确算术运算的整数范围为：</h5><pre><code>正负2的53次方，也即从最小值-9007199254740992到最大值+9007199254740992之间的范围
+</code></pre><p>对于超过这个范围的整数，JavaScript依旧可以进行运算，但却不保证运算结果的精度。值得注意的是，对于整数的位运算（比如移位等操作），JavaScript仅支持32位整型数，也即从-2147483648到+2147483647之间的整数。</p>
+<p><strong>获取边界值：</strong></p>
+<p>两个边界值可以分别通过访问Number对象的MAX_VALUE属性和MIN_VALUE属性来获取。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Number</span>.MAX_VALUE <span class="comment">// 1.7976931348623157e+308</span></span><br><span class="line"><span class="built_in">Number</span>.MIN_VALUE <span class="comment">// 5e-324</span></span><br><span class="line"><span class="string">``</span><span class="string">`	</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">**超过边界值：**</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line"><span class="literal">Infinity</span> <span class="comment">// 如果超过Number.MAX_VALUE </span></span><br><span class="line">-<span class="literal">Infinity</span> <span class="comment">// 如果小于Number.MIN_VALUE</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">9007199254740992</span>; <span class="comment">// 对正负2的53次方范围以外的整数</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a+<span class="number">3</span>); <span class="comment">// 正确的运算结果应该是9007199254740995，但JavaScript给出的计算结果却是9007199254740996</span></span><br><span class="line"><span class="string">``</span><span class="string">`	</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### (4) float</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">##### [1] 所谓浮点数值，就是该数值中必须包含一个小数点，并且小数点后至少有一位数字</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line"><span class="keyword">var</span> floatNum1 = <span class="number">1.1</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="2-虽然小数点前面可以没有整数，但不推荐"><a href="#2-虽然小数点前面可以没有整数，但不推荐" class="headerlink" title="[2] 虽然小数点前面可以没有整数，但不推荐:"></a>[2] 虽然小数点前面可以没有整数，但不推荐:</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> floatNum2 = <span class="number">.1</span>;</span><br></pre></td></tr></table></figure>
+<h5 id="3-由于保存浮点数值需要的内存是保存整数的两倍，因此ECMAscript会不失时机地将浮点数值转换为整数"><a href="#3-由于保存浮点数值需要的内存是保存整数的两倍，因此ECMAscript会不失时机地将浮点数值转换为整数" class="headerlink" title="[3] 由于保存浮点数值需要的内存是保存整数的两倍，因此ECMAscript会不失时机地将浮点数值转换为整数"></a>[3] 由于保存浮点数值需要的内存是保存整数的两倍，因此ECMAscript会不失时机地将浮点数值转换为整数</h5><ul>
+<li>小数点后没有任何数字，那么数值就可以作为为整数值来保存</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> floatNum1 = <span class="number">1.</span>; <span class="comment">// 解析为1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>浮点数本身表示就是整数，那么该值会被转换为整数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> floatNum2 = <span class="number">10.0</span>; <span class="comment">// 解析为10</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-科学计数法："><a href="#5-科学计数法：" class="headerlink" title="(5)科学计数法："></a>(5)科学计数法：</h4><ul>
+<li><p>当数字极大或极小，可以用e表示法（即科学计数法）表示。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> floatNum = <span class="number">3.125e7</span>; <span class="comment">// 等于31250000 3.125乘以10的7次方</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ECMAscript会将那些小数点后面带有6个0以上的浮点数值转化为科学计数表示法。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> floatNum = <span class="number">3e-7</span> <span class="comment">// 等于0.0000003</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>浮点数值的最高精度是17位小数，但在进行算术计算时其精度远远不如整数。建议永远不要测试某个特定的浮点数值。</p>
+</li>
+</ul>
+<h4 id="6-Infinity"><a href="#6-Infinity" class="headerlink" title="(6) Infinity"></a>(6) Infinity</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">11 ／ 0 // Infinity</span><br></pre></td></tr></table></figure>
+<h4 id="7-NaN"><a href="#7-NaN" class="headerlink" title="(7) NaN"></a>(7) NaN</h4><p>Not a Number</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> / <span class="number">0</span> <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Nan === <span class="literal">NaN</span> <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>isNaN()</p>
+</li>
+<li><p>返回结果只有 true false</p>
+</li>
+<li>使用<strong>isNaN()</strong>判断传入值是不是NaN</li>
+<li>但实际使用中会判断传入值是否能被转化为数字</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="built_in">isNaN</span>(<span class="literal">NaN</span>)); <span class="comment">// true</span>alert(<span class="built_in">isNaN</span>(<span class="number">10</span>)); <span class="comment">// false</span>alert(<span class="built_in">isNaN</span>(<span class="string">"10"</span>)); <span class="comment">// false</span>alert(<span class="built_in">isNaN</span>(<span class="string">"blue"</span>)); <span class="comment">// true</span>alert(<span class="built_in">isNaN</span>(<span class="literal">true</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h4 id="7-转换方法"><a href="#7-转换方法" class="headerlink" title="(7) 转换方法"></a>(7) 转换方法</h4><p>目的：将数据转换成数字、整数、浮点数。</p>
+<p>[1] Number()</p>
+<p>作用：任何数据类型转Number</p>
+<pre><code>- 数字
+
+- NaN
+</code></pre><p>[2] parseFloat</p>
+<p>作用：处理字符串</p>
+<p>建议：传第二个参数10</p>
+<p>[3] parseInt</p>
+<p>作用：处理字符串</p>
+<p>建议：传第二个参数10 （表示第一个参数是什么进制，返回值结果始终十进制）</p>
+<h4 id="8-精度损失-（0-1-0-2-！-0-3）"><a href="#8-精度损失-（0-1-0-2-！-0-3）" class="headerlink" title="(8) 精度损失 （0.1 + 0.2 ！= 0.3）"></a>(8) 精度损失 （0.1 + 0.2 ！= 0.3）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (a + b === <span class="number">0.3</span>) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'You got 0.3'</span>); <span class="comment">// 无法到达</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="1-原因"><a href="#1-原因" class="headerlink" title="[1] 原因"></a>[1] 原因</h5><p>关于浮点数值计算误差的问题，是因为基于IEEE754标准。</p>
+<h5 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="[2] 解决方案"></a>[2] 解决方案</h5><p>(1) 基数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> res = ((a * <span class="number">10</span>) + (b * <span class="number">10</span>)) /  <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(res); <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
+<p>(2) toFixed</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> res = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(res.toFixed(<span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="6-String"><a href="#6-String" class="headerlink" title="6.String"></a>6.String</h3><p>String类型用于表示由零或多个16位unicode字符组成的字符序列，即字符串。</p>
+<p>(1) 字符串特性</p>
+<p>ECMAScript中字符串是不可变的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;abcd&apos;</span><br><span class="line">&apos;abcd&apos;.length = 5</span><br><span class="line"></span><br><span class="line">console.log(&apos;abcd&apos;.length); // 4</span><br></pre></td></tr></table></figure>
+<p>(2) 转义符</p>
+<p>(3) unicode 编码</p>
+<p>\uxxxx</p>
+<p>(4) 字符串类型转换</p>
+<p>toString</p>
+<p>null undefined 不可用</p>
+<p>String()</p>
+<p>可以转换传进去所有类型</p>
+<h3 id="6-基础数据类型转换归纳"><a href="#6-基础数据类型转换归纳" class="headerlink" title="6.基础数据类型转换归纳"></a>6.基础数据类型转换归纳</h3><p>相同点：</p>
+<p>(1) 都有String Boolean</p>
+<p>(2) 首字母大写</p>
+<p>(3) 都可以穿入任何类型</p>
+<p>(4) 得到的结果都是和自己对应的</p>
+<p>(5) 传入对象[Object,Object]</p>
+<h3 id="8-Object"><a href="#8-Object" class="headerlink" title="8. Object"></a>8. Object</h3><p>定义：属性构成对象的无序的集合</p>
+<p>对象的比较是引用的比较</p>
+<h4 id="1-Object对象的分类"><a href="#1-Object对象的分类" class="headerlink" title="(1) Object对象的分类"></a>(1) Object对象的分类</h4><h4 id="1-内部对象-（17个）"><a href="#1-内部对象-（17个）" class="headerlink" title="[1] 内部对象 （17个）"></a>[1] 内部对象 （17个）</h4><p>a. 内置对象 (3)</p>
+<ul>
+<li>Math</li>
+<li>Global</li>
+<li>JSON</li>
+</ul>
+<p>b. 常用对象 (8)</p>
+<ul>
+<li><p>Boolean</p>
+</li>
+<li><p>String</p>
+</li>
+<li><p>Number</p>
+</li>
+<li><p>Object</p>
+</li>
+<li><p>Array</p>
+</li>
+<li><p>Function</p>
+</li>
+<li><p>Date</p>
+</li>
+<li><p>RegExp</p>
+</li>
+</ul>
+<p>c. 错误对象 (6)</p>
+<ul>
+<li><p>Error</p>
+</li>
+<li><p>EvalError</p>
+</li>
+<li><p>RangeError</p>
+</li>
+<li><p>ReferenceError</p>
+</li>
+<li><p>SyntaxError</p>
+</li>
+<li><p>TypeError</p>
+</li>
+<li><p>URIError</p>
+</li>
+</ul>
+<h4 id="2-宿主对象"><a href="#2-宿主对象" class="headerlink" title="[2] 宿主对象"></a>[2] 宿主对象</h4><ul>
+<li>window (浏览器)</li>
+<li>global (node)</li>
+<li>document</li>
+</ul>
+<h4 id="3-自定义对象"><a href="#3-自定义对象" class="headerlink" title="[3] 自定义对象"></a>[3] 自定义对象</h4><h4 id="2-基础数据类型转对象"><a href="#2-基础数据类型转对象" class="headerlink" title="(2)基础数据类型转对象"></a>(2)基础数据类型转对象</h4><h5 id="1-boolean-gt-Object"><a href="#1-boolean-gt-Object" class="headerlink" title="[1] boolean =&gt; Object"></a>[1] boolean =&gt; Object</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Boolean</span> &#123;<span class="literal">false</span>&#125;</span><br><span class="line">__proto__: <span class="built_in">Boolean</span></span><br><span class="line">[[PrimitiveValue]]:<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-null-gt-Object"><a href="#2-null-gt-Object" class="headerlink" title="[2] null =&gt; Object"></a>[2] null =&gt; Object</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>(<span class="literal">null</span>)；</span><br><span class="line"></span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="3-undefined-gt-Object"><a href="#3-undefined-gt-Object" class="headerlink" title="[3] undefined =&gt; Object"></a>[3] undefined =&gt; Object</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>(<span class="literal">undefined</span>);</span><br><span class="line"></span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="4-string-gt-Object"><a href="#4-string-gt-Object" class="headerlink" title="[4] string =&gt; Object"></a>[4] string =&gt; Object</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>(<span class="string">'abc'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span> &#123;<span class="string">"abc"</span>&#125;</span><br><span class="line">	<span class="number">0</span>: <span class="string">"a"</span></span><br><span class="line">	<span class="number">1</span>: <span class="string">"b"</span></span><br><span class="line">	<span class="number">2</span>: <span class="string">"c"</span></span><br><span class="line">	length: <span class="number">3</span></span><br><span class="line">	__proto__: <span class="built_in">String</span></span><br><span class="line">	[[PrimitiveValue]]: <span class="string">"abc"</span></span><br></pre></td></tr></table></figure>
+<h5 id="5-number-gt-Object"><a href="#5-number-gt-Object" class="headerlink" title="[5] number =&gt; Object"></a>[5] number =&gt; Object</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>(<span class="number">123</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Number</span> &#123;<span class="number">123</span>&#125;</span><br><span class="line">	__proto__: <span class="built_in">Number</span></span><br><span class="line">	[[PrimitiveValue]]: <span class="number">123</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-对象转基础数据类型"><a href="#3-对象转基础数据类型" class="headerlink" title="(3) 对象转基础数据类型"></a>(3) 对象转基础数据类型</h4><h5 id="1-Object-gt-boolean"><a href="#1-Object-gt-boolean" class="headerlink" title="[1] Object =&gt; boolean"></a>[1] Object =&gt; boolean</h5><p>任何对象转换boolean类型，都是true</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Boolean</span>(<span class="built_in">Object</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Boolean</span>(&#123;&#125;); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Boolean</span>(<span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">false</span>));  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-Object-gt-number"><a href="#2-Object-gt-number" class="headerlink" title="[2] Object =&gt; number"></a>[2] Object =&gt; number</h5><p>先调用valueOf(),后调用toString()</p>
+<p>调用valueOf()，返回原始值，若无原始值则返回对象本身</p>
+<p>[1] date对象特殊，当前系统时间与1970年1月1日差额毫秒</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>[2] 对象</p>
+<h5 id="3-Object-gt-string"><a href="#3-Object-gt-string" class="headerlink" title="[3] Object =&gt; string"></a>[3] Object =&gt; string</h5><p>先调用toString(),后调用valueOf()</p>
+<p>调用toString(),当前对象通过字符串表示</p>
+<ul>
+<li>数组</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">String</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].toString() <span class="comment">// 等同于调用了 结果："1,2,3"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function a() &#123;</span><br><span class="line">	console.log(&apos;test&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">a.toString()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>日期</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>(a);</span><br><span class="line"></span><br><span class="line">a.toString(); <span class="comment">// 相当于</span></span><br><span class="line"></span><br><span class="line"><span class="string">"Sat Jun 30 2018 23:43:59 GMT+0800 (China Standard Time)"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>正则</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">RegExp</span>();</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>(a); <span class="comment">// 输出"/(?:)/"</span></span><br><span class="line"></span><br><span class="line">a.toString() <span class="comment">// 相当于</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-创建Object"><a href="#4-创建Object" class="headerlink" title="(4). 创建Object"></a>(4). 创建Object</h4><h5 id="1-对象字面量"><a href="#1-对象字面量" class="headerlink" title="[1] 对象字面量"></a>[1] 对象字面量</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o1 = &#123;<span class="attr">test</span>: <span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="2-new-Object"><a href="#2-new-Object" class="headerlink" title="[2] new Object()"></a>[2] new Object()</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o1 = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;<span class="attr">test</span>: <span class="number">1111</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="3-Object-create"><a href="#3-Object-create" class="headerlink" title="[3] Object.create()"></a>[3] Object.create()</h5><ul>
+<li>语法</li>
+</ul>
+<p>Object.create(proto, [propertiesObject])</p>
+<ul>
+<li>参数</li>
+</ul>
+<p><strong>proto:</strong></p>
+<p>新创建对象的原型对象。</p>
+<p><strong>propertiesObject:</strong></p>
+<p>可选。如果没有指定为 undefined，则是要添加到新创建对象的可枚举属性（即其自身定义的属性，而不是其原型链上的枚举属性）对象的属性描述符以及相应的属性名称。这些属性对应Object.defineProperties()的第二个参数</p>
+<ul>
+<li>返回值</li>
+</ul>
+<p>一个新对象，带着指定的原型对象和属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.prototype,&#123;<span class="attr">foo</span>: &#123;<span class="attr">value</span>: <span class="string">'111'</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<h5 id="4-new-Object-和-Object-create-区别"><a href="#4-new-Object-和-Object-create-区别" class="headerlink" title="[4] new Object() 和  Object.create()区别"></a>[4] new Object() 和  Object.create()区别</h5><p>new操作符——完成四件事</p>
+<ol>
+<li><p>创建一个新的空对象；</p>
+</li>
+<li><p>绑定this到这个空对象，即切换上下文；</p>
+</li>
+<li><p>给这个新对象添加<strong>proto</strong>，并指向构造函数的原型；</p>
+</li>
+<li><p>如果构造函数未返回对象(如返回对象，则替换return this)，则将该新对象返回，即return this（第2条：this指向新对象）；</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">Object</span>.create(<span class="literal">null</span>,&#123;<span class="attr">foo</span>: &#123;<span class="attr">value</span>: <span class="string">'111'</span>&#125;&#125;);</span><br><span class="line"></span><br><span class="line">&#123;<span class="attr">foo</span>: <span class="string">"111"</span>&#125;</span><br><span class="line">foo: <span class="string">"111"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.prototype,&#123;<span class="attr">foo</span>: &#123;<span class="attr">value</span>: <span class="string">'111'</span>&#125;&#125;);</span><br><span class="line"></span><br><span class="line">&#123;<span class="attr">foo</span>: <span class="string">"111"</span>&#125;</span><br><span class="line"></span><br><span class="line">foo: <span class="string">"111"</span></span><br><span class="line"></span><br><span class="line">__proto__: </span><br><span class="line">Objectconstructor: ƒ <span class="built_in">Object</span>()</span><br><span class="line">hasOwnProperty: ƒ hasOwnProperty()</span><br><span class="line">isPrototypeOf: ƒ isPrototypeOf()</span><br><span class="line">propertyIsEnumerable: ƒ propertyIsEnumerable()</span><br><span class="line">toLocaleString: ƒ toLocaleString()</span><br><span class="line">toString: ƒ toString()</span><br><span class="line">valueOf: ƒ valueOf()</span><br><span class="line">__defineGetter__: ƒ __defineGetter__()</span><br><span class="line">__defineSetter__: ƒ __defineSetter__()</span><br><span class="line">__lookupGetter__: ƒ __lookupGetter__()</span><br><span class="line">__lookupSetter__: ƒ __lookupSetter__()</span><br><span class="line">get __proto__: ƒ __proto__()</span><br><span class="line">set __proto__: ƒ __proto__()</span><br></pre></td></tr></table></figure>
+<p>Object.create</p>
+<ol>
+<li><p>Object.create传入对象将作为新建对象的原型。</p>
+</li>
+<li><p>Object.create传入构造函数原型时，无论构造函数是否返回对象，Object.create只会return 以构造函数原型来新建的对象（参见下面的polyfill），而new则参见上节粗体描述。</p>
+</li>
+</ol>
+<h5 id="5-Object-assign-vs-new"><a href="#5-Object-assign-vs-new" class="headerlink" title="[5] Object.assign vs new"></a>[5] Object.assign vs new</h5><p>Object.assign 只拷贝对象的属性和函数，丢失原型链，<strong>proto</strong>指向Object.prototype</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Dog.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> pet1 = <span class="keyword">new</span> Dog(<span class="string">'rocky'</span>); </span><br><span class="line"><span class="built_in">console</span>.log(pet1.getName());      <span class="comment">//rocky</span></span><br><span class="line"><span class="keyword">const</span> pet2 = <span class="built_in">Object</span>.assign(&#123;&#125;,pet1);</span><br><span class="line"><span class="built_in">console</span>.log(pet2.name)            <span class="comment">//rocky</span></span><br><span class="line"><span class="built_in">console</span>.log(pet2.getName());      <span class="comment">//error!!!!!  getName undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-对象属性查找"><a href="#5-对象属性查找" class="headerlink" title="(5). 对象属性查找"></a>(5). 对象属性查找</h4><h5 id="1"><a href="#1" class="headerlink" title="[1] ."></a>[1] .</h5><p>解释器解析步骤：</p>
+<ul>
+<li>判断.之前是否为null 或 undefined</li>
+<li>判断.前时候为对象，若不是转化为对象</li>
+<li>.后名字匹配</li>
+<li>返回值或undefined</li>
+</ul>
+<h5 id="2"><a href="#2" class="headerlink" title="[2] []"></a>[2] []</h5><p>解释器解析步骤</p>
+<ul>
+<li>判断[]之前是否为null 或 undefined</li>
+<li>判断[]前时候为对象，若不是转化为对象</li>
+<li>计算[]，转换为字符串,匹配值</li>
+<li>返回值或undefined</li>
+</ul>
+<h3 id="7-symbol"><a href="#7-symbol" class="headerlink" title="7.symbol"></a>7.symbol</h3><p>ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。</p>
+<h4 id="1-Symbol值通过Symbol函数生成的"><a href="#1-Symbol值通过Symbol函数生成的" class="headerlink" title="[1] Symbol值通过Symbol函数生成的"></a>[1] Symbol值通过Symbol函数生成的</h4><p>Symbol 值通过Symbol函数生成,Symbol函数前不能使用new命令，否则会报错。这是因为生成的 Symbol 是一个原始类型的值，不是对象。也就是说，由于 Symbol 值不是对象，所以不能添加属性。基本上，它是一种类似于字符串的数据类型。<strong>基本上，它是一种类似于字符串的数据类型。</strong></p>
+<ul>
+<li>创建</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不能使用new操作符</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> <span class="built_in">Symbol</span>(); <span class="comment">//报错</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>不能添加属性 </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>(); <span class="comment">// s.name 等 '123' 不可行</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-typeof"><a href="#2-typeof" class="headerlink" title="[2] typeof"></a>[2] typeof</h4><p>typeof运算符的结果，表明变量s是 Symbol 数据类型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> s <span class="comment">// "symbol"</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-参数"><a href="#3-参数" class="headerlink" title="[3] 参数"></a>[3] 参数</h4><p><strong>Symbol</strong>函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述，主要是为了在控制台显示，或者转为字符串时，比较容易区分。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'bar'</span>);</span><br><span class="line"></span><br><span class="line">s1 <span class="comment">// Symbol(foo)</span></span><br><span class="line">s2 <span class="comment">// Symbol(bar)</span></span><br><span class="line"></span><br><span class="line">s1.toString() <span class="comment">// "Symbol(foo)"</span></span><br><span class="line">s2.toString() <span class="comment">// "Symbol(bar)"</span></span><br></pre></td></tr></table></figure>
+<p>如果 Symbol 的参数是一个对象，就会调用该对象的toString方法，将其转为字符串，然后才生成一个 Symbol值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  toString() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'abc'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> sym = <span class="built_in">Symbol</span>(obj);</span><br><span class="line">sym <span class="comment">// Symbol(abc)</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-比较"><a href="#4-比较" class="headerlink" title="[4] 比较"></a>[4] 比较</h4><p>Symbol函数的参数只是表示对当前 Symbol 值的描述，因此相同参数的Symbol函数的返回值是不相等的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 没有参数的情况</span></span><br><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>();</span><br><span class="line"></span><br><span class="line">s1 === s2 <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参数的情况</span></span><br><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">Symbol</span>(<span class="string">'foo'</span>);</span><br><span class="line"></span><br><span class="line">s1 === s2 <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-运算"><a href="#5-运算" class="headerlink" title="[5] 运算"></a>[5] 运算</h4><ul>
+<li>Symbol 值不能与其他类型的值进行运算，会报错</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sym = <span class="built_in">Symbol</span>(<span class="string">'My symbol'</span>);</span><br><span class="line"></span><br><span class="line"><span class="string">"your symbol is "</span> + sym</span><br><span class="line"><span class="comment">// TypeError: can't convert symbol to string</span></span><br><span class="line"><span class="string">`your symbol is <span class="subst">$&#123;sym&#125;</span>`</span></span><br><span class="line"><span class="comment">// TypeError: can't convert symbol to string</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Symbol 值可以显式转为字符串</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sym = <span class="built_in">Symbol</span>(<span class="string">'My symbol'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>(sym) <span class="comment">// 'Symbol(My symbol)'</span></span><br><span class="line">sym.toString() <span class="comment">// 'Symbol(My symbol)'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Symbol 值也可以转为布尔值，但是不能转为数值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sym = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="built_in">Boolean</span>(sym) <span class="comment">// true</span></span><br><span class="line">!sym  <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (sym) &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Number</span>(sym) <span class="comment">// TypeError</span></span><br><span class="line">sym + <span class="number">2</span> <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-作为属性名的-Symbol"><a href="#6-作为属性名的-Symbol" class="headerlink" title="[6] 作为属性名的 Symbol"></a>[6] 作为属性名的 Symbol</h4><ul>
+<li>定义</li>
+</ul>
+<p>由于每一个 Symbol 值都是不相等的，这意味着 Symbol 值可以作为标识符，用于对象的属性名，就能保证不会出现同名的属性。这对于一个对象由多个模块构成的情况非常有用，能防止某一个键被不小心改写或覆盖。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> mySymbol = <span class="built_in">Symbol</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第一种写法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;;</span><br><span class="line">a[mySymbol] = <span class="string">'Hello!'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种写法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  [mySymbol]: <span class="string">'Hello!'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三种写法</span></span><br><span class="line"><span class="keyword">let</span> a = &#123;&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(a, mySymbol, &#123; <span class="attr">value</span>: <span class="string">'Hello!'</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上写法都得到同样结果</span></span><br><span class="line">a[mySymbol] <span class="comment">// "Hello!"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Symbol 值作为对象属性名时，不能用点运算符</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySymbol = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> a = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">a.mySymbol = <span class="string">'Hello!'</span>;</span><br><span class="line">a[mySymbol] <span class="comment">// undefined</span></span><br><span class="line">a[<span class="string">'mySymbol'</span>] <span class="comment">// "Hello!"</span></span><br></pre></td></tr></table></figure>
+<p>上面代码中，因为点运算符后面总是字符串，所以不会读取mySymbol作为标识名所指代的那个值，导致a的属性名实际上是一个字符串，而不是一个 Symbol 值。</p>
+<p>同理，在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  [s]: <span class="function"><span class="keyword">function</span> (<span class="params">arg</span>) </span>&#123; ... &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj[s](<span class="number">123</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码中，如果s不放在方括号中，该属性的键名就是字符串s，而不是s所代表的那个 Symbol 值。</p>
+<ul>
+<li>增强的对象写法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  [s](arg) &#123; ... &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>增强的对象写法</li>
+</ul>
+<p>Symbol 类型还可以用于定义一组常量，保证这组常量的值都是不相等的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> log = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">log.levels = &#123;</span><br><span class="line">  DEBUG: <span class="built_in">Symbol</span>(<span class="string">'debug'</span>),</span><br><span class="line">  INFO: <span class="built_in">Symbol</span>(<span class="string">'info'</span>),</span><br><span class="line">  WARN: <span class="built_in">Symbol</span>(<span class="string">'warn'</span>)</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(log.levels.DEBUG, <span class="string">'debug message'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(log.levels.INFO, <span class="string">'info message'</span>);</span><br></pre></td></tr></table></figure>
+<p>下面是另外一个例子。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> COLOR_RED    = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> COLOR_GREEN  = <span class="built_in">Symbol</span>();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getComplement</span>(<span class="params">color</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (color) &#123;</span><br><span class="line">    <span class="keyword">case</span> COLOR_RED:</span><br><span class="line">      <span class="keyword">return</span> COLOR_GREEN;</span><br><span class="line">    <span class="keyword">case</span> COLOR_GREEN:</span><br><span class="line">      <span class="keyword">return</span> COLOR_RED;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Undefined color'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常量使用 Symbol 值最大的好处，就是其他任何值都不可能有相同的值了，因此可以保证上面的switch语句会按设计的方式工作。</p>
+<p>还有一点需要注意，Symbol 值作为属性名时，该属性还是公开属性，不是私有属性。</p>
+<h3 id="8-可变类型与不可类型"><a href="#8-可变类型与不可类型" class="headerlink" title="8.可变类型与不可类型"></a>8.可变类型与不可类型</h3><p>注：数据类型动态性 定义变量只是赋值，但过程中没有确定数据类型，在使用时在确定数据类型</p>
+<h4 id="1-基础数据类型是不可变："><a href="#1-基础数据类型是不可变：" class="headerlink" title="(1) 基础数据类型是不可变："></a>(1) 基础数据类型是不可变：</h4><h5 id="1-值比较"><a href="#1-值比较" class="headerlink" title="[1] 值比较"></a>[1] 值比较</h5><ul>
+<li>基础数据类型，是值的比较</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">a === b <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-动态的属性"><a href="#2-动态的属性" class="headerlink" title="[2] 动态的属性"></a>[2] 动态的属性</h5><ul>
+<li>不可以添加属性和方法，也不能改变和删除属性和方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'test'</span>;</span><br><span class="line"></span><br><span class="line">a.name = <span class="string">'helloworld'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.name); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-复制变量值"><a href="#3-复制变量值" class="headerlink" title="[3] 复制变量值"></a>[3] 复制变量值</h5><p>从一个变量向另一个变量复制基本类型的值，会在变量对象上创建一个新值，然后把该值复制为新变量分配的位置上。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num1 = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num2 = num1; <span class="comment">// num1: 1 num2: 1</span></span><br><span class="line"></span><br><span class="line">num2 = <span class="number">3</span>; <span class="comment">// num1: 1 num2: 3</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-传递参数"><a href="#4-传递参数" class="headerlink" title="[4] 传递参数"></a>[4] 传递参数</h5><ul>
+<li><p>传递参数的方式为值传递</p>
+</li>
+<li><p>向参数传递基本类型，被传递的值会复制给一个局部变量，因此这个局部变量的变化会反应在函数外部。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addTen</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">	num += <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">return</span> num;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> count = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = addTen(count);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(count); <span class="comment">// 20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 30</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-引用数据类型可变"><a href="#2-引用数据类型可变" class="headerlink" title="(2) 引用数据类型可变"></a>(2) 引用数据类型可变</h4><h5 id="1-值比较-1"><a href="#1-值比较-1" class="headerlink" title="[1] 值比较"></a>[1] 值比较</h5><ul>
+<li>引用比较，独立对象不相等</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;<span class="attr">a</span>: <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;<span class="attr">a</span>:<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line">obj1 ===  obj2 <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-动态的属性-1"><a href="#2-动态的属性-1" class="headerlink" title="[2] 动态的属性"></a>[2] 动态的属性</h5><ul>
+<li>可以添加属性和方法，也不能改变和删除属性和方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">a.name = <span class="string">'helloworld'</span>;</span><br><span class="line"></span><br><span class="line">a.name; <span class="comment">// 'helloworld'</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-复制变量值-1"><a href="#3-复制变量值-1" class="headerlink" title="[3] 复制变量值"></a>[3] 复制变量值</h5><p>从一个变量向另一个变量复制引用类型的值，同样会将存储在变量对象中的值复制一份放到新变量分配的空间中。不同的是，这个值的副本实际上是一个指针，复制结束后，两个变量实际上将引用同一个对象。<br>因此，改变其中一个，会影响另一个。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;<span class="attr">a</span>: <span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = obj1</span><br><span class="line"></span><br><span class="line">obj2.a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">obj1.a <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">obj2.b <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<h5 id="4-传递参数-1"><a href="#4-传递参数-1" class="headerlink" title="[4] 传递参数"></a>[4] 传递参数</h5><ul>
+<li><p>传递参数的方式为值传递</p>
+</li>
+<li><p>向参数传递引用类型，被传递的对象的引用会复制给一个局部变量，因此外部和函数内部的变量指向同一引用，因此内部会影响外部：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">	obj.name = <span class="string">"Neo"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">setName(person);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.name); <span class="comment">// Neo</span></span><br></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.neohuang.com/child/2018/07/08/js-review-datatype/" data-id="cjzh45xvu0007c4jg5le4ni5u" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            <!--
+    
+        <a href="http://www.neohuang.com/child/2018/07/08/js-review-datatype/#comments" class="article-comment-link">Comments</a>
+    
+-->
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-js-review-base-md" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -317,7 +1033,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjopv949i0006exjdhqubsuv2" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/25/js-review-base-md/" data-id="cjzh45xvt0006c4jg6eit518o" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -385,7 +1101,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/06/25/js-review-base-md/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -602,7 +1318,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjopv949w000eexjd3cc976ua" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/22/promise-2/" data-id="cjzh45xw4000hc4jgqbcym6u9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -670,7 +1386,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/06/22/promise-2/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -819,7 +1535,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjopv949v000dexjdpdcywctg" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/10/promise-1/" data-id="cjzh45xw3000fc4jgwj13v0wr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -887,7 +1603,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/06/10/promise-1/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -966,7 +1682,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjopv949z000iexjdak72nee1" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/06/04/week-question-1/" data-id="cjzh45xw7000kc4jgmjc3px2x" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1034,7 +1750,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/06/04/week-question-1/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1134,7 +1850,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjopv949y000hexjdx8zjacrz" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/28/subscribe/" data-id="cjzh45xw6000jc4jg2oq0x7ki" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1202,7 +1918,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/05/28/subscribe/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1492,7 +2208,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjopv949s000aexjd61n2i9m7" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/04/js-review-script/" data-id="cjzh45xvz000bc4jgorw1k0lk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1560,7 +2276,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/05/04/js-review-script/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1676,7 +2392,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjopv949x000fexjdnnm7aooo" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-function/" data-id="cjzh45xw3000gc4jg4c2enz6p" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1744,7 +2460,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/05/03/study-function/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -1843,7 +2559,7 @@
 
 </div>
 
-    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjopv949y000gexjd2vyavdc0" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://www.neohuang.com/child/2018/05/03/study-plan/" data-id="cjzh45xw5000ic4jg3giz65vo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1911,138 +2627,7 @@
 
             <!--
     
-        <a href="http://www.neohuang.com/child/2018/05/03/study-plan/#comments" class="article-comment-link">Commentaires</a>
-    
--->
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-hexo" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/04/13/hexo/">Hexo博客一些常用的命令</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/04/13/hexo/">
-            <time datetime="2018-04-12T16:00:00.000Z" itemprop="datePublished">2018-04-13</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>从今天开始总算开始重新写博客了，之前的自己搭建的服务器到期，所以开始在github上重新更新博客，一些常用命令。</p>
-<p><img src="/img/hexo.jpeg" alt=""></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.neohuang.com/child/2018/04/13/hexo/" data-id="cjopv949c0001exjd5o0723id" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            <!--
-    
-        <a href="http://www.neohuang.com/child/2018/04/13/hexo/#comments" class="article-comment-link">Commentaires</a>
+        <a href="http://www.neohuang.com/child/2018/05/03/study-plan/#comments" class="article-comment-link">Comments</a>
     
 -->
         </footer>
@@ -2053,7 +2638,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Préc</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -2061,9 +2646,47 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Récents</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2019/08/18/neo-fe-review-prospect/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/img/npm.jpg)" alt="回顾前端系列 - 前瞻" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2019/08/18/neo-fe-review-prospect/" class="title">回顾前端系列 - 前瞻</a></p>
+                            <p class="item-date"><time datetime="2019-08-17T16:00:00.000Z" itemprop="datePublished">2019-08-18</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/12/10/npm-manager/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/12/10/npm-manager/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2018-12-10T07:01:03.000Z" itemprop="datePublished">2018-12-10</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -2122,44 +2745,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/11/js-reivew-event-mouse/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习鼠标事件笔记" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/11/js-reivew-event-mouse/" class="title">js复习鼠标事件笔记</a></p>
-                            <p class="item-date"><time datetime="2018-09-10T16:00:00.000Z" itemprop="datePublished">2018-09-11</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/06/js-review-event-op/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/img/js-review-event-op.jpg)" alt="js复习事件的基本操作" class="thumbnail-image"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/09/06/js-review-event-op/" class="title">js复习事件的基本操作</a></p>
-                            <p class="item-date"><time datetime="2018-09-05T16:00:00.000Z" itemprop="datePublished">2018-09-06</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -2169,9 +2754,9 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archives</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -2182,7 +2767,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Liens</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 
@@ -2223,7 +2808,7 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2018 Neo<br>
+            &copy; 2019 Neo<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>
